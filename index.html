@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSG - Ficha Técnica Gastronômica & Dimensionador</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --secondary: #16a34a;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 15px; }
+
+        .container { max-width: 900px; margin: 0 auto; }
+        .card { background: var(--card); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        
+        h1, h2, h3, h4 { margin-bottom: 15px; color: var(--primary-dark); }
+        .flex { display: flex; gap: 10px; flex-wrap: wrap; }
+        .flex-1 { flex: 1; min-width: 180px; }
+
+        input, select, button, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; }
+        textarea { font-family: monospace; resize: vertical; min-height: 120px; }
+        button { background-color: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background-color: var(--primary-dark); }
+        button.success { background-color: var(--secondary); }
+        button.danger { background-color: var(--danger); }
+        button.warning { background-color: var(--warning); color: white; }
+
+        nav { display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
+        nav button { padding: 12px; font-size: 15px; background: #e2e8f0; color: var(--text); flex: 1; min-width: 140px; }
+        nav button.active { background: var(--primary); color: white; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th { background-color: #f1f5f9; }
+
+        .hidden { display: none !important; }
+        .stat-box { background: #f1f5f9; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0; }
+        .stat-title { font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase; }
+        .stat-value { font-size: 18px; font-weight: bold; margin-top: 4px; }
+
+        .ingredient-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+        .ingredient-row select.rec-insumo-select { flex: 3; min-width: 160px; margin-bottom: 0; }
+        .ingredient-row input.rec-insumo-qtd { flex: 1.5; min-width: 90px; margin-bottom: 0; }
+        .ingredient-row select.rec-insumo-unidade { flex: 1; min-width: 80px; margin-bottom: 0; }
+        .ingredient-row button { width: auto; padding: 12px 16px; margin-bottom: 0; }
+
+        .import-box { background: #f0f9ff; border: 1px dashed var(--primary); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        
+        .remember-group { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
+        .remember-group input { width: auto; margin-bottom: 0; cursor: pointer; }
+        .remember-group label { font-size: 14px; color: #475569; cursor: pointer; }
+
+        @media print {
+            nav, button, input, select, textarea, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .card { box-shadow: none; border: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- TELA DE LOGIN / CADASTRO -->
+    <div id="auth-screen" class="card">
+        <h2>🔒 Acesso ao Sistema Gastronômico</h2>
+        <p style="margin-bottom: 15px; color: #64748b;">Informe seus dados para entrar ou criar sua conta.</p>
+        <form id="auth-form" onsubmit="handleAuth(event)">
+            <input type="text" id="nome" placeholder="Seu Nome / Nome do Estabelecimento" required>
+            <input type="email" id="email" placeholder="Seu E-mail" required>
+            <input type="password" id="password" placeholder="Sua Senha" required>
+            
+            <div class="remember-group">
+                <input type="checkbox" id="remember-me" checked>
+                <label for="remember-me">Lembrar meu usuário (permanecer conectado neste aparelho)</label>
+            </div>
+
+            <button type="submit" id="auth-btn">Entrar / Cadastrar</button>
+        </form>
+    </div>
+
+    <!-- TELA PRINCIPAL DO APLICATIVO -->
+    <div id="app-screen" class="hidden">
+        
+        <!-- CABEÇALHO DE BOAS-VINDAS E LOGOUT -->
+        <div class="card flex no-print" style="justify-content: space-between; align-items: center;">
+            <div>
+                <h2 id="user-display" style="margin: 0;">Nome do Usuário</h2>
+                <small id="user-email" style="color: #64748b;"></small>
+            </div>
+            <button onclick="logout()" class="danger" style="width: auto; padding: 8px 16px;">Sair</button>
+        </div>
+
+        <div class="card no-print">
+            <h2>🍳 Ficha Técnica Gastronômica & Dimensionador</h2>
+            <p style="color: #64748b; font-size: 14px;">Gestão de custos, precificação e escalonamento de receitas para cozinha e confeitaria.</p>
+        </div>
+
+        <!-- NAVEGAÇÃO -->
+        <nav class="no-print">
+            <button class="nav-btn active" onclick="switchTab('insumos')">📦 1. Insumos Base</button>
+            <button class="nav-btn" onclick="switchTab('receitas')">📝 2. Ficha Técnica</button>
+            <button class="nav-btn" onclick="switchTab('dimensionador')">⚖️ 3. Dimensionador</button>
+        </nav>
+
+        <!-- ABA 1: CADASTRO E EDIÇÃO DE INSUMOS BASE -->
+        <div id="tab-insumos" class="tab-content">
+            <div class="card">
+                <h3 id="form-insumo-titulo">Cadastrar Novo Insumo / Ingrediente</h3>
+                <div class="flex">
+                    <input type="text" id="insumo-nome" placeholder="Nome (Ex: Pistache Descascado, Leite, Açúcar)">
+                    <select id="insumo-unidade">
+                        <option value="g">Gramas (g)</option>
+                        <option value="ml">Mililitros (ml)</option>
+                        <option value="un">Unidade (un)</option>
+                    </select>
+                </div>
+                <div class="flex">
+                    <div class="flex-1">
+                        <label style="font-size: 12px; font-weight: bold;">Qtd da Embalagem de Compra:</label>
+                        <input type="number" id="insumo-qtd-emb" placeholder="Ex: 500 (g) ou 1000 (ml)">
+                    </div>
+                    <div class="flex-1">
+                        <label style="font-size: 12px; font-weight: bold;">Preço Pago na Embalagem (R$):</label>
+                        <input type="number" id="insumo-preco" step="0.01" placeholder="Ex: 60,00">
+                    </div>
+                </div>
+                
+                <div class="flex">
+                    <button id="btn-salvar-insumo" onclick="salvarInsumo()" class="success" style="margin-bottom:0;">Salvar Insumo</button>
+                    <button id="btn-cancelar-insumo" onclick="cancelarEdicaoInsumo()" class="danger hidden" style="margin-bottom:0;">Cancelar Edição</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Lista de Insumos Cadastrados</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ingrediente</th>
+                            <th>Embalagem</th>
+                            <th>Preço Pago</th>
+                            <th>Custo Fracionado</th>
+                            <th class="no-print">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-insumos"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ABA 2: CRIAR, IMPORTAR E VER FICHA TÉCNICA DE RECEITAS -->
+        <div id="tab-receitas" class="tab-content hidden">
+            
+            <!-- OPÇÃO DE IMPORTAÇÃO RÁPIDA (COPIAR E COLAR) -->
+            <div class="card no-print">
+                <div class="flex" style="justify-content: space-between; align-items: center;">
+                    <h3>📋 Importar Receita via Copiar e Colar</h3>
+                    <button onclick="toggleImportArea()" style="width: auto; padding: 6px 12px; font-size: 13px;">Exibir / Ocultar Importador</button>
+                </div>
+
+                <div id="import-area" class="import-box hidden">
+                    <p style="font-size: 13px; color: #475569; margin-bottom: 10px;">
+                        Cole abaixo o texto da receita. Você pode usar o modelo abaixo ou apenas colar o texto com as quantidades!
+                    </p>
+                    <textarea id="import-text" placeholder="Nome: Picolé de Cajá&#10;Rendimento: 10&#10;Lucro: 120%&#10;&#10;Ingredientes:&#10;Polpa de Cajá: 0.4kg&#10;Leite Condensado: 395g&#10;Creme de Leite: 200g"></textarea>
+                    
+                    <div class="flex">
+                        <button onclick="processarImportacaoTexto()" class="success" style="margin-bottom: 0;">📥 Processar e Importar Receita</button>
+                        <button onclick="preencherExemploImportacao()" class="warning" style="margin-bottom: 0;">💡 Carregar Exemplo</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMULÁRIO MANUAL DE FICHA TÉCNICA -->
+            <div class="card no-print">
+                <h3>Nova Ficha Técnica (Manual)</h3>
+                
+                <div class="flex">
+                    <div class="flex-1">
+                        <label style="font-size: 12px; font-weight: bold;">Nome da Receita:</label>
+                        <input type="text" id="rec-nome" placeholder="Ex: Picolé Gourmet de Pistache">
+                    </div>
+                    <div class="flex-1">
+                        <label style="font-size: 12px; font-weight: bold;">Rendimento Padrão (Porções/Qtd):</label>
+                        <input type="number" id="rec-rendimento" value="10" min="1">
+                    </div>
+                    <div class="flex-1">
+                        <label style="font-size: 12px; font-weight: bold;">Margem de Lucro Desejada (%):</label>
+                        <input type="number" id="rec-lucro" value="100" min="0">
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 10px;">Ingredientes da Receita:</h4>
+                <div id="container-ingredientes">
+                    <!-- Linhas dinâmicas de ingredientes -->
+                </div>
+                
+                <button onclick="adicionarLinhaIngrediente()" style="background-color: #64748b; margin-bottom: 15px;">+ Adicionar Ingrediente</button>
+
+                <button onclick="salvarReceita()" class="success">Salvar Ficha Técnica</button>
+            </div>
+
+            <!-- LISTA DE FICHAS TÉCNICAS -->
+            <div class="card">
+                <h3>Minhas Fichas Técnicas Cadastradas</h3>
+                <div id="lista-receitas-cards"></div>
+            </div>
+        </div>
+
+        <!-- ABA 3: DIMENSIONADOR / ESCALONADOR -->
+        <div id="tab-dimensionador" class="tab-content hidden">
+            <div class="card no-print">
+                <h3>⚖️ Escalonador de Produção</h3>
+                <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Selecione uma receita e ajuste a quantidade desejada para recalcular os ingredientes.</p>
+
+                <label style="font-size: 12px; font-weight: bold;">Selecione a Receita:</label>
+                <select id="sim-receita" onchange="calcularEscalonamento()"></select>
+
+                <label style="font-size: 12px; font-weight: bold;">Quantidade a Produzir (Rendimento Desejado):</label>
+                <input type="number" id="sim-qtd-desejada" value="10" min="1" oninput="calcularEscalonamento()">
+            </div>
+
+            <!-- RELATÓRIO DO ESCALONAMENTO -->
+            <div id="relatorio-dimensionador" class="card hidden">
+                <div class="flex" style="justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div>
+                        <h2 id="sim-titulo-receita">Nome da Receita</h2>
+                        <small id="sim-subtitulo" style="color: #64748b;"></small>
+                    </div>
+                    <button onclick="window.print()" class="no-print" style="width: auto; padding: 8px 16px;">🖨️ Imprimir Ficha</button>
+                </div>
+
+                <div class="flex" style="margin-bottom: 20px;">
+                    <div class="flex-1 stat-box">
+                        <div class="stat-title">Custo Total dos Ingredientes</div>
+                        <div class="stat-value" id="sim-custo-total" style="color: var(--danger);">R$ 0,00</div>
+                    </div>
+                    <div class="flex-1 stat-box">
+                        <div class="stat-title">Custo por Porção</div>
+                        <div class="stat-value" id="sim-custo-unidade">R$ 0,00</div>
+                    </div>
+                    <div class="flex-1 stat-box">
+                        <div class="stat-title">Preço Sugerido / Porção</div>
+                        <div class="stat-value" id="sim-preco-sugerido" style="color: var(--secondary);">R$ 0,00</div>
+                    </div>
+                    <div class="flex-1 stat-box">
+                        <div class="stat-title">Faturamento Estimado</div>
+                        <div class="stat-value" id="sim-faturamento" style="color: var(--primary-dark);">R$ 0,00</div>
+                    </div>
+                </div>
+
+                <h4>Quantidade Exata de Ingredientes para Esta Batelada:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ingrediente</th>
+                            <th>Quantidade Necessária</th>
+                            <th>Custo Proporcional (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sim-tabela-ingredientes"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // ESTADO DA APLICAÇÃO E BANCO DE DADOS LOCAL
+    let currentUser = null;
+    let editingInsumoId = null;
+
+    let db = {
+        users: JSON.parse(localStorage.getItem('tsg_gastro_users')) || [],
+        insumos: JSON.parse(localStorage.getItem('tsg_gastro_insumos')) || [],
+        receitas: JSON.parse(localStorage.getItem('tsg_gastro_receitas')) || []
+    };
+
+    function saveData() {
+        try {
+            localStorage.setItem('tsg_gastro_users', JSON.stringify(db.users));
+            localStorage.setItem('tsg_gastro_insumos', JSON.stringify(db.insumos));
+            localStorage.setItem('tsg_gastro_receitas', JSON.stringify(db.receitas));
+        } catch(e) {
+            alert("Aviso: Limite do armazenamento local atingido.");
+            console.error(e);
+        }
+    }
+
+    // AUTO-LOGIN AO CARREGAR A PÁGINA
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedEmail = localStorage.getItem('tsg_gastro_session');
+        if (savedEmail) {
+            const user = db.users.find(u => u.email === savedEmail);
+            if (user) {
+                iniciarSessao(user);
+                return;
+            }
+        }
+    });
+
+    // SISTEMA DE AUTENTICAÇÃO
+    function handleAuth(e) {
+        e.preventDefault();
+        const nome = document.getElementById('nome').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const pass = document.getElementById('password').value.trim();
+        const remember = document.getElementById('remember-me').checked;
+
+        let user = db.users.find(u => u.email === email);
+
+        if(!user) {
+            user = { nome, email, pass };
+            db.users.push(user);
+            saveData();
+            alert(`Bem-vindo(a), ${nome}! Seu usuário foi registrado.`);
+        } else {
+            if(user.pass !== pass) {
+                alert("Senha incorreta!");
+                return;
+            }
+            if(nome) {
+                user.nome = nome;
+                saveData();
+            }
+        }
+
+        if(remember) {
+            localStorage.setItem('tsg_gastro_session', user.email);
+        } else {
+            localStorage.removeItem('tsg_gastro_session');
+        }
+
+        iniciarSessao(user);
+    }
+
+    function iniciarSessao(user) {
+        currentUser = user;
+        document.getElementById('auth-screen').classList.add('hidden');
+        document.getElementById('app-screen').classList.remove('hidden');
+
+        document.getElementById('user-display').innerText = currentUser.nome || "Usuário";
+        document.getElementById('user-email').innerText = currentUser.email;
+
+        renderInsumos();
+        renderReceitas();
+        atualizarSelectsDimensionador();
+        if(document.querySelectorAll('.ingredient-row').length === 0) {
+            adicionarLinhaIngrediente();
+        }
+    }
+
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem('tsg_gastro_session');
+        document.getElementById('auth-screen').classList.remove('hidden');
+        document.getElementById('app-screen').classList.add('hidden');
+    }
+
+    // CONVERSOR UNIVERSAL DE UNIDADES DE MEDIDA
+    function converterUnidade(qtd, unidadeOrigem, unidadeDestino) {
+        if (unidadeOrigem === unidadeDestino) return qtd;
+
+        // Massa
+        if (unidadeOrigem === 'kg' && unidadeDestino === 'g') return qtd * 1000;
+        if (unidadeOrigem === 'g' && unidadeDestino === 'kg') return qtd / 1000;
+
+        // Volume
+        if (unidadeOrigem === 'l' && unidadeDestino === 'ml') return qtd * 1000;
+        if (unidadeOrigem === 'ml' && unidadeDestino === 'l') return qtd / 1000;
+
+        return qtd;
+    }
+
+    // NAVEGAÇÃO
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+        event.target.classList.add('active');
+
+        if(tabName === 'dimensionador') {
+            atualizarSelectsDimensionador();
+            calcularEscalonamento();
+        }
+    }
+
+    // 1. GESTÃO DE INSUMOS BASE (CADASTRO E EDIÇÃO)
+    function salvarInsumo() {
+        const nome = document.getElementById('insumo-nome').value.trim();
+        const unidade = document.getElementById('insumo-unidade').value;
+        const qtdEmb = parseFloat(document.getElementById('insumo-qtd-emb').value);
+        const preco = parseFloat(document.getElementById('insumo-preco').value);
+
+        if(!nome || isNaN(qtdEmb) || isNaN(preco) || qtdEmb <= 0 || preco < 0) {
+            alert("Preencha todos os campos do insumo corretamente!");
+            return;
+        }
+
+        if(editingInsumoId !== null) {
+            // Atualizar Insumo Existente
+            const insumo = db.insumos.find(i => i.id === editingInsumoId);
+            if(insumo) {
+                insumo.nome = nome;
+                insumo.unidade = unidade;
+                insumo.qtdEmb = qtdEmb;
+                insumo.preco = preco;
+            }
+            cancelarEdicaoInsumo();
+        } else {
+            // Novo Insumo
+            const id = new Date().getTime();
+            db.insumos.push({ id, nome, unidade, qtdEmb, preco });
+            
+            document.getElementById('insumo-nome').value = '';
+            document.getElementById('insumo-qtd-emb').value = '';
+            document.getElementById('insumo-preco').value = '';
+        }
+
+        saveData();
+        renderInsumos();
+        renderReceitas(); // Recalcula custos das receitas que usam esse insumo!
+    }
+
+    function editarInsumo(id) {
+        const insumo = db.insumos.find(i => i.id === id);
+        if(!insumo) return;
+
+        editingInsumoId = id;
+        document.getElementById('insumo-nome').value = insumo.nome;
+        document.getElementById('insumo-unidade').value = insumo.unidade;
+        document.getElementById('insumo-qtd-emb').value = insumo.qtdEmb;
+        document.getElementById('insumo-preco').value = insumo.preco;
+
+        document.getElementById('form-insumo-titulo').innerText = `✏️ Editar Insumo: "${insumo.nome}"`;
+        document.getElementById('btn-salvar-insumo').innerText = '🔄 Atualizar Insumo';
+        document.getElementById('btn-cancelar-insumo').classList.remove('hidden');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cancelarEdicaoInsumo() {
+        editingInsumoId = null;
+        document.getElementById('insumo-nome').value = '';
+        document.getElementById('insumo-qtd-emb').value = '';
+        document.getElementById('insumo-preco').value = '';
+        
+        document.getElementById('form-insumo-titulo').innerText = 'Cadastrar Novo Insumo / Ingrediente';
+        document.getElementById('btn-salvar-insumo').innerText = 'Salvar Insumo';
+        document.getElementById('btn-cancelar-insumo').classList.add('hidden');
+    }
+
+    function deletarInsumo(id) {
+        if(confirm("Deseja remover este insumo?")) {
+            db.insumos = db.insumos.filter(i => i.id !== id);
+            if(editingInsumoId === id) cancelarEdicaoInsumo();
+            saveData();
+            renderInsumos();
+            renderReceitas();
+        }
+    }
+
+    function renderInsumos() {
+        const lista = document.getElementById('lista-insumos');
+        lista.innerHTML = db.insumos.map(i => {
+            const custoFracionado = i.qtdEmb > 0 ? (i.preco / i.qtdEmb) : 0;
+            const alertaPrecoZero = i.preco === 0 ? ' <span style="color:var(--danger); font-size:11px;">(Sem preço)</span>' : '';
+
+            return `
+                <tr>
+                    <td><b>${i.nome}</b>${alertaPrecoZero}</td>
+                    <td>${i.qtdEmb} ${i.unidade}</td>
+                    <td>R$ ${i.preco.toFixed(2)}</td>
+                    <td>R$ ${custoFracionado.toFixed(4)} / ${i.unidade}</td>
+                    <td class="no-print" style="display:flex; gap:5px;">
+                        <button onclick="editarInsumo(${i.id})" class="warning" style="padding: 4px 8px; width: auto; margin-bottom: 0;">Editar</button>
+                        <button onclick="deletarInsumo(${i.id})" class="danger" style="padding: 4px 8px; width: auto; margin-bottom: 0;">Excluir</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // 2. GESTÃO DE FICHA TÉCNICA
+    function toggleImportArea() {
+        document.getElementById('import-area').classList.toggle('hidden');
+    }
+
+    function preencherExemploImportacao() {
+        const exemplo = `Nome: Picolé de Cajá com Castanha
+Rendimento: 10
+Lucro: 150%
+
+Ingredientes:
+Polpa de Cajá: 0.4kg
+Leite Condensado: 395g
+Creme de Leite: 0.2l
+Castanha de Caju: 100g`;
+
+        document.getElementById('import-text').value = exemplo;
+    }
+
+    function processarImportacaoTexto() {
+        const rawText = document.getElementById('import-text').value.trim();
+        if(!rawText) {
+            alert("Cole o texto da receita antes de importar!");
+            return;
+        }
+
+        let nome = "Receita Importada";
+        let rendimento = 10;
+        let lucro = 100;
+        const listaIngredientesRaw = [];
+
+        const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+        lines.forEach(line => {
+            const lineLower = line.toLowerCase();
+            if(lineLower.startsWith('nome:')) {
+                nome = line.substring(5).trim();
+            } else if(lineLower.startsWith('rendimento:')) {
+                const r = parseInt(line.replace(/\D/g, ''));
+                if(!isNaN(r) && r > 0) rendimento = r;
+            } else if(lineLower.startsWith('lucro:') || lineLower.startsWith('margem:')) {
+                const l = parseFloat(line.replace(/[^0-9.]/g, ''));
+                if(!isNaN(l)) lucro = l;
+            } else if(!lineLower.startsWith('ingredientes')) {
+                let qtd = 0;
+                let unidade = 'g';
+                let ingNome = '';
+
+                const matchQtd = line.match(/(\d+[\.,]?\d*)\s*(g|ml|un|kg|l)?/i);
+                if(matchQtd) {
+                    qtd = parseFloat(matchQtd[1].replace(',', '.'));
+                    unidade = matchQtd[2] ? matchQtd[2].toLowerCase() : 'g';
+                    ingNome = line.replace(matchQtd[0], '').replace(/[:\-]/g, '').trim();
+                }
+
+                if(!ingNome && line.includes(':')) {
+                    const parts = line.split(':');
+                    ingNome = parts[0].trim();
+                    qtd = parseFloat(parts[1].replace(/[^0-9.]/g, '')) || 100;
+                } else if(!ingNome) {
+                    ingNome = line;
+                    qtd = 100;
+                }
+
+                if(ingNome && qtd > 0) {
+                    listaIngredientesRaw.push({ nome: ingNome, qtd, unidade });
+                }
+            }
+        });
+
+        if(listaIngredientesRaw.length === 0) {
+            alert("Não foi possível identificar ingredientes no texto colado.");
+            return;
+        }
+
+        let novosInsumosCriados = 0;
+        const ingredientesFinais = [];
+
+        listaIngredientesRaw.forEach(item => {
+            let insumo = db.insumos.find(i => i.nome.toLowerCase() === item.nome.toLowerCase());
+            
+            if(!insumo) {
+                const newId = new Date().getTime() + Math.floor(Math.random() * 1000);
+                const unidadeBase = (item.unidade === 'kg' ? 'g' : (item.unidade === 'l' ? 'ml' : item.unidade));
+                const qtdPadraoEmb = unidadeBase === 'un' ? 1 : 1000;
+                
+                insumo = { id: newId, nome: item.nome, unidade: unidadeBase, qtdEmb: qtdPadraoEmb, preco: 0 };
+                db.insumos.push(insumo);
+                novosInsumosCriados++;
+            }
+
+            ingredientesFinais.push({ insumoId: insumo.id, qtdUsada: item.qtd, unidadeUsada: item.unidade });
+        });
+
+        const recId = new Date().getTime();
+        db.receitas.push({ id: recId, nome, rendimento, lucro, ingredientes: ingredientesFinais });
+        
+        saveData();
+        renderInsumos();
+        renderReceitas();
+
+        document.getElementById('import-text').value = '';
+        document.getElementById('import-area').classList.add('hidden');
+
+        let msg = `Receita "${nome}" importada com sucesso!`;
+        if(novosInsumosCriados > 0) {
+            msg += `\n\n⚠️ ${novosInsumosCriados} novo(s) ingrediente(s) adicionados ao "Insumos Base" com R$ 0,00. Atualize os preços deles quando possível.`;
+        }
+        alert(msg);
+    }
+
+    function copiarTextoReceita(id) {
+        const r = db.receitas.find(rec => rec.id === id);
+        if(!r) return;
+
+        let txt = `Nome: ${r.nome}\nRendimento: ${r.rendimento}\nLucro: ${r.lucro}%\n\nIngredientes:\n`;
+        r.ingredientes.forEach(ing => {
+            const insumo = db.insumos.find(i => i.id === ing.insumoId);
+            if(insumo) {
+                txt += `${insumo.nome}: ${ing.qtdUsada}${ing.unidadeUsada || insumo.unidade}\n`;
+            }
+        });
+
+        navigator.clipboard.writeText(txt).then(() => {
+            alert("Ficha técnica copiada para a área de transferência!");
+        });
+    }
+
+    function adicionarLinhaIngrediente() {
+        const container = document.getElementById('container-ingredientes');
+        const div = document.createElement('div');
+        div.className = 'ingredient-row';
+        
+        const options = db.insumos.map(i => `<option value="${i.id}">${i.nome} (Base: ${i.unidade})</option>`).join('');
+
+        div.innerHTML = `
+            <select class="rec-insumo-select" onchange="aoSelecionarInsumo(this)">
+                ${options.length ? options : '<option value="">Cadastre insumos primeiro</option>'}
+            </select>
+            <input type="number" class="rec-insumo-qtd" placeholder="Qtd" step="0.01">
+            <select class="rec-insumo-unidade">
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="ml">ml</option>
+                <option value="l">L</option>
+                <option value="un">un</option>
+            </select>
+            <button onclick="this.parentElement.remove()" class="danger">X</button>
+        `;
+        container.appendChild(div);
+        
+        const select = div.querySelector('.rec-insumo-select');
+        if(select && select.value) aoSelecionarInsumo(select);
+    }
+
+    function aoSelecionarInsumo(selectEl) {
+        const insumoId = parseInt(selectEl.value);
+        const insumo = db.insumos.find(i => i.id === insumoId);
+        if(insumo) {
+            const unitSelect = selectEl.parentElement.querySelector('.rec-insumo-unidade');
+            if(unitSelect) unitSelect.value = insumo.unidade;
+        }
+    }
+
+    function salvarReceita() {
+        const nome = document.getElementById('rec-nome').value.trim();
+        const rendimento = parseInt(document.getElementById('rec-rendimento').value);
+        const lucro = parseFloat(document.getElementById('rec-lucro').value);
+
+        if(!nome || isNaN(rendimento) || isNaN(lucro) || rendimento <= 0) {
+            alert("Preencha o nome, rendimento e margem de lucro da receita!");
+            return;
+        }
+
+        const linhas = document.querySelectorAll('.ingredient-row');
+        const ingredientes = [];
+
+        linhas.forEach(row => {
+            const insumoId = parseInt(row.querySelector('.rec-insumo-select').value);
+            const qtdUsada = parseFloat(row.querySelector('.rec-insumo-qtd').value);
+            const unidadeUsada = row.querySelector('.rec-insumo-unidade').value;
+
+            if(!isNaN(insumoId) && !isNaN(qtdUsada) && qtdUsada > 0) {
+                ingredientes.push({ insumoId, qtdUsada, unidadeUsada });
+            }
+        });
+
+        if(ingredientes.length === 0) {
+            alert("Adicione pelo menos um ingrediente válido com quantidade!");
+            return;
+        }
+
+        const id = new Date().getTime();
+        db.receitas.push({ id, nome, rendimento, lucro, ingredientes });
+        saveData();
+        renderReceitas();
+
+        document.getElementById('rec-nome').value = '';
+        document.getElementById('container-ingredientes').innerHTML = '';
+        adicionarLinhaIngrediente();
+        alert("Ficha Técnica salva com sucesso!");
+    }
+
+    function deletarReceita(id) {
+        if(confirm("Tem certeza que deseja excluir esta receita?")) {
+            db.receitas = db.receitas.filter(r => r.id !== id);
+            saveData();
+            renderReceitas();
+        }
+    }
+
+    function renderReceitas() {
+        const container = document.getElementById('lista-receitas-cards');
+        if(db.receitas.length === 0) {
+            container.innerHTML = `<p style="color: #64748b;">Nenhuma receita cadastrada ainda.</p>`;
+            return;
+        }
+
+        container.innerHTML = db.receitas.map(r => {
+            let custoTotalBase = 0;
+
+            const tabelaIng = r.ingredientes.map(ing => {
+                const insumo = db.insumos.find(i => i.id === ing.insumoId);
+                if(!insumo) return '';
+                
+                const unitUsada = ing.unidadeUsada || insumo.unidade;
+                const qtdConvertida = converterUnidade(ing.qtdUsada, unitUsada, insumo.unidade);
+                
+                const custoFrac = insumo.qtdEmb > 0 ? (insumo.preco / insumo.qtdEmb) : 0;
+                const custoItem = custoFrac * qtdConvertida;
+                custoTotalBase += custoItem;
+
+                return `<tr><td>${insumo.nome}</td><td>${ing.qtdUsada} ${unitUsada}</td><td>R$ ${custoItem.toFixed(2)}</td></tr>`;
+            }).join('');
+
+            const custoPorPorcao = custoTotalBase / r.rendimento;
+            const precoSugerido = custoPorPorcao * (1 + (r.lucro / 100));
+
+            return `
+                <div class="card" style="border: 1px solid #e2e8f0; margin-bottom: 15px;">
+                    <div class="flex" style="justify-content: space-between; align-items: center;">
+                        <h4>${r.nome}</h4>
+                        <div class="no-print">
+                            <button onclick="copiarTextoReceita(${r.id})" class="warning" style="width: auto; padding: 4px 8px; font-size: 12px;">📋 Copiar Texto</button>
+                            <button onclick="deletarReceita(${r.id})" class="danger" style="width: auto; padding: 4px 8px; font-size: 12px;">Excluir</button>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: #64748b; margin-bottom: 10px;">
+                        Rendimento Padrão: <b>${r.rendimento} porções</b> | Lucro Meta: <b>${r.lucro}%</b>
+                    </p>
+                    <table>
+                        <thead><tr><th>Ingrediente</th><th>Qtd Padrão</th><th>Custo</th></tr></thead>
+                        <tbody>${tabelaIng}</tbody>
+                    </table>
+                    <div class="flex" style="margin-top: 10px; font-size: 14px; background: #f8fafc; padding: 10px; border-radius: 6px;">
+                        <div class="flex-1">Custo Total: <b>R$ ${custoTotalBase.toFixed(2)}</b></div>
+                        <div class="flex-1">Custo/Unidade: <b>R$ ${custoPorPorcao.toFixed(2)}</b></div>
+                        <div class="flex-1" style="color: var(--secondary);">Preço Sugerido: <b>R$ ${precoSugerido.toFixed(2)}</b></div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // 3. DIMENSIONADOR / ESCALONADOR DE RECEITAS
+    function atualizarSelectsDimensionador() {
+        const select = document.getElementById('sim-receita');
+        select.innerHTML = db.receitas.map(r => `<option value="${r.id}">${r.nome} (Base: ${r.rendimento} porções)</option>`).join('');
+    }
+
+    function calcularEscalonamento() {
+        const recId = parseInt(document.getElementById('sim-receita').value);
+        const qtdDesejada = parseInt(document.getElementById('sim-qtd-desejada').value);
+        const relatorio = document.getElementById('relatorio-dimensionador');
+
+        const receita = db.receitas.find(r => r.id === recId);
+        if(!receita || isNaN(qtdDesejada) || qtdDesejada <= 0) {
+            relatorio.classList.add('hidden');
+            return;
+        }
+
+        relatorio.classList.remove('hidden');
+
+        const fator = qtdDesejada / receita.rendimento;
+
+        document.getElementById('sim-titulo-receita').innerText = receita.nome;
+        document.getElementById('sim-subtitulo').innerText = `Proporção para produzir ${qtdDesejada} porções (Fator: ${fator.toFixed(2)}x a receita base)`;
+
+        let custoTotalProporcional = 0;
+
+        const tabelaRows = receita.ingredientes.map(ing => {
+            const insumo = db.insumos.find(i => i.id === ing.insumoId);
+            if(!insumo) return '';
+
+            const unitUsada = ing.unidadeUsada || insumo.unidade;
+            const qtdProporcionalNaUnidadeEscolhida = ing.qtdUsada * fator;
+            
+            const qtdConvertida = converterUnidade(qtdProporcionalNaUnidadeEscolhida, unitUsada, insumo.unidade);
+            const custoFrac = insumo.qtdEmb > 0 ? (insumo.preco / insumo.qtdEmb) : 0;
+            const custoItem = custoFrac * qtdConvertida;
+            custoTotalProporcional += custoItem;
+
+            return `
+                <tr>
+                    <td><b>${insumo.nome}</b></td>
+                    <td style="color: var(--primary-dark); font-weight: bold;">${qtdProporcionalNaUnidadeEscolhida.toFixed(2)} ${unitUsada}</td>
+                    <td>R$ ${custoItem.toFixed(2)}</td>
+                </tr>
+            `;
+        }).join('');
+
+        document.getElementById('sim-tabela-ingredientes').innerHTML = tabelaRows;
+
+        const custoPorPorcao = custoTotalProporcional / qtdDesejada;
+        const precoSugeridoPorPorcao = custoPorPorcao * (1 + (receita.lucro / 100));
+        const faturamentoTotal = precoSugeridoPorPorcao * qtdDesejada;
+
+        document.getElementById('sim-custo-total').innerText = `R$ ${custoTotalProporcional.toFixed(2)}`;
+        document.getElementById('sim-custo-unidade').innerText = `R$ ${custoPorPorcao.toFixed(2)}`;
+        document.getElementById('sim-preco-sugerido').innerText = `R$ ${precoSugeridoPorPorcao.toFixed(2)}`;
+        document.getElementById('sim-faturamento').innerText = `R$ ${faturamentoTotal.toFixed(2)}`;
+    }
+</script>
+
+</body>
+</html>
