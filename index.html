@@ -3,49 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSG - Ficha Técnica Gastronômica & Dimensionador</title>
+    <title>TSG Gastronomia - Ficha Técnica & Dimensionador</title>
     <style>
         :root {
-            --primary: #0284c7;
-            --primary-dark: #0369a1;
-            --secondary: #16a34a;
-            --danger: #dc2626;
-            --warning: #d97706;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #0f172a;
+            --ml-yellow: #FFE600;
+            --ml-blue: #3483fa;
+            --ml-blue-dark: #2968c8;
+            --ml-navy: #2D3277;
+            --ml-green: #00a650;
+            --ml-green-dark: #008741;
+            --ml-red: #f8312f;
+            --ml-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --border-color: #e6e6e6;
+            --radius: 12px;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding: 15px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+        body { background-color: var(--ml-bg); color: var(--text-main); padding: 0 0 40px 0; line-height: 1.5; }
 
-        .container { max-width: 900px; margin: 0 auto; }
-        .card { background: var(--card); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        /* CABEÇALHO MERCADO LIVRE */
+        header.ml-header {
+            background-color: var(--ml-yellow);
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .header-content {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .brand-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--ml-navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 15px; }
+        .card { 
+            background: var(--card-bg); 
+            padding: 24px; 
+            border-radius: var(--radius); 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08); 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border-color);
+        }
         
-        h1, h2, h3, h4 { margin-bottom: 15px; color: var(--primary-dark); }
-        .flex { display: flex; gap: 10px; flex-wrap: wrap; }
-        .flex-1 { flex: 1; min-width: 180px; }
+        h1, h2, h3, h4 { color: var(--ml-navy); font-weight: 700; margin-bottom: 12px; }
+        .flex-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+        .col { flex: 1; min-width: 200px; }
 
-        input, select, button, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; }
-        textarea { font-family: monospace; resize: vertical; min-height: 120px; }
-        button { background-color: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        button:hover { background-color: var(--primary-dark); }
-        button.success { background-color: var(--secondary); }
-        button.danger { background-color: var(--danger); }
-        button.warning { background-color: var(--warning); color: white; }
+        label { font-size: 13px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px; }
+        input, select, button, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 12px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            font-size: 14px; 
+            transition: all 0.2s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--ml-blue);
+            box-shadow: 0 0 0 3px rgba(52, 131, 250, 0.15);
+        }
+        textarea { font-family: inherit; resize: vertical; min-height: 110px; }
 
-        nav { display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
-        nav button { padding: 12px; font-size: 15px; background: #e2e8f0; color: var(--text); flex: 1; min-width: 140px; }
-        nav button.active { background: var(--primary); color: white; }
+        button { 
+            background-color: var(--ml-blue); 
+            color: white; 
+            border: none; 
+            font-weight: 600; 
+            cursor: pointer; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        button:hover { background-color: var(--ml-blue-dark); }
+        button.success { background-color: var(--ml-green); }
+        button.success:hover { background-color: var(--ml-green-dark); }
+        button.danger { background-color: #ffebe9; color: var(--ml-red); border: 1px solid #ffc2c0; }
+        button.danger:hover { background-color: var(--ml-red); color: white; }
+        button.outline { background: transparent; color: var(--ml-blue); border: 1px solid var(--ml-blue); }
+        button.outline:hover { background: rgba(52, 131, 250, 0.08); }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
-        th { background-color: #f1f5f9; }
+        /* NAV TABS */
+        nav { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; flex-wrap: wrap; }
+        nav button { 
+            padding: 12px 18px; 
+            font-size: 14px; 
+            background: transparent; 
+            color: var(--text-muted); 
+            flex: 1; 
+            min-width: 140px; 
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+        nav button.active { background: var(--card-bg); color: var(--ml-blue); font-weight: 700; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
+
+        /* TABELAS */
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        th { background-color: #f9fafb; font-weight: 700; color: var(--ml-navy); }
+        tr:last-child td { border-bottom: none; }
 
         .hidden { display: none !important; }
-        .stat-box { background: #f1f5f9; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #e2e8f0; }
-        .stat-title { font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase; }
-        .stat-value { font-size: 18px; font-weight: bold; margin-top: 4px; }
+
+        /* CARDS E PAINÉIS */
+        .stat-box { background: #f8fafc; padding: 16px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
+        .stat-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-value { font-size: 20px; font-weight: 800; margin-top: 4px; color: var(--ml-navy); }
 
         .ingredient-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
         .ingredient-row select.rec-insumo-select { flex: 3; min-width: 160px; margin-bottom: 0; }
@@ -53,14 +133,46 @@
         .ingredient-row select.rec-insumo-unidade { flex: 1; min-width: 80px; margin-bottom: 0; }
         .ingredient-row button { width: auto; padding: 12px 16px; margin-bottom: 0; }
 
-        .import-box { background: #f0f9ff; border: 1px dashed var(--primary); padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .import-box { background: #eef5ff; border: 1px dashed var(--ml-blue); padding: 18px; border-radius: 8px; margin-bottom: 15px; }
         
         .remember-group { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         .remember-group input { width: auto; margin-bottom: 0; cursor: pointer; }
-        .remember-group label { font-size: 14px; color: #475569; cursor: pointer; }
+        .remember-group label { font-size: 13px; color: var(--text-muted); cursor: pointer; margin-bottom: 0; }
+
+        /* CARD DE APOIO / DOAÇÃO */
+        .support-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fffde6 100%);
+            border: 1px solid #ffe866;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .support-info { flex: 1; min-width: 260px; }
+        .support-info h3 { color: var(--ml-navy); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .support-info p { font-size: 13px; color: #444; line-height: 1.4; }
+        .btn-support {
+            background-color: var(--ml-green);
+            color: white;
+            font-weight: 700;
+            padding: 14px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 166, 80, 0.25);
+            transition: transform 0.2s, background-color 0.2s;
+            white-space: nowrap;
+        }
+        .btn-support:hover {
+            background-color: var(--ml-green-dark);
+            transform: translateY(-2px);
+        }
 
         @media print {
-            nav, button, input, select, textarea, .no-print { display: none !important; }
+            header, nav, button, input, select, textarea, .no-print, .support-card { display: none !important; }
             body { background: white; padding: 0; }
             .card { box-shadow: none; border: none; padding: 0; }
         }
@@ -68,41 +180,61 @@
 </head>
 <body>
 
+    <!-- CABEÇALHO -->
+    <header class="ml-header">
+        <div class="header-content">
+            <div class="brand-title">
+                <span>🍳</span> TSG Gastronomia & Gestão
+            </div>
+            <div id="user-header-info" class="hidden" style="font-size: 13px; color: var(--ml-navy);">
+                Bem-vindo(a), <b id="user-display-name">Usuário</b>!
+                <button onclick="logout()" class="danger" style="width: auto; padding: 4px 10px; margin-left: 10px; font-size: 12px; margin-bottom: 0;">Sair</button>
+            </div>
+        </div>
+    </header>
+
 <div class="container">
 
     <!-- TELA DE LOGIN / CADASTRO -->
-    <div id="auth-screen" class="card">
-        <h2>🔒 Acesso ao Sistema Gastronômico</h2>
-        <p style="margin-bottom: 15px; color: #64748b;">Informe seus dados para entrar ou criar sua conta.</p>
+    <div id="auth-screen" class="card" style="max-width: 480px; margin: 30px auto;">
+        <h2 style="text-align: center;">🔒 Acesso ao Sistema</h2>
+        <p style="text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+            Entre ou cadastre-se para gerenciar suas receitas e custos com facilidade.
+        </p>
         <form id="auth-form" onsubmit="handleAuth(event)">
-            <input type="text" id="nome" placeholder="Seu Nome / Nome do Estabelecimento" required>
-            <input type="email" id="email" placeholder="Seu E-mail" required>
-            <input type="password" id="password" placeholder="Sua Senha" required>
+            <label>Seu Nome ou Estabelecimento:</label>
+            <input type="text" id="nome" placeholder="Ex: Confeitaria Doce Amor" required>
+            
+            <label>E-mail:</label>
+            <input type="email" id="email" placeholder="seu@email.com" required>
+            
+            <label>Senha:</label>
+            <input type="password" id="password" placeholder="••••••••" required>
             
             <div class="remember-group">
                 <input type="checkbox" id="remember-me" checked>
-                <label for="remember-me">Lembrar meu usuário (permanecer conectado neste aparelho)</label>
+                <label for="remember-me">Lembrar meu usuário neste dispositivo</label>
             </div>
 
-            <button type="submit" id="auth-btn">Entrar / Cadastrar</button>
+            <button type="submit" class="success" style="padding: 14px; font-size: 16px;">Entrar no Sistema</button>
         </form>
     </div>
 
     <!-- TELA PRINCIPAL DO APLICATIVO -->
     <div id="app-screen" class="hidden">
         
-        <!-- CABEÇALHO DE BOAS-VINDAS E LOGOUT -->
-        <div class="card flex no-print" style="justify-content: space-between; align-items: center;">
-            <div>
-                <h2 id="user-display" style="margin: 0;">Nome do Usuário</h2>
-                <small id="user-email" style="color: #64748b;"></small>
+        <!-- CARD DE APOIO / DOAÇÃO -->
+        <div class="card support-card no-print">
+            <div class="support-info">
+                <h3>🤝 Apoie o Desenvolvimento deste Projeto</h3>
+                <p>
+                    Esta ferramenta é 100% gratuita para ajudar confeiteiros, cozinheiros e empreendedores. 
+                    Se ela simplifica o seu dia a dia, faça uma contribuição de qualquer valor para nos ajudar a mantê-la atualizada!
+                </p>
             </div>
-            <button onclick="logout()" class="danger" style="width: auto; padding: 8px 16px;">Sair</button>
-        </div>
-
-        <div class="card no-print">
-            <h2>🍳 Ficha Técnica Gastronômica & Dimensionador</h2>
-            <p style="color: #64748b; font-size: 14px;">Gestão de custos, precificação e escalonamento de receitas para cozinha e confeitaria.</p>
+            <a href="https://mpago.la/1bFBQQa" target="_blank" rel="noopener noreferrer" class="btn-support">
+                💛 Apoiar via Mercado Pago
+            </a>
         </div>
 
         <!-- NAVEGAÇÃO -->
@@ -116,28 +248,34 @@
         <div id="tab-insumos" class="tab-content">
             <div class="card">
                 <h3 id="form-insumo-titulo">Cadastrar Novo Insumo / Ingrediente</h3>
-                <div class="flex">
-                    <input type="text" id="insumo-nome" placeholder="Nome (Ex: Pistache Descascado, Leite, Açúcar)">
-                    <select id="insumo-unidade">
-                        <option value="g">Gramas (g)</option>
-                        <option value="ml">Mililitros (ml)</option>
-                        <option value="un">Unidade (un)</option>
-                    </select>
+                <div class="flex-grid">
+                    <div class="col" style="flex: 2;">
+                        <label>Nome do Ingrediente:</label>
+                        <input type="text" id="insumo-nome" placeholder="Ex: Pistache Descascado, Leite Condensado">
+                    </div>
+                    <div class="col">
+                        <label>Unidade de Compra:</label>
+                        <select id="insumo-unidade">
+                            <option value="g">Gramas (g)</option>
+                            <option value="ml">Mililitros (ml)</option>
+                            <option value="un">Unidade (un)</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="flex">
-                    <div class="flex-1">
-                        <label style="font-size: 12px; font-weight: bold;">Qtd da Embalagem de Compra:</label>
+                <div class="flex-grid">
+                    <div class="col">
+                        <label>Quantidade da Embalagem:</label>
                         <input type="number" id="insumo-qtd-emb" placeholder="Ex: 500 (g) ou 1000 (ml)">
                     </div>
-                    <div class="flex-1">
-                        <label style="font-size: 12px; font-weight: bold;">Preço Pago na Embalagem (R$):</label>
-                        <input type="number" id="insumo-preco" step="0.01" placeholder="Ex: 60,00">
+                    <div class="col">
+                        <label>Preço Pago na Embalagem (R$):</label>
+                        <input type="number" id="insumo-preco" step="0.01" placeholder="Ex: 45.00">
                     </div>
                 </div>
                 
-                <div class="flex">
-                    <button id="btn-salvar-insumo" onclick="salvarInsumo()" class="success" style="margin-bottom:0;">Salvar Insumo</button>
-                    <button id="btn-cancelar-insumo" onclick="cancelarEdicaoInsumo()" class="danger hidden" style="margin-bottom:0;">Cancelar Edição</button>
+                <div class="flex-grid" style="margin-top: 5px;">
+                    <button id="btn-salvar-insumo" onclick="salvarInsumo()" class="success" style="margin-bottom:0; flex: 2;">Salvar Insumo</button>
+                    <button id="btn-cancelar-insumo" onclick="cancelarEdicaoInsumo()" class="danger hidden" style="margin-bottom:0; flex: 1;">Cancelar Edição</button>
                 </div>
             </div>
 
@@ -150,7 +288,7 @@
                             <th>Embalagem</th>
                             <th>Preço Pago</th>
                             <th>Custo Fracionado</th>
-                            <th class="no-print">Ações</th>
+                            <th class="no-print" style="width: 140px;">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="lista-insumos"></tbody>
@@ -161,58 +299,55 @@
         <!-- ABA 2: CRIAR, IMPORTAR E VER FICHA TÉCNICA DE RECEITAS -->
         <div id="tab-receitas" class="tab-content hidden">
             
-            <!-- OPÇÃO DE IMPORTAÇÃO RÁPIDA (COPIAR E COLAR) -->
+            <!-- IMPORTADOR RÁPIDO -->
             <div class="card no-print">
-                <div class="flex" style="justify-content: space-between; align-items: center;">
-                    <h3>📋 Importar Receita via Copiar e Colar</h3>
-                    <button onclick="toggleImportArea()" style="width: auto; padding: 6px 12px; font-size: 13px;">Exibir / Ocultar Importador</button>
+                <div class="flex-grid" style="justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0;">📋 Importação Rápida (Copiar e Colar)</h3>
+                    <button onclick="toggleImportArea()" class="outline" style="width: auto; padding: 6px 14px; font-size: 13px; margin: 0;">Exibir / Ocultar</button>
                 </div>
 
-                <div id="import-area" class="import-box hidden">
-                    <p style="font-size: 13px; color: #475569; margin-bottom: 10px;">
-                        Cole abaixo o texto da receita. Você pode usar o modelo abaixo ou apenas colar o texto com as quantidades!
+                <div id="import-area" class="import-box hidden" style="margin-top: 15px;">
+                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">
+                        Cole abaixo o texto da receita. O sistema identificará os ingredientes e quantidades automaticamente!
                     </p>
-                    <textarea id="import-text" placeholder="Nome: Picolé de Cajá&#10;Rendimento: 10&#10;Lucro: 120%&#10;&#10;Ingredientes:&#10;Polpa de Cajá: 0.4kg&#10;Leite Condensado: 395g&#10;Creme de Leite: 200g"></textarea>
+                    <textarea id="import-text" placeholder="Nome: Picolé Gourmet de Cajá&#10;Rendimento: 10&#10;Lucro: 120%&#10;&#10;Ingredientes:&#10;Polpa de Cajá: 400g&#10;Leite Condensado: 395g&#10;Creme de Leite: 200g"></textarea>
                     
-                    <div class="flex">
+                    <div class="flex-grid">
                         <button onclick="processarImportacaoTexto()" class="success" style="margin-bottom: 0;">📥 Processar e Importar Receita</button>
-                        <button onclick="preencherExemploImportacao()" class="warning" style="margin-bottom: 0;">💡 Carregar Exemplo</button>
+                        <button onclick="preencherExemploImportacao()" class="outline" style="margin-bottom: 0;">💡 Carregar Exemplo</button>
                     </div>
                 </div>
             </div>
 
-            <!-- FORMULÁRIO MANUAL DE FICHA TÉCNICA -->
+            <!-- FORMULÁRIO MANUAL -->
             <div class="card no-print">
-                <h3>Nova Ficha Técnica (Manual)</h3>
+                <h3>Criar Nova Ficha Técnica (Manual)</h3>
                 
-                <div class="flex">
-                    <div class="flex-1">
-                        <label style="font-size: 12px; font-weight: bold;">Nome da Receita:</label>
-                        <input type="text" id="rec-nome" placeholder="Ex: Picolé Gourmet de Pistache">
+                <div class="flex-grid">
+                    <div class="col" style="flex: 2;">
+                        <label>Nome da Receita:</label>
+                        <input type="text" id="rec-nome" placeholder="Ex: Gelato de Pistache">
                     </div>
-                    <div class="flex-1">
-                        <label style="font-size: 12px; font-weight: bold;">Rendimento Padrão (Porções/Qtd):</label>
+                    <div class="col">
+                        <label>Rendimento (Porções/Qtd):</label>
                         <input type="number" id="rec-rendimento" value="10" min="1">
                     </div>
-                    <div class="flex-1">
-                        <label style="font-size: 12px; font-weight: bold;">Margem de Lucro Desejada (%):</label>
+                    <div class="col">
+                        <label>Margem de Lucro (%):</label>
                         <input type="number" id="rec-lucro" value="100" min="0">
                     </div>
                 </div>
 
                 <h4 style="margin-top: 10px;">Ingredientes da Receita:</h4>
-                <div id="container-ingredientes">
-                    <!-- Linhas dinâmicas de ingredientes -->
-                </div>
+                <div id="container-ingredientes"></div>
                 
-                <button onclick="adicionarLinhaIngrediente()" style="background-color: #64748b; margin-bottom: 15px;">+ Adicionar Ingrediente</button>
-
-                <button onclick="salvarReceita()" class="success">Salvar Ficha Técnica</button>
+                <button onclick="adicionarLinhaIngrediente()" class="outline" style="margin-bottom: 15px;">+ Adicionar Ingrediente</button>
+                <button onclick="salvarReceita()" class="success" style="padding: 14px;">Salvar Ficha Técnica</button>
             </div>
 
             <!-- LISTA DE FICHAS TÉCNICAS -->
             <div class="card">
-                <h3>Minhas Fichas Técnicas Cadastradas</h3>
+                <h3>Minhas Fichas Técnicas</h3>
                 <div id="lista-receitas-cards"></div>
             </div>
         </div>
@@ -221,45 +356,52 @@
         <div id="tab-dimensionador" class="tab-content hidden">
             <div class="card no-print">
                 <h3>⚖️ Escalonador de Produção</h3>
-                <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Selecione uma receita e ajuste a quantidade desejada para recalcular os ingredientes.</p>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">
+                    Escolha uma receita e defina a nova quantidade desejada para recalcular os insumos e custos automaticamente.
+                </p>
 
-                <label style="font-size: 12px; font-weight: bold;">Selecione a Receita:</label>
-                <select id="sim-receita" onchange="calcularEscalonamento()"></select>
-
-                <label style="font-size: 12px; font-weight: bold;">Quantidade a Produzir (Rendimento Desejado):</label>
-                <input type="number" id="sim-qtd-desejada" value="10" min="1" oninput="calcularEscalonamento()">
+                <div class="flex-grid">
+                    <div class="col" style="flex: 2;">
+                        <label>Selecione a Receita:</label>
+                        <select id="sim-receita" onchange="calcularEscalonamento()"></select>
+                    </div>
+                    <div class="col">
+                        <label>Quantidade a Produzir:</label>
+                        <input type="number" id="sim-qtd-desejada" value="10" min="1" oninput="calcularEscalonamento()">
+                    </div>
+                </div>
             </div>
 
             <!-- RELATÓRIO DO ESCALONAMENTO -->
             <div id="relatorio-dimensionador" class="card hidden">
-                <div class="flex" style="justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div class="flex-grid" style="justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <div>
-                        <h2 id="sim-titulo-receita">Nome da Receita</h2>
-                        <small id="sim-subtitulo" style="color: #64748b;"></small>
+                        <h2 id="sim-titulo-receita" style="margin: 0;">Nome da Receita</h2>
+                        <span id="sim-subtitulo" style="color: var(--text-muted); font-size: 13px;"></span>
                     </div>
-                    <button onclick="window.print()" class="no-print" style="width: auto; padding: 8px 16px;">🖨️ Imprimir Ficha</button>
+                    <button onclick="window.print()" class="no-print outline" style="width: auto; padding: 8px 16px;">🖨️ Imprimir Ficha</button>
                 </div>
 
-                <div class="flex" style="margin-bottom: 20px;">
-                    <div class="flex-1 stat-box">
-                        <div class="stat-title">Custo Total dos Ingredientes</div>
-                        <div class="stat-value" id="sim-custo-total" style="color: var(--danger);">R$ 0,00</div>
+                <div class="flex-grid" style="margin-bottom: 20px;">
+                    <div class="col stat-box">
+                        <div class="stat-title">Custo Total dos Insumos</div>
+                        <div class="stat-value" id="sim-custo-total" style="color: var(--ml-red);">R$ 0,00</div>
                     </div>
-                    <div class="flex-1 stat-box">
+                    <div class="col stat-box">
                         <div class="stat-title">Custo por Porção</div>
                         <div class="stat-value" id="sim-custo-unidade">R$ 0,00</div>
                     </div>
-                    <div class="flex-1 stat-box">
+                    <div class="col stat-box">
                         <div class="stat-title">Preço Sugerido / Porção</div>
-                        <div class="stat-value" id="sim-preco-sugerido" style="color: var(--secondary);">R$ 0,00</div>
+                        <div class="stat-value" id="sim-preco-sugerido" style="color: var(--ml-green);">R$ 0,00</div>
                     </div>
-                    <div class="flex-1 stat-box">
+                    <div class="col stat-box">
                         <div class="stat-title">Faturamento Estimado</div>
-                        <div class="stat-value" id="sim-faturamento" style="color: var(--primary-dark);">R$ 0,00</div>
+                        <div class="stat-value" id="sim-faturamento" style="color: var(--ml-navy);">R$ 0,00</div>
                     </div>
                 </div>
 
-                <h4>Quantidade Exata de Ingredientes para Esta Batelada:</h4>
+                <h4>Ingredientes Necessários para esta Batelada:</h4>
                 <table>
                     <thead>
                         <tr>
@@ -278,7 +420,7 @@
 </div>
 
 <script>
-    // ESTADO DA APLICAÇÃO E BANCO DE DADOS LOCAL
+    // BANCO DE DADOS LOCAL E ESTADO
     let currentUser = null;
     let editingInsumoId = null;
 
@@ -294,12 +436,12 @@
             localStorage.setItem('tsg_gastro_insumos', JSON.stringify(db.insumos));
             localStorage.setItem('tsg_gastro_receitas', JSON.stringify(db.receitas));
         } catch(e) {
-            alert("Aviso: Limite do armazenamento local atingido.");
+            alert("Aviso: Limite de memória do navegador atingido.");
             console.error(e);
         }
     }
 
-    // AUTO-LOGIN AO CARREGAR A PÁGINA
+    // AUTO-LOGIN
     window.addEventListener('DOMContentLoaded', () => {
         const savedEmail = localStorage.getItem('tsg_gastro_session');
         if (savedEmail) {
@@ -311,7 +453,7 @@
         }
     });
 
-    // SISTEMA DE AUTENTICAÇÃO
+    // AUTENTICAÇÃO
     function handleAuth(e) {
         e.preventDefault();
         const nome = document.getElementById('nome').value.trim();
@@ -325,23 +467,16 @@
             user = { nome, email, pass };
             db.users.push(user);
             saveData();
-            alert(`Bem-vindo(a), ${nome}! Seu usuário foi registrado.`);
         } else {
             if(user.pass !== pass) {
                 alert("Senha incorreta!");
                 return;
             }
-            if(nome) {
-                user.nome = nome;
-                saveData();
-            }
+            if(nome) { user.nome = nome; saveData(); }
         }
 
-        if(remember) {
-            localStorage.setItem('tsg_gastro_session', user.email);
-        } else {
-            localStorage.removeItem('tsg_gastro_session');
-        }
+        if(remember) localStorage.setItem('tsg_gastro_session', user.email);
+        else localStorage.removeItem('tsg_gastro_session');
 
         iniciarSessao(user);
     }
@@ -351,8 +486,8 @@
         document.getElementById('auth-screen').classList.add('hidden');
         document.getElementById('app-screen').classList.remove('hidden');
 
-        document.getElementById('user-display').innerText = currentUser.nome || "Usuário";
-        document.getElementById('user-email').innerText = currentUser.email;
+        document.getElementById('user-header-info').classList.remove('hidden');
+        document.getElementById('user-display-name').innerText = currentUser.nome || "Usuário";
 
         renderInsumos();
         renderReceitas();
@@ -367,20 +502,16 @@
         localStorage.removeItem('tsg_gastro_session');
         document.getElementById('auth-screen').classList.remove('hidden');
         document.getElementById('app-screen').classList.add('hidden');
+        document.getElementById('user-header-info').classList.add('hidden');
     }
 
-    // CONVERSOR UNIVERSAL DE UNIDADES DE MEDIDA
+    // CONVERSOR DE UNIDADES
     function converterUnidade(qtd, unidadeOrigem, unidadeDestino) {
         if (unidadeOrigem === unidadeDestino) return qtd;
-
-        // Massa
         if (unidadeOrigem === 'kg' && unidadeDestino === 'g') return qtd * 1000;
         if (unidadeOrigem === 'g' && unidadeDestino === 'kg') return qtd / 1000;
-
-        // Volume
         if (unidadeOrigem === 'l' && unidadeDestino === 'ml') return qtd * 1000;
         if (unidadeOrigem === 'ml' && unidadeDestino === 'l') return qtd / 1000;
-
         return qtd;
     }
 
@@ -411,7 +542,6 @@
         }
 
         if(editingInsumoId !== null) {
-            // Atualizar Insumo Existente
             const insumo = db.insumos.find(i => i.id === editingInsumoId);
             if(insumo) {
                 insumo.nome = nome;
@@ -421,7 +551,6 @@
             }
             cancelarEdicaoInsumo();
         } else {
-            // Novo Insumo
             const id = new Date().getTime();
             db.insumos.push({ id, nome, unidade, qtdEmb, preco });
             
@@ -432,7 +561,7 @@
 
         saveData();
         renderInsumos();
-        renderReceitas(); // Recalcula custos das receitas que usam esse insumo!
+        renderReceitas();
     }
 
     function editarInsumo(id) {
@@ -445,7 +574,7 @@
         document.getElementById('insumo-qtd-emb').value = insumo.qtdEmb;
         document.getElementById('insumo-preco').value = insumo.preco;
 
-        document.getElementById('form-insumo-titulo').innerText = `✏️ Editar Insumo: "${insumo.nome}"`;
+        document.getElementById('form-insumo-titulo').innerText = `✏️ Editando: "${insumo.nome}"`;
         document.getElementById('btn-salvar-insumo').innerText = '🔄 Atualizar Insumo';
         document.getElementById('btn-cancelar-insumo').classList.remove('hidden');
 
@@ -475,19 +604,26 @@
 
     function renderInsumos() {
         const lista = document.getElementById('lista-insumos');
+        if(db.insumos.length === 0) {
+            lista.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-muted);">Nenhum insumo cadastrado ainda.</td></tr>`;
+            return;
+        }
+
         lista.innerHTML = db.insumos.map(i => {
             const custoFracionado = i.qtdEmb > 0 ? (i.preco / i.qtdEmb) : 0;
-            const alertaPrecoZero = i.preco === 0 ? ' <span style="color:var(--danger); font-size:11px;">(Sem preço)</span>' : '';
+            const alertaSemPreco = i.preco === 0 ? ' <span style="color:var(--ml-red); font-size:11px;">(Sem preço)</span>' : '';
 
             return `
                 <tr>
-                    <td><b>${i.nome}</b>${alertaPrecoZero}</td>
+                    <td><b>${i.nome}</b>${alertaSemPreco}</td>
                     <td>${i.qtdEmb} ${i.unidade}</td>
                     <td>R$ ${i.preco.toFixed(2)}</td>
                     <td>R$ ${custoFracionado.toFixed(4)} / ${i.unidade}</td>
-                    <td class="no-print" style="display:flex; gap:5px;">
-                        <button onclick="editarInsumo(${i.id})" class="warning" style="padding: 4px 8px; width: auto; margin-bottom: 0;">Editar</button>
-                        <button onclick="deletarInsumo(${i.id})" class="danger" style="padding: 4px 8px; width: auto; margin-bottom: 0;">Excluir</button>
+                    <td class="no-print">
+                        <div style="display:flex; gap:6px;">
+                            <button onclick="editarInsumo(${i.id})" class="outline" style="padding: 4px 8px; font-size: 12px; margin-bottom: 0;">Editar</button>
+                            <button onclick="deletarInsumo(${i.id})" class="danger" style="padding: 4px 8px; font-size: 12px; margin-bottom: 0;">Excluir</button>
+                        </div>
                     </td>
                 </tr>
             `;
@@ -500,17 +636,15 @@
     }
 
     function preencherExemploImportacao() {
-        const exemplo = `Nome: Picolé de Cajá com Castanha
+        document.getElementById('import-text').value = `Nome: Picolé de Cajá com Castanha
 Rendimento: 10
 Lucro: 150%
 
 Ingredientes:
-Polpa de Cajá: 0.4kg
+Polpa de Cajá: 400g
 Leite Condensado: 395g
-Creme de Leite: 0.2l
+Creme de Leite: 200g
 Castanha de Caju: 100g`;
-
-        document.getElementById('import-text').value = exemplo;
     }
 
     function processarImportacaoTexto() {
@@ -641,7 +775,7 @@ Castanha de Caju: 100g`;
                 <option value="l">L</option>
                 <option value="un">un</option>
             </select>
-            <button onclick="this.parentElement.remove()" class="danger">X</button>
+            <button onclick="this.parentElement.remove()" class="danger">✕</button>
         `;
         container.appendChild(div);
         
@@ -664,7 +798,7 @@ Castanha de Caju: 100g`;
         const lucro = parseFloat(document.getElementById('rec-lucro').value);
 
         if(!nome || isNaN(rendimento) || isNaN(lucro) || rendimento <= 0) {
-            alert("Preencha o nome, rendimento e margem de lucro da receita!");
+            alert("Preencha o nome, rendimento e margem de lucro!");
             return;
         }
 
@@ -682,7 +816,7 @@ Castanha de Caju: 100g`;
         });
 
         if(ingredientes.length === 0) {
-            alert("Adicione pelo menos um ingrediente válido com quantidade!");
+            alert("Adicione pelo menos um ingrediente válido!");
             return;
         }
 
@@ -698,7 +832,7 @@ Castanha de Caju: 100g`;
     }
 
     function deletarReceita(id) {
-        if(confirm("Tem certeza que deseja excluir esta receita?")) {
+        if(confirm("Excluir esta ficha técnica?")) {
             db.receitas = db.receitas.filter(r => r.id !== id);
             saveData();
             renderReceitas();
@@ -708,7 +842,7 @@ Castanha de Caju: 100g`;
     function renderReceitas() {
         const container = document.getElementById('lista-receitas-cards');
         if(db.receitas.length === 0) {
-            container.innerHTML = `<p style="color: #64748b;">Nenhuma receita cadastrada ainda.</p>`;
+            container.innerHTML = `<p style="color: var(--text-muted);">Nenhuma receita cadastrada ainda.</p>`;
             return;
         }
 
@@ -733,32 +867,32 @@ Castanha de Caju: 100g`;
             const precoSugerido = custoPorPorcao * (1 + (r.lucro / 100));
 
             return `
-                <div class="card" style="border: 1px solid #e2e8f0; margin-bottom: 15px;">
-                    <div class="flex" style="justify-content: space-between; align-items: center;">
-                        <h4>${r.nome}</h4>
-                        <div class="no-print">
-                            <button onclick="copiarTextoReceita(${r.id})" class="warning" style="width: auto; padding: 4px 8px; font-size: 12px;">📋 Copiar Texto</button>
-                            <button onclick="deletarReceita(${r.id})" class="danger" style="width: auto; padding: 4px 8px; font-size: 12px;">Excluir</button>
+                <div class="card" style="margin-bottom: 15px;">
+                    <div class="flex-grid" style="justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h4 style="margin: 0;">${r.nome}</h4>
+                        <div class="no-print" style="display: flex; gap: 6px;">
+                            <button onclick="copiarTextoReceita(${r.id})" class="outline" style="width: auto; padding: 4px 10px; font-size: 12px; margin-bottom: 0;">📋 Copiar Texto</button>
+                            <button onclick="deletarReceita(${r.id})" class="danger" style="width: auto; padding: 4px 10px; font-size: 12px; margin-bottom: 0;">Excluir</button>
                         </div>
                     </div>
-                    <p style="font-size: 13px; color: #64748b; margin-bottom: 10px;">
+                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
                         Rendimento Padrão: <b>${r.rendimento} porções</b> | Lucro Meta: <b>${r.lucro}%</b>
                     </p>
                     <table>
                         <thead><tr><th>Ingrediente</th><th>Qtd Padrão</th><th>Custo</th></tr></thead>
                         <tbody>${tabelaIng}</tbody>
                     </table>
-                    <div class="flex" style="margin-top: 10px; font-size: 14px; background: #f8fafc; padding: 10px; border-radius: 6px;">
-                        <div class="flex-1">Custo Total: <b>R$ ${custoTotalBase.toFixed(2)}</b></div>
-                        <div class="flex-1">Custo/Unidade: <b>R$ ${custoPorPorcao.toFixed(2)}</b></div>
-                        <div class="flex-1" style="color: var(--secondary);">Preço Sugerido: <b>R$ ${precoSugerido.toFixed(2)}</b></div>
+                    <div class="flex-grid" style="margin-top: 12px; font-size: 14px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div class="col">Custo Total: <b>R$ ${custoTotalBase.toFixed(2)}</b></div>
+                        <div class="col">Custo/Unidade: <b>R$ ${custoPorPorcao.toFixed(2)}</b></div>
+                        <div class="col" style="color: var(--ml-green);">Preço Sugerido: <b>R$ ${precoSugerido.toFixed(2)}</b></div>
                     </div>
                 </div>
             `;
         }).join('');
     }
 
-    // 3. DIMENSIONADOR / ESCALONADOR DE RECEITAS
+    // 3. DIMENSIONADOR / ESCALONADOR
     function atualizarSelectsDimensionador() {
         const select = document.getElementById('sim-receita');
         select.innerHTML = db.receitas.map(r => `<option value="${r.id}">${r.nome} (Base: ${r.rendimento} porções)</option>`).join('');
@@ -780,7 +914,7 @@ Castanha de Caju: 100g`;
         const fator = qtdDesejada / receita.rendimento;
 
         document.getElementById('sim-titulo-receita').innerText = receita.nome;
-        document.getElementById('sim-subtitulo').innerText = `Proporção para produzir ${qtdDesejada} porções (Fator: ${fator.toFixed(2)}x a receita base)`;
+        document.getElementById('sim-subtitulo').innerText = `Dimensionado para ${qtdDesejada} porções (${fator.toFixed(2)}x a receita base)`;
 
         let custoTotalProporcional = 0;
 
@@ -799,7 +933,7 @@ Castanha de Caju: 100g`;
             return `
                 <tr>
                     <td><b>${insumo.nome}</b></td>
-                    <td style="color: var(--primary-dark); font-weight: bold;">${qtdProporcionalNaUnidadeEscolhida.toFixed(2)} ${unitUsada}</td>
+                    <td style="color: var(--ml-blue); font-weight: 700;">${qtdProporcionalNaUnidadeEscolhida.toFixed(2)} ${unitUsada}</td>
                     <td>R$ ${custoItem.toFixed(2)}</td>
                 </tr>
             `;
