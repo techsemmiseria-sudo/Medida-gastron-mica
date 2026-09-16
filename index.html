@@ -3,63 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSG Gastronomia - Ficha Técnica & Dimensionador</title>
+    <title>TSG Gastronomia & Gestão Profissional</title>
     <style>
         :root {
-            --ml-yellow: #FFE600;
-            --ml-blue: #3483fa;
-            --ml-blue-dark: #2968c8;
-            --ml-navy: #2D3277;
-            --ml-green: #00a650;
-            --ml-green-dark: #008741;
-            --ml-red: #f8312f;
-            --ml-bg: #f5f5f5;
-            --card-bg: #ffffff;
-            --text-main: #333333;
-            --text-muted: #666666;
-            --border-color: #e6e6e6;
+            --primary: #1E293B;       /* Grafite Sofisticado / Slate */
+            --primary-dark: #0F172A;
+            --accent: #D97706;        /* Dourado Gastronômico / Âmbar */
+            --success: #16A34A;       /* Verde Oliva / Esmeralda */
+            --success-dark: #15803D;
+            --danger: #DC2626;        /* Vermelho Alerta */
+            --warning: #CA8A04;       /* Amarelo Alerta */
+            --bg: #F8FAFC;            /* Fundo Limpo Neutro */
+            --card-bg: #FFFFFF;
+            --text-main: #334155;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
             --radius: 12px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
-        body { background-color: var(--ml-bg); color: var(--text-main); padding: 0 0 40px 0; line-height: 1.5; }
+        body { background-color: var(--bg); color: var(--text-main); padding: 0 0 50px 0; line-height: 1.5; }
 
-        /* CABEÇALHO MERCADO LIVRE */
-        header.ml-header {
-            background-color: var(--ml-yellow);
-            padding: 15px 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        /* CABEÇALHO PROFISSIONAL */
+        header.app-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 18px 20px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             margin-bottom: 25px;
         }
         .header-content {
-            max-width: 960px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
         }
         .brand-title {
             font-size: 20px;
             font-weight: 800;
-            color: var(--ml-navy);
+            color: #FFFFFF;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+        }
+        .brand-title span { color: var(--accent); }
+
+        .user-panel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
         }
 
-        .container { max-width: 960px; margin: 0 auto; padding: 0 15px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 15px; }
+        
         .card { 
             background: var(--card-bg); 
             padding: 24px; 
             border-radius: var(--radius); 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08); 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03); 
             margin-bottom: 20px; 
             border: 1px solid var(--border-color);
         }
         
-        h1, h2, h3, h4 { color: var(--ml-navy); font-weight: 700; margin-bottom: 12px; }
+        h1, h2, h3, h4 { color: var(--primary); font-weight: 700; margin-bottom: 12px; }
         .flex-grid { display: flex; gap: 12px; flex-wrap: wrap; }
         .col { flex: 1; min-width: 200px; }
 
@@ -72,16 +82,18 @@
             border-radius: 8px; 
             font-size: 14px; 
             transition: all 0.2s ease;
+            background-color: #FFFFFF;
+            color: var(--text-main);
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--ml-blue);
-            box-shadow: 0 0 0 3px rgba(52, 131, 250, 0.15);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
         }
         textarea { font-family: inherit; resize: vertical; min-height: 110px; }
 
         button { 
-            background-color: var(--ml-blue); 
+            background-color: var(--primary); 
             color: white; 
             border: none; 
             font-weight: 600; 
@@ -91,41 +103,45 @@
             justify-content: center;
             gap: 6px;
             text-decoration: none;
+            border-radius: 8px;
+            padding: 12px 18px;
+            transition: background 0.2s, transform 0.1s;
         }
-        button:hover { background-color: var(--ml-blue-dark); }
-        button.success { background-color: var(--ml-green); }
-        button.success:hover { background-color: var(--ml-green-dark); }
-        button.danger { background-color: #ffebe9; color: var(--ml-red); border: 1px solid #ffc2c0; }
-        button.danger:hover { background-color: var(--ml-red); color: white; }
-        button.outline { background: transparent; color: var(--ml-blue); border: 1px solid var(--ml-blue); }
-        button.outline:hover { background: rgba(52, 131, 250, 0.08); }
+        button:hover { background-color: var(--primary-dark); }
+        button:active { transform: scale(0.98); }
+        button.success { background-color: var(--success); }
+        button.success:hover { background-color: var(--success-dark); }
+        button.danger { background-color: #FEE2E2; color: var(--danger); border: 1px solid #FECACA; }
+        button.danger:hover { background-color: var(--danger); color: white; }
+        button.outline { background: transparent; color: var(--primary); border: 1px solid var(--border-color); }
+        button.outline:hover { background: #F1F5F9; border-color: var(--primary); }
+        button.accent { background-color: var(--accent); color: white; }
+        button.accent:hover { background-color: #B45309; }
 
         /* NAV TABS */
         nav { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; flex-wrap: wrap; }
         nav button { 
-            padding: 12px 18px; 
-            font-size: 14px; 
             background: transparent; 
             color: var(--text-muted); 
             flex: 1; 
             min-width: 140px; 
-            border-radius: 8px;
-            margin-bottom: 0;
+            box-shadow: none;
         }
-        nav button.active { background: var(--card-bg); color: var(--ml-blue); font-weight: 700; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
+        nav button.active { background: var(--primary); color: white; font-weight: 700; }
 
-        /* TABELAS */
-        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        /* TABELAS RESPONSIVAS */
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; border-radius: 8px; border: 1px solid var(--border-color); }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
-        th { background-color: #f9fafb; font-weight: 700; color: var(--ml-navy); }
+        th { background-color: #F8FAFC; font-weight: 700; color: var(--primary); }
         tr:last-child td { border-bottom: none; }
 
         .hidden { display: none !important; }
 
         /* CARDS E PAINÉIS */
-        .stat-box { background: #f8fafc; padding: 16px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
+        .stat-box { background: #F8FAFC; padding: 16px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
         .stat-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-value { font-size: 20px; font-weight: 800; margin-top: 4px; color: var(--ml-navy); }
+        .stat-value { font-size: 20px; font-weight: 800; margin-top: 4px; color: var(--primary); }
 
         .ingredient-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
         .ingredient-row select.rec-insumo-select { flex: 3; min-width: 160px; margin-bottom: 0; }
@@ -133,46 +149,48 @@
         .ingredient-row select.rec-insumo-unidade { flex: 1; min-width: 80px; margin-bottom: 0; }
         .ingredient-row button { width: auto; padding: 12px 16px; margin-bottom: 0; }
 
-        .import-box { background: #eef5ff; border: 1px dashed var(--ml-blue); padding: 18px; border-radius: 8px; margin-bottom: 15px; }
+        .import-box { background: #F0FDF4; border: 1px dashed var(--success); padding: 18px; border-radius: 8px; margin-bottom: 15px; }
         
         .remember-group { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         .remember-group input { width: auto; margin-bottom: 0; cursor: pointer; }
         .remember-group label { font-size: 13px; color: var(--text-muted); cursor: pointer; margin-bottom: 0; }
 
-        /* CARD DE APOIO / DOAÇÃO */
+        /* BADGES INTELIGENTES */
+        .badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+        .badge-warning { background: #FEF3C7; color: #92400E; }
+        .badge-danger { background: #FEE2E2; color: #991B1B; }
+        .badge-success { background: #DCFCE7; color: #166534; }
+
+        /* BACKUP & BARRA DE AÇÃO */
+        .action-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; background: white; padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border-color); }
+
+        /* TOAST NOTIFICATION CONTAINER */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 350px; }
+        .toast { background: var(--primary); color: white; padding: 12px 18px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 14px; animation: slideIn 0.3s ease; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* MODAL CUSTOMIZADO */
+        .modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998; display: flex; align-items: center; justify-content: center; padding: 15px; }
+        .modal-box { background: white; width: 100%; max-width: 420px; padding: 24px; border-radius: var(--radius); box-shadow: 0 10px 25px rgba(0,0,0,0.1); animation: scaleIn 0.2s ease; }
+        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* CARD DE APOIO */
         .support-card {
-            background: linear-gradient(135deg, #ffffff 0%, #fffde6 100%);
-            border: 1px solid #ffe866;
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border: 1px solid #FCD34D;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
             flex-wrap: wrap;
         }
-        .support-info { flex: 1; min-width: 260px; }
-        .support-info h3 { color: var(--ml-navy); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-        .support-info p { font-size: 13px; color: #444; line-height: 1.4; }
-        .btn-support {
-            background-color: var(--ml-green);
-            color: white;
-            font-weight: 700;
-            padding: 14px 22px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0, 166, 80, 0.25);
-            transition: transform 0.2s, background-color 0.2s;
-            white-space: nowrap;
-        }
-        .btn-support:hover {
-            background-color: var(--ml-green-dark);
-            transform: translateY(-2px);
-        }
+        .support-info h3 { color: #92400E; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .support-info p { font-size: 13px; color: #78350F; line-height: 1.4; }
 
         @media print {
-            header, nav, button, input, select, textarea, .no-print, .support-card { display: none !important; }
+            header, nav, button, input, select, textarea, .no-print, .support-card, .action-bar { display: none !important; }
             body { background: white; padding: 0; }
             .card { box-shadow: none; border: none; padding: 0; }
         }
@@ -180,15 +198,19 @@
 </head>
 <body>
 
-    <!-- CABEÇALHO -->
-    <header class="ml-header">
+    <!-- SISTEMA DE TOASTS E MODAIS -->
+    <div id="toast-container"></div>
+    <div id="custom-modal-container"></div>
+
+    <!-- CABEÇALHO PROFISSIONAL -->
+    <header class="app-header">
         <div class="header-content">
             <div class="brand-title">
-                <span>🍳</span> TSG Gastronomia & Gestão
+                <span>🍳</span> TSG Gastronomia & Gestão <span>Pro</span>
             </div>
-            <div id="user-header-info" class="hidden" style="font-size: 13px; color: var(--ml-navy);">
-                Bem-vindo(a), <b id="user-display-name">Usuário</b>!
-                <button onclick="logout()" class="danger" style="width: auto; padding: 4px 10px; margin-left: 10px; font-size: 12px; margin-bottom: 0;">Sair</button>
+            <div id="user-header-info" class="hidden user-panel">
+                <span>Bem-vindo(a), <b id="user-display-name">Usuário</b></span>
+                <button onclick="logout()" class="danger" style="width: auto; padding: 6px 12px; font-size: 12px; margin-bottom: 0;">Sair</button>
             </div>
         </div>
     </header>
@@ -196,14 +218,14 @@
 <div class="container">
 
     <!-- TELA DE LOGIN / CADASTRO -->
-    <div id="auth-screen" class="card" style="max-width: 480px; margin: 30px auto;">
+    <div id="auth-screen" class="card" style="max-width: 440px; margin: 40px auto;">
         <h2 style="text-align: center;">🔒 Acesso ao Sistema</h2>
         <p style="text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
-            Entre ou cadastre-se para gerenciar suas receitas e custos com facilidade.
+            Gerencie fichas técnicas, custos operacionais e margens com precisão profissional.
         </p>
         <form id="auth-form" onsubmit="handleAuth(event)">
             <label>Seu Nome ou Estabelecimento:</label>
-            <input type="text" id="nome" placeholder="Ex: Confeitaria Doce Amor" required>
+            <input type="text" id="nome" placeholder="Ex: Confeitaria Artesanal" required>
             
             <label>E-mail:</label>
             <input type="email" id="email" placeholder="seu@email.com" required>
@@ -216,23 +238,33 @@
                 <label for="remember-me">Lembrar meu usuário neste dispositivo</label>
             </div>
 
-            <button type="submit" class="success" style="padding: 14px; font-size: 16px;">Entrar no Sistema</button>
+            <button type="submit" class="success" style="padding: 14px; font-size: 16px; width: 100%;">Entrar no Sistema</button>
         </form>
     </div>
 
     <!-- TELA PRINCIPAL DO APLICATIVO -->
     <div id="app-screen" class="hidden">
         
-        <!-- CARD DE APOIO / DOAÇÃO -->
-        <div class="card support-card no-print">
-            <div class="support-info">
-                <h3>🤝 Apoie o Desenvolvimento deste Projeto</h3>
-                <p>
-                    Esta ferramenta é 100% gratuita para ajudar confeiteiros, cozinheiros e empreendedores. 
-                    Se ela simplifica o seu dia a dia, faça uma contribuição de qualquer valor para nos ajudar a mantê-la atualizada!
-                </p>
+        <!-- BARRA DE GERENCIAMENTO E BACKUP -->
+        <div class="action-bar no-print">
+            <div style="font-size: 13px; color: var(--text-muted);">
+                💾 <b>Segurança de Dados:</b> Exporte ou restaure suas receitas e insumos via JSON.
             </div>
-            <a href="https://mpago.la/1bFBQQa" target="_blank" rel="noopener noreferrer" class="btn-support">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button onclick="exportarBackupJSON()" class="outline" style="width: auto; padding: 6px 12px; font-size: 12px; margin:0;">📥 Exportar Backup</button>
+                <label class="outline" style="width: auto; padding: 6px 12px; font-size: 12px; margin:0; cursor:pointer; display:inline-flex; align-items:center; border-radius:8px; border:1px solid var(--border-color); background:transparent; color:var(--primary); font-weight:600;">
+                    📤 Restaurar Backup <input type="file" id="import-json-file" accept=".json" onchange="importarBackupJSON(event)" style="display: none;">
+                </label>
+            </div>
+        </div>
+
+        <!-- CARD DE APOIO -->
+        <div class="card support-card no-print">
+            <div class="support-info" style="flex: 1; min-width: 260px;">
+                <h3>🤝 Apoie o Desenvolvimento do Projeto</h3>
+                <p>Ferramenta essencial para cozinhas e confeitarias. Contribua para mantermos as atualizações constantes!</p>
+            </div>
+            <a href="https://mpago.la/1bFBQQa" target="_blank" rel="noopener noreferrer" class="accent" style="padding: 12px 20px; border-radius: 8px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
                 💛 Apoiar via Mercado Pago
             </a>
         </div>
@@ -244,14 +276,14 @@
             <button class="nav-btn" onclick="switchTab('dimensionador')">⚖️ 3. Dimensionador</button>
         </nav>
 
-        <!-- ABA 1: CADASTRO E EDIÇÃO DE INSUMOS BASE -->
+        <!-- ABA 1: INSUMOS BASE -->
         <div id="tab-insumos" class="tab-content">
             <div class="card">
                 <h3 id="form-insumo-titulo">Cadastrar Novo Insumo / Ingrediente</h3>
                 <div class="flex-grid">
                     <div class="col" style="flex: 2;">
                         <label>Nome do Ingrediente:</label>
-                        <input type="text" id="insumo-nome" placeholder="Ex: Pistache Descascado, Leite Condensado">
+                        <input type="text" id="insumo-nome" placeholder="Ex: Filé Mignon, Pistache, Leite Condensado">
                     </div>
                     <div class="col">
                         <label>Unidade de Compra:</label>
@@ -265,11 +297,16 @@
                 <div class="flex-grid">
                     <div class="col">
                         <label>Quantidade da Embalagem:</label>
-                        <input type="number" id="insumo-qtd-emb" placeholder="Ex: 500 (g) ou 1000 (ml)">
+                        <input type="number" id="insumo-qtd-emb" placeholder="Ex: 1000 (g) ou 1000 (ml)">
                     </div>
                     <div class="col">
                         <label>Preço Pago na Embalagem (R$):</label>
                         <input type="number" id="insumo-preco" step="0.01" placeholder="Ex: 45.00">
+                    </div>
+                    <div class="col">
+                        <label>Fator de Correção (FC / Limpeza):</label>
+                        <input type="number" id="insumo-fc" step="0.01" value="1.00" min="1.00" placeholder="Ex: 1.25 (Padrão 1.0)">
+                        <small style="font-size: 11px; color: var(--text-muted);">Índice de perda no pré-preparo.</small>
                     </div>
                 </div>
                 
@@ -281,22 +318,25 @@
 
             <div class="card">
                 <h3>Lista de Insumos Cadastrados</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Ingrediente</th>
-                            <th>Embalagem</th>
-                            <th>Preço Pago</th>
-                            <th>Custo Fracionado</th>
-                            <th class="no-print" style="width: 140px;">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="lista-insumos"></tbody>
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ingrediente</th>
+                                <th>Embalagem</th>
+                                <th>Preço Pago</th>
+                                <th>Fator Corr. (FC)</th>
+                                <th>Custo Real Fracionado</th>
+                                <th class="no-print" style="width: 140px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-insumos"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <!-- ABA 2: CRIAR, IMPORTAR E VER FICHA TÉCNICA DE RECEITAS -->
+        <!-- ABA 2: FICHA TÉCNICA -->
         <div id="tab-receitas" class="tab-content hidden">
             
             <!-- IMPORTADOR RÁPIDO -->
@@ -310,7 +350,7 @@
                     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">
                         Cole abaixo o texto da receita. O sistema identificará os ingredientes e quantidades automaticamente!
                     </p>
-                    <textarea id="import-text" placeholder="Nome: Picolé Gourmet de Cajá&#10;Rendimento: 10&#10;Lucro: 120%&#10;&#10;Ingredientes:&#10;Polpa de Cajá: 400g&#10;Leite Condensado: 395g&#10;Creme de Leite: 200g"></textarea>
+                    <textarea id="import-text" placeholder="Nome: Picolé Gourmet de Cajá&#10;Rendimento: 10 und&#10;Lucro: 120%&#10;&#10;Ingredientes:&#10;Polpa de Cajá: 400g&#10;Leite Condensado: 395g&#10;Creme de Leite: 200g"></textarea>
                     
                     <div class="flex-grid">
                         <button onclick="processarImportacaoTexto()" class="success" style="margin-bottom: 0;">📥 Processar e Importar Receita</button>
@@ -319,30 +359,51 @@
                 </div>
             </div>
 
-            <!-- FORMULÁRIO MANUAL -->
+            <!-- FORMULÁRIO MANUAL COM MARKUP REAL, EMBALAGEM E OVERHEAD -->
             <div class="card no-print">
                 <h3>Criar Nova Ficha Técnica (Manual)</h3>
                 
                 <div class="flex-grid">
                     <div class="col" style="flex: 2;">
                         <label>Nome da Receita:</label>
-                        <input type="text" id="rec-nome" placeholder="Ex: Gelato de Pistache">
+                        <input type="text" id="rec-nome" placeholder="Ex: Gelato de Pistache Artesanal">
                     </div>
                     <div class="col">
-                        <label>Rendimento (Porções/Qtd):</label>
-                        <input type="number" id="rec-rendimento" value="10" min="1">
+                        <label>Rendimento e Unidade Base:</label>
+                        <div style="display: flex; gap: 6px;">
+                            <input type="number" id="rec-rendimento" value="10" min="0.1" step="any" style="flex: 2; margin-bottom: 0;">
+                            <select id="rec-rendimento-unidade" style="flex: 1.5; margin-bottom: 0;">
+                                <option value="und">und</option>
+                                <option value="g">g</option>
+                                <option value="kg">kg</option>
+                                <option value="ml">ml</option>
+                                <option value="l">L</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col">
-                        <label>Margem de Lucro (%):</label>
+                        <label>Margem de Lucro Desejada (%):</label>
                         <input type="number" id="rec-lucro" value="100" min="0">
                     </div>
                 </div>
 
-                <h4 style="margin-top: 10px;">Ingredientes da Receita:</h4>
+                <div class="flex-grid" style="margin-top: 5px;">
+                    <div class="col">
+                        <label>Custo de Embalagem por Porção/Lote Base (R$):</label>
+                        <input type="number" id="rec-embalagem" step="0.01" value="0.00" min="0" placeholder="Ex: 1.50">
+                    </div>
+                    <div class="col">
+                        <label>Custos Fixos / Overhead (%):</label>
+                        <input type="number" id="rec-overhead" step="0.1" value="10" min="0" placeholder="Ex: 10% (energia, gás, taxas)">
+                        <small style="font-size: 11px; color: var(--text-muted);">Incidente sobre os custos diretos.</small>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 15px;">Ingredientes da Receita:</h4>
                 <div id="container-ingredientes"></div>
                 
                 <button onclick="adicionarLinhaIngrediente()" class="outline" style="margin-bottom: 15px;">+ Adicionar Ingrediente</button>
-                <button onclick="salvarReceita()" class="success" style="padding: 14px;">Salvar Ficha Técnica</button>
+                <button onclick="salvarReceita()" class="success" style="padding: 14px;">Salvar Ficha Técnica Completa</button>
             </div>
 
             <!-- LISTA DE FICHAS TÉCNICAS -->
@@ -352,22 +413,31 @@
             </div>
         </div>
 
-        <!-- ABA 3: DIMENSIONADOR / ESCALONADOR -->
+        <!-- ABA 3: DIMENSIONADOR -->
         <div id="tab-dimensionador" class="tab-content hidden">
             <div class="card no-print">
                 <h3>⚖️ Escalonador de Produção</h3>
                 <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">
-                    Escolha uma receita e defina a nova quantidade desejada para recalcular os insumos e custos automaticamente.
+                    Escolha uma receita e defina a quantidade e a unidade desejada (unidades, peso ou volume) para recalcular a batelada perfeitamente.
                 </p>
 
                 <div class="flex-grid">
                     <div class="col" style="flex: 2;">
                         <label>Selecione a Receita:</label>
-                        <select id="sim-receita" onchange="calcularEscalonamento()"></select>
+                        <select id="sim-receita" onchange="aoMudarReceitaDimensionador()"></select>
                     </div>
-                    <div class="col">
-                        <label>Quantidade a Produzir:</label>
-                        <input type="number" id="sim-qtd-desejada" value="10" min="1" oninput="calcularEscalonamento()">
+                    <div class="col" style="flex: 2;">
+                        <label>Quantidade e Unidade Desejada:</label>
+                        <div style="display: flex; gap: 6px;">
+                            <input type="number" id="sim-qtd-desejada" value="10" min="0.01" step="any" oninput="calcularEscalonamento()" style="flex: 2; margin-bottom: 0;">
+                            <select id="sim-qtd-unidade" onchange="calcularEscalonamento()" style="flex: 1.5; margin-bottom: 0;">
+                                <option value="und">und</option>
+                                <option value="g">g</option>
+                                <option value="kg">kg</option>
+                                <option value="ml">ml</option>
+                                <option value="l">L</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -384,34 +454,36 @@
 
                 <div class="flex-grid" style="margin-bottom: 20px;">
                     <div class="col stat-box">
-                        <div class="stat-title">Custo Total dos Insumos</div>
-                        <div class="stat-value" id="sim-custo-total" style="color: var(--ml-red);">R$ 0,00</div>
+                        <div class="stat-title">Custo Total da Batelada</div>
+                        <div class="stat-value" id="sim-custo-total" style="color: var(--danger);">R$ 0,00</div>
                     </div>
                     <div class="col stat-box">
-                        <div class="stat-title">Custo por Porção</div>
+                        <div class="stat-title">Custo Unitário / Proporcional</div>
                         <div class="stat-value" id="sim-custo-unidade">R$ 0,00</div>
                     </div>
                     <div class="col stat-box">
-                        <div class="stat-title">Preço Sugerido / Porção</div>
-                        <div class="stat-value" id="sim-preco-sugerido" style="color: var(--ml-green);">R$ 0,00</div>
+                        <div class="stat-title">Preço de Venda Sugerido</div>
+                        <div class="stat-value" id="sim-preco-sugerido" style="color: var(--success);">R$ 0,00</div>
                     </div>
                     <div class="col stat-box">
                         <div class="stat-title">Faturamento Estimado</div>
-                        <div class="stat-value" id="sim-faturamento" style="color: var(--ml-navy);">R$ 0,00</div>
+                        <div class="stat-value" id="sim-faturamento" style="color: var(--primary);">R$ 0,00</div>
                     </div>
                 </div>
 
-                <h4>Ingredientes Necessários para esta Batelada:</h4>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Ingrediente</th>
-                            <th>Quantidade Necessária</th>
-                            <th>Custo Proporcional (R$)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="sim-tabela-ingredientes"></tbody>
-                </table>
+                <h4>Insumos e Quantidades Necessárias para esta Batelada:</h4>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ingrediente</th>
+                                <th>Qtd Bruta (Com FC)</th>
+                                <th>Custo Proporcional (R$)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sim-tabela-ingredientes"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -420,7 +492,41 @@
 </div>
 
 <script>
-    // BANCO DE DADOS LOCAL E ESTADO
+    // SISTEMA DE NOTIFICAÇÕES TOAST
+    function showToast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `<span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3500);
+    }
+
+    // MODAL DE CONFIRMAÇÃO CUSTOMIZADO
+    function showCustomModal(title, text, onConfirm) {
+        const container = document.getElementById('custom-modal-container');
+        container.innerHTML = `
+            <div class="modal-backdrop">
+                <div class="modal-box">
+                    <h3>${title}</h3>
+                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">${text}</p>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button onclick="document.getElementById('custom-modal-container').innerHTML = ''" class="outline" style="width: auto; margin:0;">Cancelar</button>
+                        <button id="modal-confirm-btn" class="danger" style="width: auto; margin:0;">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.getElementById('modal-confirm-btn').onclick = () => {
+            container.innerHTML = '';
+            onConfirm();
+        };
+    }
+
+    // BANCO DE DADOS E ESTADO
     let currentUser = null;
     let editingInsumoId = null;
 
@@ -436,8 +542,44 @@
             localStorage.setItem('tsg_gastro_insumos', JSON.stringify(db.insumos));
             localStorage.setItem('tsg_gastro_receitas', JSON.stringify(db.receitas));
         } catch(e) {
-            alert("Aviso: Limite de memória do navegador atingido.");
+            showToast("Aviso: Limite de armazenamento do navegador atingido.", "error");
             console.error(e);
+        }
+    }
+
+    // SISTEMA DE BACKUP E RESTAURAÇÃO JSON
+    function exportarBackupJSON() {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `tsg_gastronomia_backup_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+        showToast("Backup exportado com sucesso!", "success");
+    }
+
+    function importarBackupJSON(event) {
+        const fileReader = new FileReader();
+        if(event.target.files[0]) {
+            fileReader.readAsText(event.target.files[0], "UTF-8");
+            fileReader.onload = e => {
+                try {
+                    const importedDB = JSON.parse(e.target.result);
+                    if(importedDB && importedDB.insumos && importedDB.receitas) {
+                        db = importedDB;
+                        saveData();
+                        renderInsumos();
+                        renderReceitas();
+                        atualizarSelectsDimensionador();
+                        showToast("Backup restaurado com sucesso!", "success");
+                    } else {
+                        showToast("Arquivo de backup inválido.", "error");
+                    }
+                } catch (err) {
+                    showToast("Erro ao processar o arquivo JSON.", "error");
+                }
+            };
         }
     }
 
@@ -469,7 +611,7 @@
             saveData();
         } else {
             if(user.pass !== pass) {
-                alert("Senha incorreta!");
+                showToast("Senha incorreta!", "error");
                 return;
             }
             if(nome) { user.nome = nome; saveData(); }
@@ -479,6 +621,7 @@
         else localStorage.removeItem('tsg_gastro_session');
 
         iniciarSessao(user);
+        showToast(`Bem-vindo(a), ${user.nome || 'Usuário'}!`, "success");
     }
 
     function iniciarSessao(user) {
@@ -503,9 +646,10 @@
         document.getElementById('auth-screen').classList.remove('hidden');
         document.getElementById('app-screen').classList.add('hidden');
         document.getElementById('user-header-info').classList.add('hidden');
+        showToast("Sessão encerrada.", "success");
     }
 
-    // CONVERSOR DE UNIDADES
+    // CONVERSORES DE UNIDADES E BASE COMUM
     function converterUnidade(qtd, unidadeOrigem, unidadeDestino) {
         if (unidadeOrigem === unidadeDestino) return qtd;
         if (unidadeOrigem === 'kg' && unidadeDestino === 'g') return qtd * 1000;
@@ -513,6 +657,14 @@
         if (unidadeOrigem === 'l' && unidadeDestino === 'ml') return qtd * 1000;
         if (unidadeOrigem === 'ml' && unidadeDestino === 'l') return qtd / 1000;
         return qtd;
+    }
+
+    function converterParaBaseComum(qtd, unidade) {
+        if (unidade === 'kg') return qtd * 1000; // gramas
+        if (unidade === 'g') return qtd;         // gramas
+        if (unidade === 'l') return qtd * 1000;  // ml
+        if (unidade === 'ml') return qtd;        // ml
+        return qtd;                              // und ou padrão
     }
 
     // NAVEGAÇÃO
@@ -529,15 +681,16 @@
         }
     }
 
-    // 1. GESTÃO DE INSUMOS BASE (CADASTRO E EDIÇÃO)
+    // 1. GESTÃO DE INSUMOS BASE (COM FATOR DE CORREÇÃO)
     function salvarInsumo() {
         const nome = document.getElementById('insumo-nome').value.trim();
         const unidade = document.getElementById('insumo-unidade').value;
         const qtdEmb = parseFloat(document.getElementById('insumo-qtd-emb').value);
         const preco = parseFloat(document.getElementById('insumo-preco').value);
+        const fc = parseFloat(document.getElementById('insumo-fc').value) || 1.0;
 
-        if(!nome || isNaN(qtdEmb) || isNaN(preco) || qtdEmb <= 0 || preco < 0) {
-            alert("Preencha todos os campos do insumo corretamente!");
+        if(!nome || isNaN(qtdEmb) || isNaN(preco) || qtdEmb <= 0 || preco < 0 || fc < 1) {
+            showToast("Preencha todos os campos do insumo corretamente (FC mínimo 1.0)!", "error");
             return;
         }
 
@@ -548,15 +701,19 @@
                 insumo.unidade = unidade;
                 insumo.qtdEmb = qtdEmb;
                 insumo.preco = preco;
+                insumo.fc = fc;
             }
             cancelarEdicaoInsumo();
+            showToast("Insumo atualizado com sucesso!", "success");
         } else {
             const id = new Date().getTime();
-            db.insumos.push({ id, nome, unidade, qtdEmb, preco });
+            db.insumos.push({ id, nome, unidade, qtdEmb, preco, fc });
             
             document.getElementById('insumo-nome').value = '';
             document.getElementById('insumo-qtd-emb').value = '';
             document.getElementById('insumo-preco').value = '';
+            document.getElementById('insumo-fc').value = '1.00';
+            showToast("Insumo cadastrado com sucesso!", "success");
         }
 
         saveData();
@@ -573,6 +730,7 @@
         document.getElementById('insumo-unidade').value = insumo.unidade;
         document.getElementById('insumo-qtd-emb').value = insumo.qtdEmb;
         document.getElementById('insumo-preco').value = insumo.preco;
+        document.getElementById('insumo-fc').value = insumo.fc || 1.0;
 
         document.getElementById('form-insumo-titulo').innerText = `✏️ Editando: "${insumo.nome}"`;
         document.getElementById('btn-salvar-insumo').innerText = '🔄 Atualizar Insumo';
@@ -586,6 +744,7 @@
         document.getElementById('insumo-nome').value = '';
         document.getElementById('insumo-qtd-emb').value = '';
         document.getElementById('insumo-preco').value = '';
+        document.getElementById('insumo-fc').value = '1.00';
         
         document.getElementById('form-insumo-titulo').innerText = 'Cadastrar Novo Insumo / Ingrediente';
         document.getElementById('btn-salvar-insumo').innerText = 'Salvar Insumo';
@@ -593,32 +752,39 @@
     }
 
     function deletarInsumo(id) {
-        if(confirm("Deseja remover este insumo?")) {
+        showCustomModal("Excluir Insumo", "Deseja realmente remover este insumo? Isso pode afetar fichas técnicas vinculadas.", () => {
             db.insumos = db.insumos.filter(i => i.id !== id);
             if(editingInsumoId === id) cancelarEdicaoInsumo();
             saveData();
             renderInsumos();
             renderReceitas();
-        }
+            showToast("Insumo excluído.", "success");
+        });
     }
 
     function renderInsumos() {
         const lista = document.getElementById('lista-insumos');
         if(db.insumos.length === 0) {
-            lista.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-muted);">Nenhum insumo cadastrado ainda.</td></tr>`;
+            lista.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted);">Nenhum insumo cadastrado ainda.</td></tr>`;
             return;
         }
 
         lista.innerHTML = db.insumos.map(i => {
-            const custoFracionado = i.qtdEmb > 0 ? (i.preco / i.qtdEmb) : 0;
-            const alertaSemPreco = i.preco === 0 ? ' <span style="color:var(--ml-red); font-size:11px;">(Sem preço)</span>' : '';
+            const fc = i.fc || 1.0;
+            const custoFracionadoBase = i.qtdEmb > 0 ? (i.preco / i.qtdEmb) : 0;
+            const custoRealFracionado = custoFracionadoBase * fc;
+            
+            let badges = '';
+            if (i.preco === 0) badges += `<span class="badge badge-danger" style="margin-left:5px;">Sem Preço</span>`;
+            if (fc > 1.2) badges += `<span class="badge badge-warning" style="margin-left:5px;">FC Alto (${fc})</span>`;
 
             return `
                 <tr>
-                    <td><b>${i.nome}</b>${alertaSemPreco}</td>
+                    <td><b>${i.nome}</b>${badges}</td>
                     <td>${i.qtdEmb} ${i.unidade}</td>
                     <td>R$ ${i.preco.toFixed(2)}</td>
-                    <td>R$ ${custoFracionado.toFixed(4)} / ${i.unidade}</td>
+                    <td>${fc.toFixed(2)}</td>
+                    <td><b>R$ ${custoRealFracionado.toFixed(4)}</b> / ${i.unidade}</td>
                     <td class="no-print">
                         <div style="display:flex; gap:6px;">
                             <button onclick="editarInsumo(${i.id})" class="outline" style="padding: 4px 8px; font-size: 12px; margin-bottom: 0;">Editar</button>
@@ -630,14 +796,14 @@
         }).join('');
     }
 
-    // 2. GESTÃO DE FICHA TÉCNICA
+    // 2. GESTÃO DE FICHA TÉCNICA (COM EMBALAGEM E OVERHEAD)
     function toggleImportArea() {
         document.getElementById('import-area').classList.toggle('hidden');
     }
 
     function preencherExemploImportacao() {
         document.getElementById('import-text').value = `Nome: Picolé de Cajá com Castanha
-Rendimento: 10
+Rendimento: 10 und
 Lucro: 150%
 
 Ingredientes:
@@ -650,12 +816,13 @@ Castanha de Caju: 100g`;
     function processarImportacaoTexto() {
         const rawText = document.getElementById('import-text').value.trim();
         if(!rawText) {
-            alert("Cole o texto da receita antes de importar!");
+            showToast("Cole o texto da receita antes de importar!", "error");
             return;
         }
 
         let nome = "Receita Importada";
         let rendimento = 10;
+        let rendimentoUnidade = 'und';
         let lucro = 100;
         const listaIngredientesRaw = [];
 
@@ -666,8 +833,14 @@ Castanha de Caju: 100g`;
             if(lineLower.startsWith('nome:')) {
                 nome = line.substring(5).trim();
             } else if(lineLower.startsWith('rendimento:')) {
-                const r = parseInt(line.replace(/\D/g, ''));
-                if(!isNaN(r) && r > 0) rendimento = r;
+                const textRend = line.substring(11).trim();
+                const matchR = textRend.match(/(\d+[\.,]?\d*)\s*(g|ml|un|kg|l|und)?/i);
+                if(matchR) {
+                    rendimento = parseFloat(matchR[1].replace(',', '.'));
+                    let u = matchR[2] ? matchR[2].toLowerCase() : 'und';
+                    if(u === 'un') u = 'und';
+                    rendimentoUnidade = u;
+                }
             } else if(lineLower.startsWith('lucro:') || lineLower.startsWith('margem:')) {
                 const l = parseFloat(line.replace(/[^0-9.]/g, ''));
                 if(!isNaN(l)) lucro = l;
@@ -676,10 +849,12 @@ Castanha de Caju: 100g`;
                 let unidade = 'g';
                 let ingNome = '';
 
-                const matchQtd = line.match(/(\d+[\.,]?\d*)\s*(g|ml|un|kg|l)?/i);
+                const matchQtd = line.match(/(\d+[\.,]?\d*)\s*(g|ml|un|kg|l|und)?/i);
                 if(matchQtd) {
                     qtd = parseFloat(matchQtd[1].replace(',', '.'));
-                    unidade = matchQtd[2] ? matchQtd[2].toLowerCase() : 'g';
+                    let u = matchQtd[2] ? matchQtd[2].toLowerCase() : 'g';
+                    if(u === 'un') u = 'und';
+                    unidade = u;
                     ingNome = line.replace(matchQtd[0], '').replace(/[:\-]/g, '').trim();
                 }
 
@@ -699,11 +874,10 @@ Castanha de Caju: 100g`;
         });
 
         if(listaIngredientesRaw.length === 0) {
-            alert("Não foi possível identificar ingredientes no texto colado.");
+            showToast("Não foi possível identificar ingredientes no texto.", "error");
             return;
         }
 
-        let novosInsumosCriados = 0;
         const ingredientesFinais = [];
 
         listaIngredientesRaw.forEach(item => {
@@ -711,19 +885,18 @@ Castanha de Caju: 100g`;
             
             if(!insumo) {
                 const newId = new Date().getTime() + Math.floor(Math.random() * 1000);
-                const unidadeBase = (item.unidade === 'kg' ? 'g' : (item.unidade === 'l' ? 'ml' : item.unidade));
+                const unidadeBase = (item.unidade === 'kg' ? 'g' : (item.unidade === 'l' || item.unidade === 'ml' ? 'ml' : 'g'));
                 const qtdPadraoEmb = unidadeBase === 'un' ? 1 : 1000;
                 
-                insumo = { id: newId, nome: item.nome, unidade: unidadeBase, qtdEmb: qtdPadraoEmb, preco: 0 };
+                insumo = { id: newId, nome: item.nome, unidade: unidadeBase, qtdEmb: qtdPadraoEmb, preco: 0, fc: 1.0 };
                 db.insumos.push(insumo);
-                novosInsumosCriados++;
             }
 
             ingredientesFinais.push({ insumoId: insumo.id, qtdUsada: item.qtd, unidadeUsada: item.unidade });
         });
 
         const recId = new Date().getTime();
-        db.receitas.push({ id: recId, nome, rendimento, lucro, ingredientes: ingredientesFinais });
+        db.receitas.push({ id: recId, nome, rendimento, rendimentoUnidade, lucro, embalagem: 0, overhead: 10, ingredientes: ingredientesFinais });
         
         saveData();
         renderInsumos();
@@ -731,19 +904,14 @@ Castanha de Caju: 100g`;
 
         document.getElementById('import-text').value = '';
         document.getElementById('import-area').classList.add('hidden');
-
-        let msg = `Receita "${nome}" importada com sucesso!`;
-        if(novosInsumosCriados > 0) {
-            msg += `\n\n⚠️ ${novosInsumosCriados} novo(s) ingrediente(s) adicionados ao "Insumos Base" com R$ 0,00. Atualize os preços deles quando possível.`;
-        }
-        alert(msg);
+        showToast(`Receita "${nome}" importada com sucesso!`, "success");
     }
 
     function copiarTextoReceita(id) {
         const r = db.receitas.find(rec => rec.id === id);
         if(!r) return;
 
-        let txt = `Nome: ${r.nome}\nRendimento: ${r.rendimento}\nLucro: ${r.lucro}%\n\nIngredientes:\n`;
+        let txt = `Nome: ${r.nome}\nRendimento: ${r.rendimento} ${r.rendimentoUnidade || 'und'}\nLucro: ${r.lucro}%\nEmbalagem: R$ ${r.embalagem || 0}\nOverhead: ${r.overhead || 0}%\n\nIngredientes:\n`;
         r.ingredientes.forEach(ing => {
             const insumo = db.insumos.find(i => i.id === ing.insumoId);
             if(insumo) {
@@ -752,7 +920,7 @@ Castanha de Caju: 100g`;
         });
 
         navigator.clipboard.writeText(txt).then(() => {
-            alert("Ficha técnica copiada para a área de transferência!");
+            showToast("Ficha técnica copiada para a área de transferência!", "success");
         });
     }
 
@@ -773,7 +941,7 @@ Castanha de Caju: 100g`;
                 <option value="kg">kg</option>
                 <option value="ml">ml</option>
                 <option value="l">L</option>
-                <option value="un">un</option>
+                <option value="und">und</option>
             </select>
             <button onclick="this.parentElement.remove()" class="danger">✕</button>
         `;
@@ -794,11 +962,14 @@ Castanha de Caju: 100g`;
 
     function salvarReceita() {
         const nome = document.getElementById('rec-nome').value.trim();
-        const rendimento = parseInt(document.getElementById('rec-rendimento').value);
+        const rendimento = parseFloat(document.getElementById('rec-rendimento').value);
+        const rendimentoUnidade = document.getElementById('rec-rendimento-unidade').value;
         const lucro = parseFloat(document.getElementById('rec-lucro').value);
+        const embalagem = parseFloat(document.getElementById('rec-embalagem').value) || 0;
+        const overhead = parseFloat(document.getElementById('rec-overhead').value) || 0;
 
         if(!nome || isNaN(rendimento) || isNaN(lucro) || rendimento <= 0) {
-            alert("Preencha o nome, rendimento e margem de lucro!");
+            showToast("Preencha o nome, rendimento válido e margem de lucro!", "error");
             return;
         }
 
@@ -816,27 +987,31 @@ Castanha de Caju: 100g`;
         });
 
         if(ingredientes.length === 0) {
-            alert("Adicione pelo menos um ingrediente válido!");
+            showToast("Adicione pelo menos um ingrediente válido!", "error");
             return;
         }
 
         const id = new Date().getTime();
-        db.receitas.push({ id, nome, rendimento, lucro, ingredientes });
+        db.receitas.push({ id, nome, rendimento, rendimentoUnidade, lucro, embalagem, overhead, ingredientes });
         saveData();
         renderReceitas();
+        atualizarSelectsDimensionador();
 
         document.getElementById('rec-nome').value = '';
+        document.getElementById('rec-embalagem').value = '0.00';
         document.getElementById('container-ingredientes').innerHTML = '';
         adicionarLinhaIngrediente();
-        alert("Ficha Técnica salva com sucesso!");
+        showToast("Ficha Técnica salva com sucesso!", "success");
     }
 
     function deletarReceita(id) {
-        if(confirm("Excluir esta ficha técnica?")) {
+        showCustomModal("Excluir Ficha Técnica", "Deseja realmente excluir esta ficha técnica?", () => {
             db.receitas = db.receitas.filter(r => r.id !== id);
             saveData();
             renderReceitas();
-        }
+            atualizarSelectsDimensionador();
+            showToast("Ficha técnica excluída.", "success");
+        });
     }
 
     function renderReceitas() {
@@ -847,7 +1022,8 @@ Castanha de Caju: 100g`;
         }
 
         container.innerHTML = db.receitas.map(r => {
-            let custoTotalBase = 0;
+            const rUnidade = r.rendimentoUnidade || 'und';
+            let custoInsumosTotal = 0;
 
             const tabelaIng = r.ingredientes.map(ing => {
                 const insumo = db.insumos.find(i => i.id === ing.insumoId);
@@ -856,51 +1032,77 @@ Castanha de Caju: 100g`;
                 const unitUsada = ing.unidadeUsada || insumo.unidade;
                 const qtdConvertida = converterUnidade(ing.qtdUsada, unitUsada, insumo.unidade);
                 
-                const custoFrac = insumo.qtdEmb > 0 ? (insumo.preco / insumo.qtdEmb) : 0;
-                const custoItem = custoFrac * qtdConvertida;
-                custoTotalBase += custoItem;
+                const fc = insumo.fc || 1.0;
+                const custoFracReal = insumo.qtdEmb > 0 ? (insumo.preco / insumo.qtdEmb) * fc : 0;
+                const custoItem = custoFracReal * qtdConvertida;
+                custoInsumosTotal += custoItem;
 
-                return `<tr><td>${insumo.nome}</td><td>${ing.qtdUsada} ${unitUsada}</td><td>R$ ${custoItem.toFixed(2)}</td></tr>`;
+                return `<tr><td>${insumo.nome}</td><td>${ing.qtdUsada} ${unitUsada} (FC: ${fc})</td><td>R$ ${custoItem.toFixed(2)}</td></tr>`;
             }).join('');
 
-            const custoPorPorcao = custoTotalBase / r.rendimento;
-            const precoSugerido = custoPorPorcao * (1 + (r.lucro / 100));
+            const custoInsumosPorBase = custoInsumosTotal / r.rendimento;
+            const custoEmbPorBase = r.embalagem || 0;
+            const custoDiretoUnitario = custoInsumosPorBase + custoEmbPorBase;
+            const overheadUnitario = custoDiretoUnitario * ((r.overhead || 0) / 100);
+            const custoTotalUnitario = custoDiretoUnitario + overheadUnitario;
+            const precoSugerido = custoTotalUnitario * (1 + (r.lucro / 100));
+
+            let lucroBadge = '';
+            if (r.lucro < 50) lucroBadge = `<span class="badge badge-warning" style="margin-left:8px;">Lucro Baixo (${r.lucro}%)</span>`;
 
             return `
                 <div class="card" style="margin-bottom: 15px;">
                     <div class="flex-grid" style="justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <h4 style="margin: 0;">${r.nome}</h4>
+                        <h4 style="margin: 0;">${r.nome} ${lucroBadge}</h4>
                         <div class="no-print" style="display: flex; gap: 6px;">
-                            <button onclick="copiarTextoReceita(${r.id})" class="outline" style="width: auto; padding: 4px 10px; font-size: 12px; margin-bottom: 0;">📋 Copiar Texto</button>
+                            <button onclick="copiarTextoReceita(${r.id})" class="outline" style="width: auto; padding: 4px 10px; font-size: 12px; margin-bottom: 0;">📋 Copiar</button>
                             <button onclick="deletarReceita(${r.id})" class="danger" style="width: auto; padding: 4px 10px; font-size: 12px; margin-bottom: 0;">Excluir</button>
                         </div>
                     </div>
                     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
-                        Rendimento Padrão: <b>${r.rendimento} porções</b> | Lucro Meta: <b>${r.lucro}%</b>
+                        Rendimento Base: <b>${r.rendimento} ${rUnidade}</b> | Lucro Meta: <b>${r.lucro}%</b> | Embalagem/Lote: <b>R$ ${(r.embalagem||0).toFixed(2)}</b> | Overhead: <b>${r.overhead||0}%</b>
                     </p>
-                    <table>
-                        <thead><tr><th>Ingrediente</th><th>Qtd Padrão</th><th>Custo</th></tr></thead>
-                        <tbody>${tabelaIng}</tbody>
-                    </table>
-                    <div class="flex-grid" style="margin-top: 12px; font-size: 14px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <div class="col">Custo Total: <b>R$ ${custoTotalBase.toFixed(2)}</b></div>
-                        <div class="col">Custo/Unidade: <b>R$ ${custoPorPorcao.toFixed(2)}</b></div>
-                        <div class="col" style="color: var(--ml-green);">Preço Sugerido: <b>R$ ${precoSugerido.toFixed(2)}</b></div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Ingrediente</th><th>Qtd</th><th>Custo Real</th></tr></thead>
+                            <tbody>${tabelaIng}</tbody>
+                        </table>
+                    </div>
+                    <div class="flex-grid" style="margin-top: 12px; font-size: 13px; background: #F8FAFC; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div class="col">Custo Insumos (Lote): <b>R$ ${custoInsumosTotal.toFixed(2)}</b></div>
+                        <div class="col">Custo Total / ${rUnidade}: <b>R$ ${custoTotalUnitario.toFixed(2)}</b></div>
+                        <div class="col" style="color: var(--success);">Preço Sugerido / ${rUnidade}: <b>R$ ${precoSugerido.toFixed(2)}</b></div>
                     </div>
                 </div>
             `;
         }).join('');
     }
 
-    // 3. DIMENSIONADOR / ESCALONADOR
+    // 3. DIMENSIONADOR / ESCALONADOR COM CONVERSÃO DE UNIDADES
     function atualizarSelectsDimensionador() {
         const select = document.getElementById('sim-receita');
-        select.innerHTML = db.receitas.map(r => `<option value="${r.id}">${r.nome} (Base: ${r.rendimento} porções)</option>`).join('');
+        if(db.receitas.length === 0) {
+            select.innerHTML = `<option value="">Cadastre receitas primeiro</option>`;
+            return;
+        }
+        select.innerHTML = db.receitas.map(r => `<option value="${r.id}">${r.nome} (Base: ${r.rendimento} ${r.rendimentoUnidade || 'und'})</option>`).join('');
+        aoMudarReceitaDimensionador();
+    }
+
+    function aoMudarReceitaDimensionador() {
+        const recId = parseInt(document.getElementById('sim-receita').value);
+        const receita = db.receitas.find(r => r.id === recId);
+        if(receita) {
+            document.getElementById('sim-qtd-desejada').value = receita.rendimento;
+            document.getElementById('sim-qtd-unidade').value = receita.rendimentoUnidade || 'und';
+        }
+        calcularEscalonamento();
     }
 
     function calcularEscalonamento() {
         const recId = parseInt(document.getElementById('sim-receita').value);
-        const qtdDesejada = parseInt(document.getElementById('sim-qtd-desejada').value);
+        const qtdDesejada = parseFloat(document.getElementById('sim-qtd-desejada').value);
+        const unidadeDesejada = document.getElementById('sim-qtd-unidade').value;
         const relatorio = document.getElementById('relatorio-dimensionador');
 
         const receita = db.receitas.find(r => r.id === recId);
@@ -911,29 +1113,40 @@ Castanha de Caju: 100g`;
 
         relatorio.classList.remove('hidden');
 
-        const fator = qtdDesejada / receita.rendimento;
+        const recUnidade = receita.rendimentoUnidade || 'und';
+
+        // Cálculo inteligente de proporção cruzando unidades compatíveis (peso com peso, volume com volume, und com und)
+        let fator = 1;
+        const baseRecVal = converterParaBaseComum(receita.rendimento, recUnidade);
+        const baseDesejadaVal = converterParaBaseComum(qtdDesejada, unidadeDesejada);
+
+        if(baseRecVal > 0) {
+            fator = baseDesejadaVal / baseRecVal;
+        }
 
         document.getElementById('sim-titulo-receita').innerText = receita.nome;
-        document.getElementById('sim-subtitulo').innerText = `Dimensionado para ${qtdDesejada} porções (${fator.toFixed(2)}x a receita base)`;
+        document.getElementById('sim-subtitulo').innerText = `Dimensionado para ${qtdDesejada} ${unidadeDesejada} (${fator.toFixed(2)}x a receita base de ${receita.rendimento} ${recUnidade})`;
 
-        let custoTotalProporcional = 0;
+        let custoInsumosTotalProporcional = 0;
 
         const tabelaRows = receita.ingredientes.map(ing => {
             const insumo = db.insumos.find(i => i.id === ing.insumoId);
             if(!insumo) return '';
 
             const unitUsada = ing.unidadeUsada || insumo.unidade;
-            const qtdProporcionalNaUnidadeEscolhida = ing.qtdUsada * fator;
+            const qtdLiquidaProporcional = ing.qtdUsada * fator;
+            const fc = insumo.fc || 1.0;
+            const qtdBrutaNecessaria = qtdLiquidaProporcional * fc;
             
-            const qtdConvertida = converterUnidade(qtdProporcionalNaUnidadeEscolhida, unitUsada, insumo.unidade);
-            const custoFrac = insumo.qtdEmb > 0 ? (insumo.preco / insumo.qtdEmb) : 0;
-            const custoItem = custoFrac * qtdConvertida;
-            custoTotalProporcional += custoItem;
+            const qtdConvertida = converterUnidade(qtdBrutaNecessaria, unitUsada, insumo.unidade);
+            const custoFracReal = insumo.qtdEmb > 0 ? (insumo.preco / insumo.qtdEmb) * fc : 0;
+            const custoItem = custoFracReal * qtdConvertida;
+            custoInsumosTotalProporcional += custoItem;
 
             return `
                 <tr>
                     <td><b>${insumo.nome}</b></td>
-                    <td style="color: var(--ml-blue); font-weight: 700;">${qtdProporcionalNaUnidadeEscolhida.toFixed(2)} ${unitUsada}</td>
+                    <td style="color: var(--accent); font-weight: 700;">${qtdBrutaNecessaria.toFixed(2)} ${unitUsada}</td>
                     <td>R$ ${custoItem.toFixed(2)}</td>
                 </tr>
             `;
@@ -941,13 +1154,28 @@ Castanha de Caju: 100g`;
 
         document.getElementById('sim-tabela-ingredientes').innerHTML = tabelaRows;
 
-        const custoPorPorcao = custoTotalProporcional / qtdDesejada;
-        const precoSugeridoPorPorcao = custoPorPorcao * (1 + (receita.lucro / 100));
+        // Custos proporcionais
+        const custoEmbTotal = (receita.embalagem || 0) * fator;
+        const custoDiretoBatelada = custoInsumosTotalProporcional + custoEmbTotal;
+        const overheadBatelada = custoDiretoBatelada * ((receita.overhead || 0) / 100);
+        const custoTotalBatelada = custoDiretoBatelada + overheadBatelada;
+        
+        const custoUnitarioReal = baseDesejadaVal > 0 ? (custoTotalBatelada / baseDesejadaVal) * (unidadeDesejada === 'kg' ? 1000 : (unidadeDesejada === 'l' ? 1000 : 1)) : 0;
+        
+        // Se a unidade for por kg ou L, o custo unitário por 1 unidade de medida (1kg ou 1L) é calculado proporcionalmente
+        let labelUnidadeVisual = unidadeDesejada;
+        if(unidadeDesejada === 'g') labelUnidadeVisual = 'g';
+        if(unidadeDesejada === 'kg') labelUnidadeVisual = 'kg';
+        if(unidadeDesejada === 'ml') labelUnidadeVisual = 'ml';
+        if(unidadeDesejada === 'l') labelUnidadeVisual = 'L';
+        if(unidadeDesejada === 'und') labelUnidadeVisual = 'und';
+
+        const precoSugeridoPorPorcao = (custoTotalBatelada / qtdDesejada) * (1 + (receita.lucro / 100));
         const faturamentoTotal = precoSugeridoPorPorcao * qtdDesejada;
 
-        document.getElementById('sim-custo-total').innerText = `R$ ${custoTotalProporcional.toFixed(2)}`;
-        document.getElementById('sim-custo-unidade').innerText = `R$ ${custoPorPorcao.toFixed(2)}`;
-        document.getElementById('sim-preco-sugerido').innerText = `R$ ${precoSugeridoPorPorcao.toFixed(2)}`;
+        document.getElementById('sim-custo-total').innerText = `R$ ${custoTotalBatelada.toFixed(2)}`;
+        document.getElementById('sim-custo-unidade').innerText = `R$ ${(custoTotalBatelada / qtdDesejada).toFixed(2)} / ${labelUnidadeVisual}`;
+        document.getElementById('sim-preco-sugerido').innerText = `R$ ${precoSugeridoPorPorcao.toFixed(2)} / ${labelUnidadeVisual}`;
         document.getElementById('sim-faturamento').innerText = `R$ ${faturamentoTotal.toFixed(2)}`;
     }
 </script>
