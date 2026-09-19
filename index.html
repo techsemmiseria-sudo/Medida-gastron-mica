@@ -1,1183 +1,5136 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSG Gastronomia & Gestão Profissional</title>
-    <style>
-        :root {
-            --primary: #1E293B;       /* Grafite Sofisticado / Slate */
-            --primary-dark: #0F172A;
-            --accent: #D97706;        /* Dourado Gastronômico / Âmbar */
-            --success: #16A34A;       /* Verde Oliva / Esmeralda */
-            --success-dark: #15803D;
-            --danger: #DC2626;        /* Vermelho Alerta */
-            --warning: #CA8A04;       /* Amarelo Alerta */
-            --bg: #F8FAFC;            /* Fundo Limpo Neutro */
-            --card-bg: #FFFFFF;
-            --text-main: #334155;
-            --text-muted: #64748B;
-            --border-color: #E2E8F0;
-            --radius: 12px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1E293B">
+<title>TSG Gastronomia & Gestão Profissional</title>
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); padding: 0 0 50px 0; line-height: 1.5; }
+<style>
+:root{
+    --primary:#1E293B;
+    --primary-dark:#0F172A;
+    --accent:#D97706;
+    --accent-light:#FEF3C7;
+    --success:#16A34A;
+    --danger:#DC2626;
+    --warning:#CA8A04;
+    --info:#2563EB;
+    --bg:#F8FAFC;
+    --card:#FFFFFF;
+    --text:#0F172A;
+    --muted:#64748B;
+    --border:#E2E8F0;
+    --shadow:0 8px 25px rgba(15,23,42,.08);
+    --radius:14px;
+}
 
-        /* CABEÇALHO PROFISSIONAL */
-        header.app-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 18px 20px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-        }
-        .header-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .brand-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .brand-title span { color: var(--accent); }
+*{
+    box-sizing:border-box;
+}
 
-        .user-panel {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 13px;
-        }
+html{
+    scroll-behavior:smooth;
+}
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 15px; }
-        
-        .card { 
-            background: var(--card-bg); 
-            padding: 24px; 
-            border-radius: var(--radius); 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03); 
-            margin-bottom: 20px; 
-            border: 1px solid var(--border-color);
-        }
-        
-        h1, h2, h3, h4 { color: var(--primary); font-weight: 700; margin-bottom: 12px; }
-        .flex-grid { display: flex; gap: 12px; flex-wrap: wrap; }
-        .col { flex: 1; min-width: 200px; }
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
 
-        label { font-size: 13px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px; }
-        input, select, button, textarea { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 12px; 
-            border: 1px solid var(--border-color); 
-            border-radius: 8px; 
-            font-size: 14px; 
-            transition: all 0.2s ease;
-            background-color: #FFFFFF;
-            color: var(--text-main);
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
-        }
-        textarea { font-family: inherit; resize: vertical; min-height: 110px; }
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
 
-        button { 
-            background-color: var(--primary); 
-            color: white; 
-            border: none; 
-            font-weight: 600; 
-            cursor: pointer; 
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            text-decoration: none;
-            border-radius: 8px;
-            padding: 12px 18px;
-            transition: background 0.2s, transform 0.1s;
-        }
-        button:hover { background-color: var(--primary-dark); }
-        button:active { transform: scale(0.98); }
-        button.success { background-color: var(--success); }
-        button.success:hover { background-color: var(--success-dark); }
-        button.danger { background-color: #FEE2E2; color: var(--danger); border: 1px solid #FECACA; }
-        button.danger:hover { background-color: var(--danger); color: white; }
-        button.outline { background: transparent; color: var(--primary); border: 1px solid var(--border-color); }
-        button.outline:hover { background: #F1F5F9; border-color: var(--primary); }
-        button.accent { background-color: var(--accent); color: white; }
-        button.accent:hover { background-color: #B45309; }
+button{
+    cursor:pointer;
+}
 
-        /* NAV TABS */
-        nav { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; flex-wrap: wrap; }
-        nav button { 
-            background: transparent; 
-            color: var(--text-muted); 
-            flex: 1; 
-            min-width: 140px; 
-            box-shadow: none;
-        }
-        nav button.active { background: var(--primary); color: white; font-weight: 700; }
+.hidden{
+    display:none !important;
+}
 
-        /* TABELAS RESPONSIVAS */
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; border-radius: 8px; border: 1px solid var(--border-color); }
-        table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
-        th { background-color: #F8FAFC; font-weight: 700; color: var(--primary); }
-        tr:last-child td { border-bottom: none; }
+/* =========================
+   LOGIN
+========================= */
 
-        .hidden { display: none !important; }
+#auth-screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:
+        radial-gradient(circle at top right,rgba(217,119,6,.12),transparent 30%),
+        linear-gradient(135deg,#F8FAFC,#E2E8F0);
+}
 
-        /* CARDS E PAINÉIS */
-        .stat-box { background: #F8FAFC; padding: 16px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
-        .stat-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-value { font-size: 20px; font-weight: 800; margin-top: 4px; color: var(--primary); }
+.auth-card{
+    width:100%;
+    max-width:460px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:34px;
+    box-shadow:0 20px 60px rgba(15,23,42,.15);
+}
 
-        .ingredient-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
-        .ingredient-row select.rec-insumo-select { flex: 3; min-width: 160px; margin-bottom: 0; }
-        .ingredient-row input.rec-insumo-qtd { flex: 1.5; min-width: 90px; margin-bottom: 0; }
-        .ingredient-row select.rec-insumo-unidade { flex: 1; min-width: 80px; margin-bottom: 0; }
-        .ingredient-row button { width: auto; padding: 12px 16px; margin-bottom: 0; }
+.auth-logo{
+    width:70px;
+    height:70px;
+    border-radius:18px;
+    background:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    margin:0 auto 18px;
+}
 
-        .import-box { background: #F0FDF4; border: 1px dashed var(--success); padding: 18px; border-radius: 8px; margin-bottom: 15px; }
-        
-        .remember-group { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
-        .remember-group input { width: auto; margin-bottom: 0; cursor: pointer; }
-        .remember-group label { font-size: 13px; color: var(--text-muted); cursor: pointer; margin-bottom: 0; }
+.auth-card h1{
+    text-align:center;
+    margin:0 0 8px;
+    font-size:26px;
+}
 
-        /* BADGES INTELIGENTES */
-        .badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-        .badge-warning { background: #FEF3C7; color: #92400E; }
-        .badge-danger { background: #FEE2E2; color: #991B1B; }
-        .badge-success { background: #DCFCE7; color: #166534; }
+.auth-subtitle{
+    text-align:center;
+    color:var(--muted);
+    margin:0 0 26px;
+    line-height:1.5;
+}
 
-        /* BACKUP & BARRA DE AÇÃO */
-        .action-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; background: white; padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border-color); }
+.first-access-info{
+    background:var(--accent-light);
+    border:1px solid #FCD34D;
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:20px;
+    font-size:14px;
+    line-height:1.5;
+}
 
-        /* TOAST NOTIFICATION CONTAINER */
-        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 350px; }
-        .toast { background: var(--primary); color: white; padding: 12px 18px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 14px; animation: slideIn 0.3s ease; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-        .toast.success { background: var(--success); }
-        .toast.error { background: var(--danger); }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.first-access-info strong{
+    color:#92400E;
+}
 
-        /* MODAL CUSTOMIZADO */
-        .modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998; display: flex; align-items: center; justify-content: center; padding: 15px; }
-        .modal-box { background: white; width: 100%; max-width: 420px; padding: 24px; border-radius: var(--radius); box-shadow: 0 10px 25px rgba(0,0,0,0.1); animation: scaleIn 0.2s ease; }
-        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.form-group{
+    margin-bottom:16px;
+}
 
-        /* CARD DE APOIO */
-        .support-card {
-            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-            border: 1px solid #FCD34D;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .support-info h3 { color: #92400E; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-        .support-info p { font-size: 13px; color: #78350F; line-height: 1.4; }
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:700;
+    font-size:14px;
+}
 
-        @media print {
-            header, nav, button, input, select, textarea, .no-print, .support-card, .action-bar { display: none !important; }
-            body { background: white; padding: 0; }
-            .card { box-shadow: none; border: none; padding: 0; }
-        }
-    </style>
+.form-control{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 13px;
+    outline:none;
+    background:#fff;
+    color:var(--text);
+    transition:.2s;
+}
+
+.form-control:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(217,119,6,.12);
+}
+
+.auth-button{
+    width:100%;
+    border:0;
+    background:var(--primary);
+    color:#fff;
+    padding:13px;
+    border-radius:10px;
+    font-weight:700;
+    margin-top:6px;
+}
+
+.auth-button:hover{
+    background:var(--primary-dark);
+}
+
+.remember-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:10px 0 18px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.password-hint{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+/* =========================
+   APP
+========================= */
+
+#app-screen{
+    min-height:100vh;
+}
+
+header{
+    background:var(--primary);
+    color:#fff;
+    padding:16px 24px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 4px 15px rgba(15,23,42,.15);
+}
+
+.header-inner{
+    max-width:1400px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-icon{
+    font-size:30px;
+}
+
+.brand h2{
+    margin:0;
+    font-size:20px;
+}
+
+.brand small{
+    color:#CBD5E1;
+    display:block;
+    margin-top:2px;
+}
+
+.user-panel{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-info{
+    text-align:right;
+}
+
+.user-name{
+    font-weight:700;
+}
+
+.user-role{
+    font-size:12px;
+    color:#CBD5E1;
+}
+
+.logout-btn{
+    border:1px solid rgba(255,255,255,.25);
+    background:transparent;
+    color:#fff;
+    padding:8px 12px;
+    border-radius:8px;
+}
+
+.logout-btn:hover{
+    background:rgba(255,255,255,.1);
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+    width:min(1400px,calc(100% - 32px));
+    margin:24px auto;
+}
+
+.backup-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    margin-bottom:20px;
+    box-shadow:var(--shadow);
+}
+
+.backup-info{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.backup-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    border:0;
+    border-radius:9px;
+    padding:10px 14px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn-accent{
+    background:var(--accent);
+    color:#fff;
+}
+
+.btn-success{
+    background:var(--success);
+    color:#fff;
+}
+
+.btn-danger{
+    background:var(--danger);
+    color:#fff;
+}
+
+.btn-secondary{
+    background:#E2E8F0;
+    color:var(--text);
+}
+
+.btn-outline{
+    background:#fff;
+    border:1px solid var(--border);
+    color:var(--text);
+}
+
+.btn-sm{
+    padding:7px 10px;
+    font-size:13px;
+}
+
+/* =========================
+   SUPPORT
+========================= */
+
+.support-card{
+    background:linear-gradient(135deg,#FFF7ED,#FEF3C7);
+    border:1px solid #FED7AA;
+    padding:18px;
+    border-radius:var(--radius);
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.support-card h3{
+    margin:0 0 5px;
+}
+
+.support-card p{
+    margin:0;
+    color:#78350F;
+    font-size:14px;
+}
+
+/* =========================
+   NAV
+========================= */
+
+.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.tab-btn{
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--muted);
+    padding:11px 17px;
+    border-radius:10px;
+    font-weight:700;
+}
+
+.tab-btn.active{
+    background:var(--primary);
+    color:#fff;
+    border-color:var(--primary);
+}
+
+.tab-content{
+    display:none;
+}
+
+.tab-content.active{
+    display:block;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.card-header h2,
+.card-header h3{
+    margin:0;
+}
+
+.card-header p{
+    margin:5px 0 0;
+    color:var(--muted);
+    font-size:14px;
+}
+
+/* =========================
+   GRIDS
+========================= */
+
+.grid{
+    display:grid;
+    gap:16px;
+}
+
+.grid-2{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.grid-3{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.grid-4{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:720px;
+}
+
+th,
+td{
+    padding:12px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    vertical-align:middle;
+}
+
+th{
+    background:#F8FAFC;
+    font-size:13px;
+    color:var(--muted);
+}
+
+td{
+    font-size:14px;
+}
+
+.empty-state{
+    padding:30px;
+    text-align:center;
+    color:var(--muted);
+}
+
+/* =========================
+   INSUMOS
+========================= */
+
+.action-bar{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+.fc-info{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+/* =========================
+   IMPORTAÇÃO
+========================= */
+
+.import-box{
+    background:#F8FAFC;
+    border:1px dashed #CBD5E1;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.import-box textarea{
+    min-height:180px;
+    resize:vertical;
+}
+
+.import-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+/* =========================
+   INGREDIENTES
+========================= */
+
+.ingrediente-row{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr auto;
+    gap:10px;
+    align-items:end;
+    background:#F8FAFC;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:10px;
+    border:1px solid var(--border);
+}
+
+.ingrediente-row label{
+    font-size:12px;
+    color:var(--muted);
+    font-weight:700;
+    display:block;
+    margin-bottom:5px;
+}
+
+.ingrediente-custo{
+    font-weight:700;
+    font-size:13px;
+}
+
+.remove-ingredient{
+    border:0;
+    background:#FEE2E2;
+    color:#991B1B;
+    border-radius:8px;
+    padding:10px;
+}
+
+/* =========================
+   RECEITAS
+========================= */
+
+.recipe-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+}
+
+.recipe-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+    background:#fff;
+}
+
+.recipe-card h3{
+    margin:0 0 8px;
+}
+
+.recipe-meta{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+.recipe-cost{
+    margin-top:12px;
+    background:#F8FAFC;
+    border-radius:10px;
+    padding:12px;
+}
+
+.recipe-actions{
+    display:flex;
+    gap:8px;
+    margin-top:14px;
+    flex-wrap:wrap;
+}
+
+/* =========================
+   DIMENSIONADOR
+========================= */
+
+.dimensionador-header{
+    background:linear-gradient(135deg,#1E293B,#334155);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.dimensionador-header h2{
+    margin:0 0 5px;
+}
+
+.dimensionador-header p{
+    margin:0;
+    color:#CBD5E1;
+}
+
+.report{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px;
+}
+
+.report-title{
+    text-align:center;
+    border-bottom:2px solid var(--primary);
+    padding-bottom:14px;
+    margin-bottom:20px;
+}
+
+.report-title h2{
+    margin:0;
+}
+
+.report-title p{
+    margin:6px 0 0;
+    color:var(--muted);
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.summary-item{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px;
+    background:#F8FAFC;
+}
+
+.summary-label{
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+.summary-value{
+    font-size:19px;
+    font-weight:800;
+}
+
+.error-box{
+    background:#FEF2F2;
+    border:1px solid #FECACA;
+    color:#991B1B;
+    padding:14px;
+    border-radius:10px;
+    margin-top:15px;
+    line-height:1.5;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toast-container{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:9999;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.toast{
+    min-width:260px;
+    max-width:380px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-left:5px solid var(--primary);
+    border-radius:10px;
+    padding:13px 15px;
+    box-shadow:0 10px 30px rgba(15,23,42,.15);
+    animation:toastIn .25s ease;
+}
+
+.toast.success{
+    border-left-color:var(--success);
+}
+
+.toast.error{
+    border-left-color:var(--danger);
+}
+
+.toast.warning{
+    border-left-color:var(--warning);
+}
+
+@keyframes toastIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:10000;
+}
+
+.modal-overlay.active{
+    display:flex;
+}
+
+.modal{
+    background:#fff;
+    width:100%;
+    max-width:460px;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.modal h3{
+    margin:0 0 10px;
+}
+
+.modal p{
+    color:var(--muted);
+    line-height:1.5;
+    white-space:pre-line;
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:20px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:1000px){
+    .grid-4{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .recipe-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:760px){
+    .container{
+        width:min(100% - 20px,1400px);
+        margin:15px auto;
+    }
+
+    header{
+        padding:13px 15px;
+    }
+
+    .header-inner{
+        align-items:flex-start;
+    }
+
+    .brand h2{
+        font-size:16px;
+    }
+
+    .brand small{
+        display:none;
+    }
+
+    .user-info{
+        display:none;
+    }
+
+    .backup-bar,
+    .support-card{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4{
+        grid-template-columns:1fr;
+    }
+
+    .ingrediente-row{
+        grid-template-columns:1fr;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .card{
+        padding:16px;
+    }
+}
+
+@media(max-width:480px){
+    .auth-card{
+        padding:24px 18px;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .tabs{
+        display:grid;
+        grid-template-columns:1fr;
+    }
+
+    .tab-btn{
+        width:100%;
+    }
+}
+
+/* =========================
+   IMPRESSÃO
+========================= */
+
+@media print{
+    body{
+        background:#fff;
+    }
+
+    header,
+    .backup-bar,
+    .support-card,
+    .tabs,
+    .action-bar,
+    .import-box,
+    .no-print,
+    button,
+    form,
+    #auth-screen{
+        display:none !important;
+    }
+
+    .container{
+        width:100%;
+        margin:0;
+    }
+
+    .card,
+    .report{
+        box-shadow:none;
+        border:0;
+    }
+
+    .tab-content{
+        display:none !important;
+    }
+
+    #dimensionador{
+        display:block !important;
+    }
+
+    .report{
+        display:block !important;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <!-- SISTEMA DE TOASTS E MODAIS -->
-    <div id="toast-container"></div>
-    <div id="custom-modal-container"></div>
+<!-- =========================
+     LOGIN / PRIMEIRO ACESSO
+========================= -->
 
-    <!-- CABEÇALHO PROFISSIONAL -->
-    <header class="app-header">
-        <div class="header-content">
-            <div class="brand-title">
-                <span>🍳</span> TSG Gastronomia & Gestão <span>Pro</span>
-            </div>
-            <div id="user-header-info" class="hidden user-panel">
-                <span>Bem-vindo(a), <b id="user-display-name">Usuário</b></span>
-                <button onclick="logout()" class="danger" style="width: auto; padding: 6px 12px; font-size: 12px; margin-bottom: 0;">Sair</button>
-            </div>
-        </div>
-    </header>
+<section id="auth-screen">
 
-<div class="container">
+    <div class="auth-card">
 
-    <!-- TELA DE LOGIN / CADASTRO -->
-    <div id="auth-screen" class="card" style="max-width: 440px; margin: 40px auto;">
-        <h2 style="text-align: center;">🔒 Acesso ao Sistema</h2>
-        <p style="text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
-            Gerencie fichas técnicas, custos operacionais e margens com precisão profissional.
+        <div class="auth-logo">🍳</div>
+
+        <h1 id="auth-title">TSG Gastronomia & Gestão</h1>
+
+        <p class="auth-subtitle" id="auth-subtitle">
+            Sistema profissional de gestão gastronômica
         </p>
+
+        <div id="first-access-info" class="first-access-info">
+            <strong>Primeiro acesso</strong><br>
+            Utilize a senha padrão <strong>@123456#</strong> para liberar o cadastro do seu usuário e criar uma nova senha.
+        </div>
+
         <form id="auth-form" onsubmit="handleAuth(event)">
-            <label>Seu Nome ou Estabelecimento:</label>
-            <input type="text" id="nome" placeholder="Ex: Confeitaria Artesanal" required>
-            
-            <label>E-mail:</label>
-            <input type="email" id="email" placeholder="seu@email.com" required>
-            
-            <label>Senha:</label>
-            <input type="password" id="password" placeholder="••••••••" required>
-            
-            <div class="remember-group">
-                <input type="checkbox" id="remember-me" checked>
-                <label for="remember-me">Lembrar meu usuário neste dispositivo</label>
+
+            <div class="form-group" id="nome-group">
+                <label for="nome">Nome</label>
+                <input
+                    type="text"
+                    id="nome"
+                    class="form-control"
+                    autocomplete="name"
+                    placeholder="Nome do responsável"
+                >
             </div>
 
-            <button type="submit" class="success" style="padding: 14px; font-size: 16px; width: 100%;">Entrar no Sistema</button>
+            <div class="form-group">
+                <label for="email">Usuário</label>
+                <input
+                    type="text"
+                    id="email"
+                    class="form-control"
+                    autocomplete="username"
+                    placeholder="Digite seu usuário"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    autocomplete="current-password"
+                    placeholder="Digite sua senha"
+                    required
+                >
+                <div class="password-hint" id="password-hint">
+                    No primeiro acesso, use a senha padrão informada acima.
+                </div>
+            </div>
+
+            <div class="form-group hidden" id="new-password-group">
+                <label for="new-password">Nova senha</label>
+                <input
+                    type="password"
+                    id="new-password"
+                    class="form-control"
+                    autocomplete="new-password"
+                    placeholder="Crie sua nova senha"
+                >
+                <div class="password-hint">
+                    Use pelo menos 8 caracteres.
+                </div>
+            </div>
+
+            <div class="form-group hidden" id="confirm-password-group">
+                <label for="confirm-password">Confirmar nova senha</label>
+                <input
+                    type="password"
+                    id="confirm-password"
+                    class="form-control"
+                    autocomplete="new-password"
+                    placeholder="Repita sua nova senha"
+                >
+            </div>
+
+            <div class="remember-row" id="remember-row">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">Lembrar este usuário neste dispositivo</label>
+            </div>
+
+            <button type="submit" class="auth-button" id="auth-submit">
+                Entrar no Sistema
+            </button>
+
         </form>
+
     </div>
 
-    <!-- TELA PRINCIPAL DO APLICATIVO -->
-    <div id="app-screen" class="hidden">
-        
-        <!-- BARRA DE GERENCIAMENTO E BACKUP -->
-        <div class="action-bar no-print">
-            <div style="font-size: 13px; color: var(--text-muted);">
-                💾 <b>Segurança de Dados:</b> Exporte ou restaure suas receitas e insumos via JSON.
+</section>
+
+
+<!-- =========================
+     SISTEMA
+========================= -->
+
+<section id="app-screen" class="hidden">
+
+<header>
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <div class="brand-icon">🍳</div>
+
+            <div>
+                <h2>TSG Gastronomia & Gestão Pro</h2>
+                <small>Gestão profissional de fichas, insumos e custos</small>
             </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <button onclick="exportarBackupJSON()" class="outline" style="width: auto; padding: 6px 12px; font-size: 12px; margin:0;">📥 Exportar Backup</button>
-                <label class="outline" style="width: auto; padding: 6px 12px; font-size: 12px; margin:0; cursor:pointer; display:inline-flex; align-items:center; border-radius:8px; border:1px solid var(--border-color); background:transparent; color:var(--primary); font-weight:600;">
-                    📤 Restaurar Backup <input type="file" id="import-json-file" accept=".json" onchange="importarBackupJSON(event)" style="display: none;">
-                </label>
-            </div>
+
         </div>
 
-        <!-- CARD DE APOIO -->
-        <div class="card support-card no-print">
-            <div class="support-info" style="flex: 1; min-width: 260px;">
-                <h3>🤝 Apoie o Desenvolvimento do Projeto</h3>
-                <p>Ferramenta essencial para cozinhas e confeitarias. Contribua para mantermos as atualizações constantes!</p>
+        <div class="user-panel" id="user-panel">
+
+            <div class="user-info">
+                <div class="user-name" id="header-user-name">Usuário</div>
+                <div class="user-role">Responsável pelo sistema</div>
             </div>
-            <a href="https://mpago.la/1bFBQQa" target="_blank" rel="noopener noreferrer" class="accent" style="padding: 12px 20px; border-radius: 8px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
-                💛 Apoiar via Mercado Pago
-            </a>
+
+            <button class="logout-btn" onclick="logout()">
+                Sair
+            </button>
+
         </div>
 
-        <!-- NAVEGAÇÃO -->
-        <nav class="no-print">
-            <button class="nav-btn active" onclick="switchTab('insumos')">📦 1. Insumos Base</button>
-            <button class="nav-btn" onclick="switchTab('receitas')">📝 2. Ficha Técnica</button>
-            <button class="nav-btn" onclick="switchTab('dimensionador')">⚖️ 3. Dimensionador</button>
-        </nav>
+    </div>
 
-        <!-- ABA 1: INSUMOS BASE -->
-        <div id="tab-insumos" class="tab-content">
-            <div class="card">
-                <h3 id="form-insumo-titulo">Cadastrar Novo Insumo / Ingrediente</h3>
-                <div class="flex-grid">
-                    <div class="col" style="flex: 2;">
-                        <label>Nome do Ingrediente:</label>
-                        <input type="text" id="insumo-nome" placeholder="Ex: Filé Mignon, Pistache, Leite Condensado">
+</header>
+
+
+<main class="container">
+
+    <!-- BACKUP -->
+
+    <div class="backup-bar">
+
+        <div class="backup-info">
+            <strong>💾 Backup dos dados</strong><br>
+            Exporte seus insumos e receitas para guardar uma cópia segura.
+        </div>
+
+        <div class="backup-actions">
+
+            <button
+                class="btn btn-outline"
+                onclick="exportarBackupJSON()"
+            >
+                Exportar Backup
+            </button>
+
+            <label class="btn btn-outline">
+                Importar Backup
+                <input
+                    type="file"
+                    accept=".json,application/json"
+                    onchange="importarBackupJSON(event)"
+                    hidden
+                >
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUPORTE -->
+
+    <div class="support-card">
+
+        <div>
+            <h3>❤️ Apoie o projeto</h3>
+            <p>
+                Se o TSG Gastronomia & Gestão está ajudando seu negócio,
+                você pode contribuir com o projeto.
+            </p>
+        </div>
+
+        <a
+            href="https://mpago.la/1bFBQQa"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-accent"
+        >
+            Apoiar pelo Mercado Pago
+        </a>
+
+    </div>
+
+
+    <!-- NAVEGAÇÃO -->
+
+    <nav class="tabs">
+
+        <button
+            class="tab-btn active"
+            onclick="switchTab('insumos', event)"
+        >
+            📦 Insumos
+        </button>
+
+        <button
+            class="tab-btn"
+            onclick="switchTab('receitas', event)"
+        >
+            📋 Ficha Técnica
+        </button>
+
+        <button
+            class="tab-btn"
+            onclick="switchTab('dimensionador', event)"
+        >
+            📐 Dimensionador
+        </button>
+
+    </nav>
+
+
+    <!-- =========================
+         INSUMOS
+    ========================= -->
+
+    <section id="insumos" class="tab-content active">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Cadastro de Insumos</h2>
+                    <p>
+                        Cadastre ingredientes, embalagens e demais itens utilizados nas receitas.
+                    </p>
+                </div>
+
+            </div>
+
+            <form id="form-insumo" onsubmit="event.preventDefault(); salvarInsumo();">
+
+                <div class="grid grid-4">
+
+                    <div class="form-group">
+                        <label for="insumo-nome">Nome do insumo</label>
+                        <input
+                            type="text"
+                            id="insumo-nome"
+                            class="form-control"
+                            placeholder="Ex.: Açúcar"
+                            required
+                        >
                     </div>
-                    <div class="col">
-                        <label>Unidade de Compra:</label>
-                        <select id="insumo-unidade">
-                            <option value="g">Gramas (g)</option>
-                            <option value="ml">Mililitros (ml)</option>
-                            <option value="un">Unidade (un)</option>
+
+                    <div class="form-group">
+                        <label for="insumo-unidade">Unidade de compra</label>
+
+                        <select id="insumo-unidade" class="form-control">
+
+                            <option value="g">Grama (g)</option>
+                            <option value="kg">Quilograma (kg)</option>
+                            <option value="ml">Mililitro (ml)</option>
+                            <option value="l">Litro (L)</option>
+                            <option value="und">Unidade (und)</option>
+
                         </select>
                     </div>
-                </div>
-                <div class="flex-grid">
-                    <div class="col">
-                        <label>Quantidade da Embalagem:</label>
-                        <input type="number" id="insumo-qtd-emb" placeholder="Ex: 1000 (g) ou 1000 (ml)">
-                    </div>
-                    <div class="col">
-                        <label>Preço Pago na Embalagem (R$):</label>
-                        <input type="number" id="insumo-preco" step="0.01" placeholder="Ex: 45.00">
-                    </div>
-                    <div class="col">
-                        <label>Fator de Correção (FC / Limpeza):</label>
-                        <input type="number" id="insumo-fc" step="0.01" value="1.00" min="1.00" placeholder="Ex: 1.25 (Padrão 1.0)">
-                        <small style="font-size: 11px; color: var(--text-muted);">Índice de perda no pré-preparo.</small>
-                    </div>
-                </div>
-                
-                <div class="flex-grid" style="margin-top: 5px;">
-                    <button id="btn-salvar-insumo" onclick="salvarInsumo()" class="success" style="margin-bottom:0; flex: 2;">Salvar Insumo</button>
-                    <button id="btn-cancelar-insumo" onclick="cancelarEdicaoInsumo()" class="danger hidden" style="margin-bottom:0; flex: 1;">Cancelar Edição</button>
-                </div>
-            </div>
 
-            <div class="card">
-                <h3>Lista de Insumos Cadastrados</h3>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ingrediente</th>
-                                <th>Embalagem</th>
-                                <th>Preço Pago</th>
-                                <th>Fator Corr. (FC)</th>
-                                <th>Custo Real Fracionado</th>
-                                <th class="no-print" style="width: 140px;">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="lista-insumos"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                    <div class="form-group">
 
-        <!-- ABA 2: FICHA TÉCNICA -->
-        <div id="tab-receitas" class="tab-content hidden">
-            
-            <!-- IMPORTADOR RÁPIDO -->
-            <div class="card no-print">
-                <div class="flex-grid" style="justify-content: space-between; align-items: center;">
-                    <h3 style="margin: 0;">📋 Importação Rápida (Copiar e Colar)</h3>
-                    <button onclick="toggleImportArea()" class="outline" style="width: auto; padding: 6px 14px; font-size: 13px; margin: 0;">Exibir / Ocultar</button>
+                        <label for="insumo-qtd-emb">
+                            Quantidade da embalagem
+                        </label>
+
+                        <input
+                            type="number"
+                            id="insumo-qtd-emb"
+                            class="form-control"
+                            min="0"
+                            step="0.001"
+                            placeholder="Ex.: 1000"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="insumo-preco">
+                            Preço da embalagem (R$)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="insumo-preco"
+                            class="form-control"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ex.: 8,90"
+                            required
+                        >
+
+                    </div>
+
                 </div>
 
-                <div id="import-area" class="import-box hidden" style="margin-top: 15px;">
-                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">
-                        Cole abaixo o texto da receita. O sistema identificará os ingredientes e quantidades automaticamente!
-                    </p>
-                    <textarea id="import-text" placeholder="Nome: Picolé Gourmet de Cajá&#10;Rendimento: 10 und&#10;Lucro: 120%&#10;&#10;Ingredientes:&#10;Polpa de Cajá: 400g&#10;Leite Condensado: 395g&#10;Creme de Leite: 200g"></textarea>
-                    
-                    <div class="flex-grid">
-                        <button onclick="processarImportacaoTexto()" class="success" style="margin-bottom: 0;">📥 Processar e Importar Receita</button>
-                        <button onclick="preencherExemploImportacao()" class="outline" style="margin-bottom: 0;">💡 Carregar Exemplo</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- FORMULÁRIO MANUAL COM MARKUP REAL, EMBALAGEM E OVERHEAD -->
-            <div class="card no-print">
-                <h3>Criar Nova Ficha Técnica (Manual)</h3>
-                
-                <div class="flex-grid">
-                    <div class="col" style="flex: 2;">
-                        <label>Nome da Receita:</label>
-                        <input type="text" id="rec-nome" placeholder="Ex: Gelato de Pistache Artesanal">
-                    </div>
-                    <div class="col">
-                        <label>Rendimento e Unidade Base:</label>
-                        <div style="display: flex; gap: 6px;">
-                            <input type="number" id="rec-rendimento" value="10" min="0.1" step="any" style="flex: 2; margin-bottom: 0;">
-                            <select id="rec-rendimento-unidade" style="flex: 1.5; margin-bottom: 0;">
-                                <option value="und">und</option>
-                                <option value="g">g</option>
-                                <option value="kg">kg</option>
-                                <option value="ml">ml</option>
-                                <option value="l">L</option>
-                            </select>
+                <div class="grid grid-2">
+
+                    <div class="form-group">
+
+                        <label for="insumo-fc">
+                            Fator de correção (FC)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="insumo-fc"
+                            class="form-control"
+                            min="0.0001"
+                            step="0.001"
+                            value="1"
+                        >
+
+                        <div class="fc-info">
+                            Use 1 quando não houver perda.
+                            Valores maiores representam perda no preparo.
                         </div>
+
                     </div>
-                    <div class="col">
-                        <label>Margem de Lucro Desejada (%):</label>
-                        <input type="number" id="rec-lucro" value="100" min="0">
-                    </div>
+
                 </div>
 
-                <div class="flex-grid" style="margin-top: 5px;">
-                    <div class="col">
-                        <label>Custo de Embalagem por Porção/Lote Base (R$):</label>
-                        <input type="number" id="rec-embalagem" step="0.01" value="0.00" min="0" placeholder="Ex: 1.50">
-                    </div>
-                    <div class="col">
-                        <label>Custos Fixos / Overhead (%):</label>
-                        <input type="number" id="rec-overhead" step="0.1" value="10" min="0" placeholder="Ex: 10% (energia, gás, taxas)">
-                        <small style="font-size: 11px; color: var(--text-muted);">Incidente sobre os custos diretos.</small>
-                    </div>
+
+                <div class="action-bar">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="btn-salvar-insumo"
+                    >
+                        Salvar Insumo
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary hidden"
+                        id="btn-cancelar-insumo"
+                        onclick="cancelarEdicaoInsumo()"
+                    >
+                        Cancelar edição
+                    </button>
+
                 </div>
 
-                <h4 style="margin-top: 15px;">Ingredientes da Receita:</h4>
-                <div id="container-ingredientes"></div>
-                
-                <button onclick="adicionarLinhaIngrediente()" class="outline" style="margin-bottom: 15px;">+ Adicionar Ingrediente</button>
-                <button onclick="salvarReceita()" class="success" style="padding: 14px;">Salvar Ficha Técnica Completa</button>
-            </div>
+            </form>
 
-            <!-- LISTA DE FICHAS TÉCNICAS -->
-            <div class="card">
-                <h3>Minhas Fichas Técnicas</h3>
-                <div id="lista-receitas-cards"></div>
-            </div>
         </div>
 
-        <!-- ABA 3: DIMENSIONADOR -->
-        <div id="tab-dimensionador" class="tab-content hidden">
-            <div class="card no-print">
-                <h3>⚖️ Escalonador de Produção</h3>
-                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">
-                    Escolha uma receita e defina a quantidade e a unidade desejada (unidades, peso ou volume) para recalcular a batelada perfeitamente.
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Insumos cadastrados</h2>
+                    <p>Consulte e gerencie seus insumos.</p>
+                </div>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Insumo</th>
+                            <th>Unidade</th>
+                            <th>Qtd. embalagem</th>
+                            <th>Preço</th>
+                            <th>FC</th>
+                            <th>Custo base</th>
+                            <th>Ações</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="lista-insumos"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         RECEITAS
+    ========================= -->
+
+    <section id="receitas" class="tab-content">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Ficha Técnica</h2>
+                    <p>
+                        Cadastre receitas manualmente ou importe uma ficha por texto.
+                    </p>
+                </div>
+
+                <button
+                    class="btn btn-outline no-print"
+                    onclick="toggleImportArea()"
+                >
+                    Importar Receita
+                </button>
+
+            </div>
+
+
+            <div id="import-area" class="import-box hidden">
+
+                <h3>Importar ficha técnica</h3>
+
+                <p>
+                    Cole o texto da receita no campo abaixo.
                 </p>
 
-                <div class="flex-grid">
-                    <div class="col" style="flex: 2;">
-                        <label>Selecione a Receita:</label>
-                        <select id="sim-receita" onchange="aoMudarReceitaDimensionador()"></select>
+                <textarea
+                    id="import-text"
+                    class="form-control"
+                    placeholder="Cole aqui os dados da receita..."
+                ></textarea>
+
+                <div class="import-actions">
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="preencherExemploImportacao()"
+                    >
+                        Preencher exemplo
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="processarImportacaoTexto()"
+                    >
+                        Processar
+                    </button>
+
+                    <button
+                        class="btn btn-outline"
+                        onclick="toggleImportArea()"
+                    >
+                        Fechar
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <form id="form-receita" onsubmit="event.preventDefault(); salvarReceita();">
+
+                <div class="grid grid-3">
+
+                    <div class="form-group">
+
+                        <label for="rec-nome">
+                            Nome da receita
+                        </label>
+
+                        <input
+                            type="text"
+                            id="rec-nome"
+                            class="form-control"
+                            placeholder="Ex.: Molho Especial"
+                            required
+                        >
+
                     </div>
-                    <div class="col" style="flex: 2;">
-                        <label>Quantidade e Unidade Desejada:</label>
-                        <div style="display: flex; gap: 6px;">
-                            <input type="number" id="sim-qtd-desejada" value="10" min="0.01" step="any" oninput="calcularEscalonamento()" style="flex: 2; margin-bottom: 0;">
-                            <select id="sim-qtd-unidade" onchange="calcularEscalonamento()" style="flex: 1.5; margin-bottom: 0;">
-                                <option value="und">und</option>
-                                <option value="g">g</option>
-                                <option value="kg">kg</option>
-                                <option value="ml">ml</option>
-                                <option value="l">L</option>
-                            </select>
+
+                    <div class="form-group">
+
+                        <label for="rec-rendimento">
+                            Rendimento
+                        </label>
+
+                        <input
+                            type="number"
+                            id="rec-rendimento"
+                            class="form-control"
+                            min="0.001"
+                            step="0.001"
+                            placeholder="Ex.: 10"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="rec-rendimento-unidade">
+                            Unidade do rendimento
+                        </label>
+
+                        <select
+                            id="rec-rendimento-unidade"
+                            class="form-control"
+                        >
+                            <option value="und">Unidade</option>
+                            <option value="g">Gramas</option>
+                            <option value="kg">Quilos</option>
+                            <option value="ml">Mililitros</option>
+                            <option value="l">Litros</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="grid grid-3">
+
+                    <div class="form-group">
+
+                        <label for="rec-lucro">
+                            Margem/Lucro desejado (%)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="rec-lucro"
+                            class="form-control"
+                            min="0"
+                            step="0.01"
+                            value="30"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="rec-embalagem">
+                            Custo de embalagem (R$)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="rec-embalagem"
+                            class="form-control"
+                            min="0"
+                            step="0.01"
+                            value="0"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="rec-overhead">
+                            Custos indiretos / Overhead (%)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="rec-overhead"
+                            class="form-control"
+                            min="0"
+                            step="0.01"
+                            value="10"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="card" style="background:#F8FAFC;box-shadow:none;margin-top:20px;">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h3>Ingredientes</h3>
+                            <p>Informe a quantidade líquida utilizada na receita.</p>
                         </div>
+
+                        <button
+                            type="button"
+                            class="btn btn-outline no-print"
+                            onclick="adicionarLinhaIngrediente()"
+                        >
+                            + Adicionar ingrediente
+                        </button>
+
                     </div>
+
+                    <div id="container-ingredientes"></div>
+
                 </div>
+
+
+                <div class="action-bar">
+
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                    >
+                        Salvar Ficha Técnica
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="limparFormularioReceita()"
+                    >
+                        Limpar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Receitas cadastradas</h2>
+                    <p>Fichas técnicas disponíveis no sistema.</p>
+                </div>
+
             </div>
 
-            <!-- RELATÓRIO DO ESCALONAMENTO -->
-            <div id="relatorio-dimensionador" class="card hidden">
-                <div class="flex-grid" style="justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <div>
-                        <h2 id="sim-titulo-receita" style="margin: 0;">Nome da Receita</h2>
-                        <span id="sim-subtitulo" style="color: var(--text-muted); font-size: 13px;"></span>
-                    </div>
-                    <button onclick="window.print()" class="no-print outline" style="width: auto; padding: 8px 16px;">🖨️ Imprimir Ficha</button>
+            <div id="lista-receitas-cards" class="recipe-grid"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DIMENSIONADOR
+    ========================= -->
+
+    <section id="dimensionador" class="tab-content">
+
+        <div class="dimensionador-header">
+
+            <h2>📐 Dimensionador de Produção</h2>
+
+            <p>
+                Escalone uma ficha técnica para a quantidade desejada.
+            </p>
+
+        </div>
+
+
+        <div class="card no-print">
+
+            <div class="grid grid-3">
+
+                <div class="form-group">
+
+                    <label for="sim-receita">
+                        Receita
+                    </label>
+
+                    <select
+                        id="sim-receita"
+                        class="form-control"
+                        onchange="aoMudarReceitaDimensionador()"
+                    >
+                    </select>
+
                 </div>
 
-                <div class="flex-grid" style="margin-bottom: 20px;">
-                    <div class="col stat-box">
-                        <div class="stat-title">Custo Total da Batelada</div>
-                        <div class="stat-value" id="sim-custo-total" style="color: var(--danger);">R$ 0,00</div>
-                    </div>
-                    <div class="col stat-box">
-                        <div class="stat-title">Custo Unitário / Proporcional</div>
-                        <div class="stat-value" id="sim-custo-unidade">R$ 0,00</div>
-                    </div>
-                    <div class="col stat-box">
-                        <div class="stat-title">Preço de Venda Sugerido</div>
-                        <div class="stat-value" id="sim-preco-sugerido" style="color: var(--success);">R$ 0,00</div>
-                    </div>
-                    <div class="col stat-box">
-                        <div class="stat-title">Faturamento Estimado</div>
-                        <div class="stat-value" id="sim-faturamento" style="color: var(--primary);">R$ 0,00</div>
-                    </div>
+                <div class="form-group">
+
+                    <label for="sim-qtd-desejada">
+                        Quantidade desejada
+                    </label>
+
+                    <input
+                        type="number"
+                        id="sim-qtd-desejada"
+                        class="form-control"
+                        min="0.001"
+                        step="0.001"
+                        placeholder="Ex.: 100"
+                        oninput="calcularEscalonamento()"
+                    >
+
                 </div>
 
-                <h4>Insumos e Quantidades Necessárias para esta Batelada:</h4>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ingrediente</th>
-                                <th>Qtd Bruta (Com FC)</th>
-                                <th>Custo Proporcional (R$)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="sim-tabela-ingredientes"></tbody>
-                    </table>
+                <div class="form-group">
+
+                    <label for="sim-qtd-unidade">
+                        Unidade
+                    </label>
+
+                    <select
+                        id="sim-qtd-unidade"
+                        class="form-control"
+                        onchange="calcularEscalonamento()"
+                    >
+                        <option value="und">Unidade</option>
+                        <option value="g">Gramas</option>
+                        <option value="kg">Quilos</option>
+                        <option value="ml">Mililitros</option>
+                        <option value="l">Litros</option>
+                    </select>
+
                 </div>
+
             </div>
+
+        </div>
+
+
+        <div id="dimensionador-error" class="error-box hidden"></div>
+
+
+        <div id="dimensionador-report" class="report">
+
+            <div class="report-title">
+
+                <h2 id="sim-titulo-receita">
+                    Selecione uma receita
+                </h2>
+
+                <p id="sim-subtitulo">
+                    Informe a quantidade desejada para gerar o dimensionamento.
+                </p>
+
+            </div>
+
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Custo total
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="sim-custo-total"
+                    >
+                        R$ 0,00
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Custo por unidade
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="sim-custo-unidade"
+                    >
+                        R$ 0,00
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Preço sugerido
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="sim-preco-sugerido"
+                    >
+                        R$ 0,00
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <div class="summary-label">
+                        Faturamento
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="sim-faturamento"
+                    >
+                        R$ 0,00
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Ingrediente</th>
+                            <th>Qtd. original</th>
+                            <th>Qtd. dimensionada</th>
+                            <th>Unidade</th>
+                            <th>Custo</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="sim-tabela-ingredientes"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</section>
+
+
+<!-- MODAL -->
+
+<div id="custom-modal" class="modal-overlay">
+
+    <div class="modal">
+
+        <h3 id="modal-title"></h3>
+
+        <p id="modal-text"></p>
+
+        <div class="modal-actions">
+
+            <button
+                class="btn btn-secondary"
+                onclick="fecharCustomModal()"
+            >
+                Cancelar
+            </button>
+
+            <button
+                class="btn btn-danger"
+                id="modal-confirm"
+            >
+                Confirmar
+            </button>
+
         </div>
 
     </div>
 
 </div>
 
+
+<div id="toast-container"></div>
+
+
 <script>
-    // SISTEMA DE NOTIFICAÇÕES TOAST
-    function showToast(message, type = 'success') {
-        const container = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.innerHTML = `<span>${message}</span>`;
-        container.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 300);
-        }, 3500);
+/* ==========================================================
+   TSG GASTRONOMIA & GESTÃO PRO
+   VERSÃO CORRIGIDA
+========================================================== */
+
+
+/* ==========================================================
+   CONFIGURAÇÕES DE AUTENTICAÇÃO
+========================================================== */
+
+const AUTH_STORAGE_KEY = "tsg_gastro_auth";
+const SESSION_STORAGE_KEY = "tsg_gastro_session";
+const REMEMBER_USER_KEY = "tsg_gastro_remember_user";
+
+const DEFAULT_FIRST_ACCESS_PASSWORD = "@123456#";
+
+let authMode = "login";
+let currentUser = null;
+
+
+/* ==========================================================
+   BANCO LOCAL
+========================================================== */
+
+let db = {
+    insumos:
+        JSON.parse(localStorage.getItem("tsg_gastro_insumos")) || [],
+
+    receitas:
+        JSON.parse(localStorage.getItem("tsg_gastro_receitas")) || []
+};
+
+let editingInsumoId = null;
+
+
+/* ==========================================================
+   UTILIDADES
+========================================================== */
+
+function saveData(){
+
+    localStorage.setItem(
+        "tsg_gastro_insumos",
+        JSON.stringify(db.insumos)
+    );
+
+    localStorage.setItem(
+        "tsg_gastro_receitas",
+        JSON.stringify(db.receitas)
+    );
+}
+
+
+function gerarId(){
+
+    return Date.now().toString(36) +
+           Math.random().toString(36).substring(2,9);
+}
+
+
+function moeda(valor){
+
+    valor = Number(valor) || 0;
+
+    return valor.toLocaleString("pt-BR",{
+        style:"currency",
+        currency:"BRL"
+    });
+}
+
+
+function numero(valor){
+
+    return Number(valor) || 0;
+}
+
+
+function formatarNumero(valor){
+
+    return numero(valor).toLocaleString(
+        "pt-BR",
+        {
+            minimumFractionDigits:0,
+            maximumFractionDigits:3
+        }
+    );
+}
+
+
+/* ==========================================================
+   HASH SHA-256
+========================================================== */
+
+async function hashPassword(password){
+
+    if(!window.crypto || !window.crypto.subtle){
+
+        throw new Error(
+            "O navegador não disponibilizou criptografia segura. " +
+            "Abra o sistema em HTTPS ou localhost."
+        );
     }
 
-    // MODAL DE CONFIRMAÇÃO CUSTOMIZADO
-    function showCustomModal(title, text, onConfirm) {
-        const container = document.getElementById('custom-modal-container');
-        container.innerHTML = `
-            <div class="modal-backdrop">
-                <div class="modal-box">
-                    <h3>${title}</h3>
-                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">${text}</p>
-                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                        <button onclick="document.getElementById('custom-modal-container').innerHTML = ''" class="outline" style="width: auto; margin:0;">Cancelar</button>
-                        <button id="modal-confirm-btn" class="danger" style="width: auto; margin:0;">Confirmar</button>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.getElementById('modal-confirm-btn').onclick = () => {
-            container.innerHTML = '';
-            onConfirm();
+    const encoder = new TextEncoder();
+
+    const data = encoder.encode(password);
+
+    const hashBuffer =
+        await crypto.subtle.digest(
+            "SHA-256",
+            data
+        );
+
+    const hashArray =
+        Array.from(new Uint8Array(hashBuffer));
+
+    return hashArray
+        .map(b => b.toString(16).padStart(2,"0"))
+        .join("");
+}
+
+
+/* ==========================================================
+   AUTENTICAÇÃO
+========================================================== */
+
+function obterAuth(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(AUTH_STORAGE_KEY)
+        );
+
+    }catch(e){
+
+        return null;
+    }
+}
+
+
+function existeCadastroInicial(){
+
+    return !!obterAuth();
+}
+
+
+function configurarTelaLogin(){
+
+    const auth = obterAuth();
+
+    const nomeGroup =
+        document.getElementById("nome-group");
+
+    const newPasswordGroup =
+        document.getElementById("new-password-group");
+
+    const confirmPasswordGroup =
+        document.getElementById("confirm-password-group");
+
+    const rememberRow =
+        document.getElementById("remember-row");
+
+    const info =
+        document.getElementById("first-access-info");
+
+    const title =
+        document.getElementById("auth-title");
+
+    const subtitle =
+        document.getElementById("auth-subtitle");
+
+    const submit =
+        document.getElementById("auth-submit");
+
+    const hint =
+        document.getElementById("password-hint");
+
+    if(!auth){
+
+        authMode = "first";
+
+        title.textContent =
+            "Primeiro acesso";
+
+        subtitle.textContent =
+            "Configure o acesso do responsável pelo sistema.";
+
+        info.classList.remove("hidden");
+
+        nomeGroup.classList.remove("hidden");
+
+        newPasswordGroup.classList.remove("hidden");
+
+        confirmPasswordGroup.classList.remove("hidden");
+
+        rememberRow.classList.add("hidden");
+
+        submit.textContent =
+            "Criar acesso";
+
+        hint.textContent =
+            "Senha padrão: @123456#";
+
+        document.getElementById("password")
+            .setAttribute("placeholder","Digite @123456#");
+
+    }else{
+
+        authMode = "login";
+
+        title.textContent =
+            "TSG Gastronomia & Gestão";
+
+        subtitle.textContent =
+            "Sistema profissional de gestão gastronômica.";
+
+        info.classList.add("hidden");
+
+        nomeGroup.classList.add("hidden");
+
+        newPasswordGroup.classList.add("hidden");
+
+        confirmPasswordGroup.classList.add("hidden");
+
+        rememberRow.classList.remove("hidden");
+
+        submit.textContent =
+            "Entrar no Sistema";
+
+        hint.textContent =
+            "Informe seu usuário e senha.";
+
+        document.getElementById("password")
+            .setAttribute("placeholder","Digite sua senha");
+
+        const remembered =
+            localStorage.getItem(REMEMBER_USER_KEY);
+
+        if(remembered){
+
+            document.getElementById("email").value =
+                remembered;
+
+            document.getElementById("remember-me").checked =
+                true;
+        }
+    }
+}
+
+
+async function handleAuth(event){
+
+    event.preventDefault();
+
+    const username =
+        document.getElementById("email")
+            .value.trim();
+
+    const password =
+        document.getElementById("password")
+            .value;
+
+    if(!username){
+
+        showToast(
+            "Informe o usuário.",
+            "error"
+        );
+
+        return;
+    }
+
+    if(!password){
+
+        showToast(
+            "Informe a senha.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* =========================
+       PRIMEIRO ACESSO
+    ========================= */
+
+    if(authMode === "first"){
+
+        if(password !== DEFAULT_FIRST_ACCESS_PASSWORD){
+
+            showToast(
+                "Senha padrão incorreta.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const nome =
+            document.getElementById("nome")
+                .value.trim();
+
+        const newPassword =
+            document.getElementById("new-password")
+                .value;
+
+        const confirmPassword =
+            document.getElementById("confirm-password")
+                .value;
+
+
+        if(nome.length < 2){
+
+            showToast(
+                "Informe o nome do responsável.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(username.length < 3){
+
+            showToast(
+                "O usuário precisa ter pelo menos 3 caracteres.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(newPassword.length < 8){
+
+            showToast(
+                "A nova senha precisa ter pelo menos 8 caracteres.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(newPassword === DEFAULT_FIRST_ACCESS_PASSWORD){
+
+            showToast(
+                "Crie uma senha diferente da senha padrão.",
+                "warning"
+            );
+
+            return;
+        }
+
+
+        if(newPassword !== confirmPassword){
+
+            showToast(
+                "As novas senhas não conferem.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try{
+
+            const passwordHash =
+                await hashPassword(newPassword);
+
+            const authData = {
+
+                username:username,
+
+                nome:nome,
+
+                passwordHash:passwordHash,
+
+                createdAt:new Date().toISOString()
+
+            };
+
+
+            localStorage.setItem(
+                AUTH_STORAGE_KEY,
+                JSON.stringify(authData)
+            );
+
+
+            document.getElementById("auth-form").reset();
+
+            configurarTelaLogin();
+
+
+            showToast(
+                "Acesso criado com sucesso. Agora entre com seu novo usuário e senha.",
+                "success"
+            );
+
+
+        }catch(error){
+
+            console.error(error);
+
+            showToast(
+                error.message ||
+                "Não foi possível criar o acesso.",
+                "error"
+            );
+        }
+
+        return;
+    }
+
+
+    /* =========================
+       LOGIN NORMAL
+    ========================= */
+
+    const auth =
+        obterAuth();
+
+    if(!auth){
+
+        configurarTelaLogin();
+
+        showToast(
+            "Configure o primeiro acesso.",
+            "warning"
+        );
+
+        return;
+    }
+
+
+    try{
+
+        const passwordHash =
+            await hashPassword(password);
+
+
+        if(
+            username.toLowerCase() !==
+            String(auth.username).toLowerCase()
+        ){
+
+            showToast(
+                "Usuário ou senha incorretos.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(passwordHash !== auth.passwordHash){
+
+            showToast(
+                "Usuário ou senha incorretos.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        currentUser = {
+
+            username:auth.username,
+
+            nome:auth.nome
+
         };
+
+
+        const remember =
+            document.getElementById("remember-me")
+                .checked;
+
+
+        if(remember){
+
+            localStorage.setItem(
+                REMEMBER_USER_KEY,
+                auth.username
+            );
+
+        }else{
+
+            localStorage.removeItem(
+                REMEMBER_USER_KEY
+            );
+        }
+
+
+        sessionStorage.setItem(
+            SESSION_STORAGE_KEY,
+            JSON.stringify({
+                username:auth.username,
+                nome:auth.nome,
+                loginAt:new Date().toISOString()
+            })
+        );
+
+
+        iniciarSessao(currentUser);
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            error.message ||
+            "Não foi possível autenticar.",
+            "error"
+        );
+    }
+}
+
+
+/* ==========================================================
+   SESSÃO
+========================================================== */
+
+function verificarSessao(){
+
+    const session =
+        sessionStorage.getItem(
+            SESSION_STORAGE_KEY
+        );
+
+    if(!session){
+
+        mostrarLogin();
+
+        return false;
     }
 
-    // BANCO DE DADOS E ESTADO
-    let currentUser = null;
-    let editingInsumoId = null;
 
-    let db = {
-        users: JSON.parse(localStorage.getItem('tsg_gastro_users')) || [],
-        insumos: JSON.parse(localStorage.getItem('tsg_gastro_insumos')) || [],
-        receitas: JSON.parse(localStorage.getItem('tsg_gastro_receitas')) || []
+    try{
+
+        currentUser =
+            JSON.parse(session);
+
+        iniciarSessao(currentUser);
+
+        return true;
+
+    }catch(e){
+
+        sessionStorage.removeItem(
+            SESSION_STORAGE_KEY
+        );
+
+        mostrarLogin();
+
+        return false;
+    }
+}
+
+
+function iniciarSessao(user){
+
+    currentUser = user;
+
+    document.getElementById("auth-screen")
+        .classList.add("hidden");
+
+    document.getElementById("app-screen")
+        .classList.remove("hidden");
+
+
+    document.getElementById("header-user-name")
+        .textContent =
+            user.nome || user.username;
+
+
+    renderInsumos();
+
+    renderReceitas();
+
+    atualizarSelectsDimensionador();
+
+
+    const container =
+        document.getElementById(
+            "container-ingredientes"
+        );
+
+
+    if(
+        container.children.length === 0
+    ){
+
+        adicionarLinhaIngrediente();
+    }
+
+
+    calcularEscalonamento();
+}
+
+
+function mostrarLogin(){
+
+    document.getElementById("app-screen")
+        .classList.add("hidden");
+
+    document.getElementById("auth-screen")
+        .classList.remove("hidden");
+
+    currentUser = null;
+
+    configurarTelaLogin();
+}
+
+
+function logout(){
+
+    sessionStorage.removeItem(
+        SESSION_STORAGE_KEY
+    );
+
+    currentUser = null;
+
+    document.getElementById("auth-form")
+        .reset();
+
+    mostrarLogin();
+
+    showToast(
+        "Sessão encerrada.",
+        "success"
+    );
+}
+
+
+/* ==========================================================
+   TOAST
+========================================================== */
+
+function showToast(message,type="success"){
+
+    const container =
+        document.getElementById(
+            "toast-container"
+        );
+
+    const toast =
+        document.createElement("div");
+
+    toast.className =
+        "toast " + type;
+
+    toast.textContent =
+        message;
+
+    container.appendChild(toast);
+
+    setTimeout(()=>{
+
+        toast.remove();
+
+    },4000);
+}
+
+
+/* ==========================================================
+   MODAL
+========================================================== */
+
+let modalCallback = null;
+
+
+function showCustomModal(
+    title,
+    text,
+    onConfirm
+){
+
+    document.getElementById("modal-title")
+        .textContent = title;
+
+    document.getElementById("modal-text")
+        .textContent = text;
+
+    modalCallback = onConfirm;
+
+    document.getElementById("custom-modal")
+        .classList.add("active");
+
+
+    document.getElementById("modal-confirm")
+        .onclick = function(){
+
+            fecharCustomModal();
+
+            if(modalCallback){
+
+                const callback =
+                    modalCallback;
+
+                modalCallback = null;
+
+                callback();
+            }
+        };
+}
+
+
+function fecharCustomModal(){
+
+    document.getElementById("custom-modal")
+        .classList.remove("active");
+
+    modalCallback = null;
+}
+
+
+/* ==========================================================
+   BACKUP
+========================================================== */
+
+function exportarBackupJSON(){
+
+    const backup = {
+
+        version:"2.0",
+
+        exportedAt:
+            new Date().toISOString(),
+
+        /* IMPORTANTE:
+           credenciais NÃO entram no backup */
+
+        insumos:db.insumos,
+
+        receitas:db.receitas
+
     };
 
-    function saveData() {
-        try {
-            localStorage.setItem('tsg_gastro_users', JSON.stringify(db.users));
-            localStorage.setItem('tsg_gastro_insumos', JSON.stringify(db.insumos));
-            localStorage.setItem('tsg_gastro_receitas', JSON.stringify(db.receitas));
-        } catch(e) {
-            showToast("Aviso: Limite de armazenamento do navegador atingido.", "error");
-            console.error(e);
-        }
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    backup,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:"application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "TSG-backup-" +
+        new Date()
+            .toISOString()
+            .slice(0,10) +
+        ".json";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+
+    showToast(
+        "Backup exportado sem as credenciais de acesso.",
+        "success"
+    );
+}
+
+
+function importarBackupJSON(event){
+
+    const file =
+        event.target.files[0];
+
+    if(!file){
+
+        return;
     }
 
-    // SISTEMA DE BACKUP E RESTAURAÇÃO JSON
-    function exportarBackupJSON() {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", `tsg_gastronomia_backup_${new Date().toISOString().slice(0,10)}.json`);
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-        showToast("Backup exportado com sucesso!", "success");
-    }
 
-    function importarBackupJSON(event) {
-        const fileReader = new FileReader();
-        if(event.target.files[0]) {
-            fileReader.readAsText(event.target.files[0], "UTF-8");
-            fileReader.onload = e => {
-                try {
-                    const importedDB = JSON.parse(e.target.result);
-                    if(importedDB && importedDB.insumos && importedDB.receitas) {
-                        db = importedDB;
-                        saveData();
-                        renderInsumos();
-                        renderReceitas();
-                        atualizarSelectsDimensionador();
-                        showToast("Backup restaurado com sucesso!", "success");
-                    } else {
-                        showToast("Arquivo de backup inválido.", "error");
-                    }
-                } catch (err) {
-                    showToast("Erro ao processar o arquivo JSON.", "error");
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e){
+
+        try{
+
+            const data =
+                JSON.parse(
+                    e.target.result
+                );
+
+
+            if(
+                !Array.isArray(data.insumos) ||
+                !Array.isArray(data.receitas)
+            ){
+
+                throw new Error(
+                    "Arquivo de backup inválido."
+                );
+            }
+
+
+            showCustomModal(
+                "Restaurar backup?",
+                "Os insumos e receitas atuais serão substituídos pelos dados deste backup.",
+                function(){
+
+                    db.insumos =
+                        data.insumos;
+
+                    db.receitas =
+                        data.receitas;
+
+
+                    saveData();
+
+                    renderInsumos();
+
+                    renderReceitas();
+
+                    atualizarSelectsDimensionador();
+
+                    showToast(
+                        "Backup restaurado com sucesso.",
+                        "success"
+                    );
                 }
-            };
+            );
+
+
+        }catch(error){
+
+            console.error(error);
+
+            showToast(
+                "Não foi possível ler o backup.",
+                "error"
+            );
         }
+
+
+        event.target.value = "";
+
+    };
+
+
+    reader.readAsText(file);
+}
+
+
+/* ==========================================================
+   ABAS
+========================================================== */
+
+function switchTab(
+    tabName,
+    event
+){
+
+    document
+        .querySelectorAll(".tab-content")
+        .forEach(tab=>{
+
+            tab.classList.remove("active");
+
+        });
+
+
+    document
+        .querySelectorAll(".tab-btn")
+        .forEach(button=>{
+
+            button.classList.remove("active");
+
+        });
+
+
+    const target =
+        document.getElementById(tabName);
+
+
+    if(target){
+
+        target.classList.add("active");
     }
 
-    // AUTO-LOGIN
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedEmail = localStorage.getItem('tsg_gastro_session');
-        if (savedEmail) {
-            const user = db.users.find(u => u.email === savedEmail);
-            if (user) {
-                iniciarSessao(user);
-                return;
-            }
-        }
-    });
 
-    // AUTENTICAÇÃO
-    function handleAuth(e) {
-        e.preventDefault();
-        const nome = document.getElementById('nome').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const pass = document.getElementById('password').value.trim();
-        const remember = document.getElementById('remember-me').checked;
+    if(event && event.currentTarget){
 
-        let user = db.users.find(u => u.email === email);
-
-        if(!user) {
-            user = { nome, email, pass };
-            db.users.push(user);
-            saveData();
-        } else {
-            if(user.pass !== pass) {
-                showToast("Senha incorreta!", "error");
-                return;
-            }
-            if(nome) { user.nome = nome; saveData(); }
-        }
-
-        if(remember) localStorage.setItem('tsg_gastro_session', user.email);
-        else localStorage.removeItem('tsg_gastro_session');
-
-        iniciarSessao(user);
-        showToast(`Bem-vindo(a), ${user.nome || 'Usuário'}!`, "success");
+        event.currentTarget
+            .classList.add("active");
     }
 
-    function iniciarSessao(user) {
-        currentUser = user;
-        document.getElementById('auth-screen').classList.add('hidden');
-        document.getElementById('app-screen').classList.remove('hidden');
 
-        document.getElementById('user-header-info').classList.remove('hidden');
-        document.getElementById('user-display-name').innerText = currentUser.nome || "Usuário";
+    if(tabName === "dimensionador"){
 
-        renderInsumos();
-        renderReceitas();
         atualizarSelectsDimensionador();
-        if(document.querySelectorAll('.ingredient-row').length === 0) {
-            adicionarLinhaIngrediente();
-        }
+
+        calcularEscalonamento();
+    }
+}
+
+
+/* ==========================================================
+   UNIDADES
+========================================================== */
+
+function categoriaUnidade(unidade){
+
+    unidade =
+        String(unidade)
+            .toLowerCase();
+
+    if(
+        unidade === "g" ||
+        unidade === "kg"
+    ){
+
+        return "peso";
     }
 
-    function logout() {
-        currentUser = null;
-        localStorage.removeItem('tsg_gastro_session');
-        document.getElementById('auth-screen').classList.remove('hidden');
-        document.getElementById('app-screen').classList.add('hidden');
-        document.getElementById('user-header-info').classList.add('hidden');
-        showToast("Sessão encerrada.", "success");
+
+    if(
+        unidade === "ml" ||
+        unidade === "l"
+    ){
+
+        return "volume";
     }
 
-    // CONVERSORES DE UNIDADES E BASE COMUM
-    function converterUnidade(qtd, unidadeOrigem, unidadeDestino) {
-        if (unidadeOrigem === unidadeDestino) return qtd;
-        if (unidadeOrigem === 'kg' && unidadeDestino === 'g') return qtd * 1000;
-        if (unidadeOrigem === 'g' && unidadeDestino === 'kg') return qtd / 1000;
-        if (unidadeOrigem === 'l' && unidadeDestino === 'ml') return qtd * 1000;
-        if (unidadeOrigem === 'ml' && unidadeDestino === 'l') return qtd / 1000;
+
+    if(
+        unidade === "und"
+    ){
+
+        return "unidade";
+    }
+
+
+    return null;
+}
+
+
+function converterParaBaseComum(
+    qtd,
+    unidade
+){
+
+    qtd = numero(qtd);
+
+    unidade =
+        String(unidade)
+            .toLowerCase();
+
+
+    if(unidade === "kg"){
+
+        return qtd * 1000;
+    }
+
+
+    if(unidade === "g"){
+
         return qtd;
     }
 
-    function converterParaBaseComum(qtd, unidade) {
-        if (unidade === 'kg') return qtd * 1000; // gramas
-        if (unidade === 'g') return qtd;         // gramas
-        if (unidade === 'l') return qtd * 1000;  // ml
-        if (unidade === 'ml') return qtd;        // ml
-        return qtd;                              // und ou padrão
+
+    if(unidade === "l"){
+
+        return qtd * 1000;
     }
 
-    // NAVEGAÇÃO
-    function switchTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-        document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-        
-        document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-        event.target.classList.add('active');
 
-        if(tabName === 'dimensionador') {
-            atualizarSelectsDimensionador();
-            calcularEscalonamento();
+    if(unidade === "ml"){
+
+        return qtd;
+    }
+
+
+    return qtd;
+}
+
+
+function converterUnidade(
+    qtd,
+    unidadeOrigem,
+    unidadeDestino
+){
+
+    qtd = numero(qtd);
+
+    unidadeOrigem =
+        String(unidadeOrigem)
+            .toLowerCase();
+
+    unidadeDestino =
+        String(unidadeDestino)
+            .toLowerCase();
+
+
+    if(unidadeOrigem === unidadeDestino){
+
+        return qtd;
+    }
+
+
+    const categoriaOrigem =
+        categoriaUnidade(unidadeOrigem);
+
+    const categoriaDestino =
+        categoriaUnidade(unidadeDestino);
+
+
+    if(
+        categoriaOrigem !==
+        categoriaDestino
+    ){
+
+        return null;
+    }
+
+
+    if(categoriaOrigem === "peso"){
+
+        const gramas =
+            unidadeOrigem === "kg"
+                ? qtd * 1000
+                : qtd;
+
+        return unidadeDestino === "kg"
+            ? gramas / 1000
+            : gramas;
+    }
+
+
+    if(categoriaOrigem === "volume"){
+
+        const ml =
+            unidadeOrigem === "l"
+                ? qtd * 1000
+                : qtd;
+
+        return unidadeDestino === "l"
+            ? ml / 1000
+            : ml;
+    }
+
+
+    return qtd;
+}
+
+
+/* ==========================================================
+   INSUMOS
+========================================================== */
+
+function salvarInsumo(){
+
+    const nome =
+        document.getElementById(
+            "insumo-nome"
+        ).value.trim();
+
+    const unidade =
+        document.getElementById(
+            "insumo-unidade"
+        ).value;
+
+    const qtdEmb =
+        numero(
+            document.getElementById(
+                "insumo-qtd-emb"
+            ).value
+        );
+
+    const preco =
+        numero(
+            document.getElementById(
+                "insumo-preco"
+            ).value
+        );
+
+    const fcInput =
+        numero(
+            document.getElementById(
+                "insumo-fc"
+            ).value
+        );
+
+
+    if(!nome){
+
+        showToast(
+            "Informe o nome do insumo.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(qtdEmb <= 0){
+
+        showToast(
+            "A quantidade da embalagem deve ser maior que zero.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(preco < 0){
+
+        showToast(
+            "O preço não pode ser negativo.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const fc =
+        fcInput > 0
+            ? fcInput
+            : 1;
+
+
+    if(editingInsumoId){
+
+        const index =
+            db.insumos.findIndex(
+                i => i.id === editingInsumoId
+            );
+
+
+        if(index !== -1){
+
+            db.insumos[index] = {
+
+                ...db.insumos[index],
+
+                nome,
+                unidade,
+                qtdEmb,
+                preco,
+                fc
+
+            };
         }
-    }
 
-    // 1. GESTÃO DE INSUMOS BASE (COM FATOR DE CORREÇÃO)
-    function salvarInsumo() {
-        const nome = document.getElementById('insumo-nome').value.trim();
-        const unidade = document.getElementById('insumo-unidade').value;
-        const qtdEmb = parseFloat(document.getElementById('insumo-qtd-emb').value);
-        const preco = parseFloat(document.getElementById('insumo-preco').value);
-        const fc = parseFloat(document.getElementById('insumo-fc').value) || 1.0;
 
-        if(!nome || isNaN(qtdEmb) || isNaN(preco) || qtdEmb <= 0 || preco < 0 || fc < 1) {
-            showToast("Preencha todos os campos do insumo corretamente (FC mínimo 1.0)!", "error");
-            return;
-        }
+        showToast(
+            "Insumo atualizado.",
+            "success"
+        );
 
-        if(editingInsumoId !== null) {
-            const insumo = db.insumos.find(i => i.id === editingInsumoId);
-            if(insumo) {
-                insumo.nome = nome;
-                insumo.unidade = unidade;
-                insumo.qtdEmb = qtdEmb;
-                insumo.preco = preco;
-                insumo.fc = fc;
-            }
-            cancelarEdicaoInsumo();
-            showToast("Insumo atualizado com sucesso!", "success");
-        } else {
-            const id = new Date().getTime();
-            db.insumos.push({ id, nome, unidade, qtdEmb, preco, fc });
-            
-            document.getElementById('insumo-nome').value = '';
-            document.getElementById('insumo-qtd-emb').value = '';
-            document.getElementById('insumo-preco').value = '';
-            document.getElementById('insumo-fc').value = '1.00';
-            showToast("Insumo cadastrado com sucesso!", "success");
-        }
+    }else{
 
-        saveData();
-        renderInsumos();
-        renderReceitas();
-    }
+        db.insumos.push({
 
-    function editarInsumo(id) {
-        const insumo = db.insumos.find(i => i.id === id);
-        if(!insumo) return;
+            id:gerarId(),
 
-        editingInsumoId = id;
-        document.getElementById('insumo-nome').value = insumo.nome;
-        document.getElementById('insumo-unidade').value = insumo.unidade;
-        document.getElementById('insumo-qtd-emb').value = insumo.qtdEmb;
-        document.getElementById('insumo-preco').value = insumo.preco;
-        document.getElementById('insumo-fc').value = insumo.fc || 1.0;
+            nome,
 
-        document.getElementById('form-insumo-titulo').innerText = `✏️ Editando: "${insumo.nome}"`;
-        document.getElementById('btn-salvar-insumo').innerText = '🔄 Atualizar Insumo';
-        document.getElementById('btn-cancelar-insumo').classList.remove('hidden');
+            unidade,
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+            qtdEmb,
 
-    function cancelarEdicaoInsumo() {
-        editingInsumoId = null;
-        document.getElementById('insumo-nome').value = '';
-        document.getElementById('insumo-qtd-emb').value = '';
-        document.getElementById('insumo-preco').value = '';
-        document.getElementById('insumo-fc').value = '1.00';
-        
-        document.getElementById('form-insumo-titulo').innerText = 'Cadastrar Novo Insumo / Ingrediente';
-        document.getElementById('btn-salvar-insumo').innerText = 'Salvar Insumo';
-        document.getElementById('btn-cancelar-insumo').classList.add('hidden');
-    }
+            preco,
 
-    function deletarInsumo(id) {
-        showCustomModal("Excluir Insumo", "Deseja realmente remover este insumo? Isso pode afetar fichas técnicas vinculadas.", () => {
-            db.insumos = db.insumos.filter(i => i.id !== id);
-            if(editingInsumoId === id) cancelarEdicaoInsumo();
-            saveData();
-            renderInsumos();
-            renderReceitas();
-            showToast("Insumo excluído.", "success");
+            fc
+
         });
+
+
+        showToast(
+            "Insumo cadastrado.",
+            "success"
+        );
     }
 
-    function renderInsumos() {
-        const lista = document.getElementById('lista-insumos');
-        if(db.insumos.length === 0) {
-            lista.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-muted);">Nenhum insumo cadastrado ainda.</td></tr>`;
-            return;
+
+    saveData();
+
+    cancelarEdicaoInsumo();
+
+    renderInsumos();
+
+    renderReceitas();
+
+    atualizarSelectsDimensionador();
+
+    calcularEscalonamento();
+}
+
+
+function editarInsumo(id){
+
+    const insumo =
+        db.insumos.find(
+            i => i.id === id
+        );
+
+
+    if(!insumo){
+
+        return;
+    }
+
+
+    editingInsumoId = id;
+
+
+    document.getElementById(
+        "insumo-nome"
+    ).value = insumo.nome || "";
+
+
+    document.getElementById(
+        "insumo-unidade"
+    ).value = insumo.unidade || "g";
+
+
+    document.getElementById(
+        "insumo-qtd-emb"
+    ).value = insumo.qtdEmb || 0;
+
+
+    document.getElementById(
+        "insumo-preco"
+    ).value = insumo.preco || 0;
+
+
+    document.getElementById(
+        "insumo-fc"
+    ).value = insumo.fc || 1;
+
+
+    document.getElementById(
+        "btn-salvar-insumo"
+    ).textContent =
+        "Atualizar Insumo";
+
+
+    document.getElementById(
+        "btn-cancelar-insumo"
+    ).classList.remove("hidden");
+
+
+    document
+        .getElementById("insumo-nome")
+        .focus();
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+function cancelarEdicaoInsumo(){
+
+    editingInsumoId = null;
+
+
+    document.getElementById(
+        "form-insumo"
+    ).reset();
+
+
+    document.getElementById(
+        "insumo-fc"
+    ).value = 1;
+
+
+    document.getElementById(
+        "btn-salvar-insumo"
+    ).textContent =
+        "Salvar Insumo";
+
+
+    document.getElementById(
+        "btn-cancelar-insumo"
+    ).classList.add("hidden");
+}
+
+
+function deletarInsumo(id){
+
+    const insumo =
+        db.insumos.find(
+            i => i.id === id
+        );
+
+
+    if(!insumo){
+
+        return;
+    }
+
+
+    showCustomModal(
+        "Excluir insumo?",
+        `O insumo "${insumo.nome}" será removido do cadastro. As receitas que o utilizam poderão ficar sem referência.`,
+        function(){
+
+            db.insumos =
+                db.insumos.filter(
+                    i => i.id !== id
+                );
+
+
+            saveData();
+
+            renderInsumos();
+
+            renderReceitas();
+
+            atualizarSelectsDimensionador();
+
+            showToast(
+                "Insumo excluído.",
+                "success"
+            );
         }
+    );
+}
 
-        lista.innerHTML = db.insumos.map(i => {
-            const fc = i.fc || 1.0;
-            const custoFracionadoBase = i.qtdEmb > 0 ? (i.preco / i.qtdEmb) : 0;
-            const custoRealFracionado = custoFracionadoBase * fc;
-            
-            let badges = '';
-            if (i.preco === 0) badges += `<span class="badge badge-danger" style="margin-left:5px;">Sem Preço</span>`;
-            if (fc > 1.2) badges += `<span class="badge badge-warning" style="margin-left:5px;">FC Alto (${fc})</span>`;
 
-            return `
-                <tr>
-                    <td><b>${i.nome}</b>${badges}</td>
-                    <td>${i.qtdEmb} ${i.unidade}</td>
-                    <td>R$ ${i.preco.toFixed(2)}</td>
-                    <td>${fc.toFixed(2)}</td>
-                    <td><b>R$ ${custoRealFracionado.toFixed(4)}</b> / ${i.unidade}</td>
-                    <td class="no-print">
-                        <div style="display:flex; gap:6px;">
-                            <button onclick="editarInsumo(${i.id})" class="outline" style="padding: 4px 8px; font-size: 12px; margin-bottom: 0;">Editar</button>
-                            <button onclick="deletarInsumo(${i.id})" class="danger" style="padding: 4px 8px; font-size: 12px; margin-bottom: 0;">Excluir</button>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        }).join('');
+function renderInsumos(){
+
+    const tbody =
+        document.getElementById(
+            "lista-insumos"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    if(db.insumos.length === 0){
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="empty-state">
+                    Nenhum insumo cadastrado.
+                </td>
+            </tr>
+        `;
+
+        return;
     }
 
-    // 2. GESTÃO DE FICHA TÉCNICA (COM EMBALAGEM E OVERHEAD)
-    function toggleImportArea() {
-        document.getElementById('import-area').classList.toggle('hidden');
-    }
 
-    function preencherExemploImportacao() {
-        document.getElementById('import-text').value = `Nome: Picolé de Cajá com Castanha
+    db.insumos.forEach(insumo=>{
+
+        const qtdEmb =
+            numero(insumo.qtdEmb);
+
+        const preco =
+            numero(insumo.preco);
+
+        const fc =
+            numero(insumo.fc) || 1;
+
+
+        const custoBase =
+            qtdEmb > 0
+                ? (preco / qtdEmb) * fc
+                : 0;
+
+
+        const tr =
+            document.createElement("tr");
+
+
+        tr.innerHTML = `
+
+            <td>
+                <strong>
+                    ${escapeHTML(insumo.nome)}
+                </strong>
+            </td>
+
+            <td>
+                ${escapeHTML(insumo.unidade || "")}
+            </td>
+
+            <td>
+                ${formatarNumero(qtdEmb)}
+            </td>
+
+            <td>
+                ${moeda(preco)}
+            </td>
+
+            <td>
+                ${formatarNumero(fc)}
+            </td>
+
+            <td>
+                ${moeda(custoBase)}
+            </td>
+
+            <td>
+
+                <div style="display:flex;gap:6px;flex-wrap:wrap">
+
+                    <button
+                        class="btn btn-sm btn-outline"
+                        onclick="editarInsumo('${insumo.id}')"
+                    >
+                        Editar
+                    </button>
+
+                    <button
+                        class="btn btn-sm btn-danger"
+                        onclick="deletarInsumo('${insumo.id}')"
+                    >
+                        Excluir
+                    </button>
+
+                </div>
+
+            </td>
+        `;
+
+
+        tbody.appendChild(tr);
+    });
+}
+
+
+/* ==========================================================
+   ESCAPE HTML
+========================================================== */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* ==========================================================
+   IMPORTAÇÃO DE RECEITA
+========================================================== */
+
+function toggleImportArea(){
+
+    document
+        .getElementById("import-area")
+        .classList.toggle("hidden");
+}
+
+
+function preencherExemploImportacao(){
+
+    document.getElementById(
+        "import-text"
+    ).value =
+
+`Receita: Molho Especial
 Rendimento: 10 und
-Lucro: 150%
+Lucro: 30%
 
 Ingredientes:
-Polpa de Cajá: 400g
-Leite Condensado: 395g
-Creme de Leite: 200g
-Castanha de Caju: 100g`;
+500 g Tomate
+100 g Cebola
+20 g Açúcar
+10 ml Óleo`;
+}
+
+
+function processarImportacaoTexto(){
+
+    const texto =
+        document.getElementById(
+            "import-text"
+        ).value.trim();
+
+
+    if(!texto){
+
+        showToast(
+            "Cole uma receita para importar.",
+            "error"
+        );
+
+        return;
     }
 
-    function processarImportacaoTexto() {
-        const rawText = document.getElementById('import-text').value.trim();
-        if(!rawText) {
-            showToast("Cole o texto da receita antes de importar!", "error");
+
+    const linhas =
+        texto.split(/\r?\n/);
+
+
+    let nome = "";
+    let rendimento = 1;
+    let rendimentoUnidade = "und";
+    let lucro = 30;
+
+    const ingredientes = [];
+
+
+    linhas.forEach(linha=>{
+
+        const l =
+            linha.trim();
+
+
+        if(!l){
+
             return;
         }
 
-        let nome = "Receita Importada";
-        let rendimento = 10;
-        let rendimentoUnidade = 'und';
-        let lucro = 100;
-        const listaIngredientesRaw = [];
 
-        const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        let match;
 
-        lines.forEach(line => {
-            const lineLower = line.toLowerCase();
-            if(lineLower.startsWith('nome:')) {
-                nome = line.substring(5).trim();
-            } else if(lineLower.startsWith('rendimento:')) {
-                const textRend = line.substring(11).trim();
-                const matchR = textRend.match(/(\d+[\.,]?\d*)\s*(g|ml|un|kg|l|und)?/i);
-                if(matchR) {
-                    rendimento = parseFloat(matchR[1].replace(',', '.'));
-                    let u = matchR[2] ? matchR[2].toLowerCase() : 'und';
-                    if(u === 'un') u = 'und';
-                    rendimentoUnidade = u;
-                }
-            } else if(lineLower.startsWith('lucro:') || lineLower.startsWith('margem:')) {
-                const l = parseFloat(line.replace(/[^0-9.]/g, ''));
-                if(!isNaN(l)) lucro = l;
-            } else if(!lineLower.startsWith('ingredientes')) {
-                let qtd = 0;
-                let unidade = 'g';
-                let ingNome = '';
 
-                const matchQtd = line.match(/(\d+[\.,]?\d*)\s*(g|ml|un|kg|l|und)?/i);
-                if(matchQtd) {
-                    qtd = parseFloat(matchQtd[1].replace(',', '.'));
-                    let u = matchQtd[2] ? matchQtd[2].toLowerCase() : 'g';
-                    if(u === 'un') u = 'und';
-                    unidade = u;
-                    ingNome = line.replace(matchQtd[0], '').replace(/[:\-]/g, '').trim();
-                }
+        match =
+            l.match(
+                /^receita\s*:\s*(.+)$/i
+            );
 
-                if(!ingNome && line.includes(':')) {
-                    const parts = line.split(':');
-                    ingNome = parts[0].trim();
-                    qtd = parseFloat(parts[1].replace(/[^0-9.]/g, '')) || 100;
-                } else if(!ingNome) {
-                    ingNome = line;
-                    qtd = 100;
-                }
+        if(match){
 
-                if(ingNome && qtd > 0) {
-                    listaIngredientesRaw.push({ nome: ingNome, qtd, unidade });
-                }
-            }
-        });
+            nome =
+                match[1].trim();
 
-        if(listaIngredientesRaw.length === 0) {
-            showToast("Não foi possível identificar ingredientes no texto.", "error");
             return;
         }
 
-        const ingredientesFinais = [];
 
-        listaIngredientesRaw.forEach(item => {
-            let insumo = db.insumos.find(i => i.nome.toLowerCase() === item.nome.toLowerCase());
-            
-            if(!insumo) {
-                const newId = new Date().getTime() + Math.floor(Math.random() * 1000);
-                const unidadeBase = (item.unidade === 'kg' ? 'g' : (item.unidade === 'l' || item.unidade === 'ml' ? 'ml' : 'g'));
-                const qtdPadraoEmb = unidadeBase === 'un' ? 1 : 1000;
-                
-                insumo = { id: newId, nome: item.nome, unidade: unidadeBase, qtdEmb: qtdPadraoEmb, preco: 0, fc: 1.0 };
-                db.insumos.push(insumo);
-            }
+        match =
+            l.match(
+                /^rendimento\s*:\s*([\d.,]+)\s*(\w+)?/i
+            );
 
-            ingredientesFinais.push({ insumoId: insumo.id, qtdUsada: item.qtd, unidadeUsada: item.unidade });
-        });
+        if(match){
 
-        const recId = new Date().getTime();
-        db.receitas.push({ id: recId, nome, rendimento, rendimentoUnidade, lucro, embalagem: 0, overhead: 10, ingredientes: ingredientesFinais });
-        
-        saveData();
-        renderInsumos();
-        renderReceitas();
+            rendimento =
+                parseNumeroBR(match[1]);
 
-        document.getElementById('import-text').value = '';
-        document.getElementById('import-area').classList.add('hidden');
-        showToast(`Receita "${nome}" importada com sucesso!`, "success");
+            rendimentoUnidade =
+                normalizarUnidade(
+                    match[2] || "und"
+                );
+
+            return;
+        }
+
+
+        match =
+            l.match(
+                /^lucro\s*:\s*([\d.,]+)/i
+            );
+
+        if(match){
+
+            lucro =
+                parseNumeroBR(match[1]);
+
+            return;
+        }
+
+
+        /* formato:
+           500 g Tomate
+           100 ml Óleo
+           2 und Ovos
+        */
+
+        match =
+            l.match(
+                /^([\d.,]+)\s*(kg|g|l|ml|und|un|unid)\s+(.+)$/i
+            );
+
+
+        if(match){
+
+            ingredientes.push({
+
+                qtd:
+                    parseNumeroBR(
+                        match[1]
+                    ),
+
+                unidade:
+                    normalizarUnidade(
+                        match[2]
+                    ),
+
+                nome:
+                    match[3].trim()
+
+            });
+        }
+
+    });
+
+
+    if(!nome){
+
+        showToast(
+            "Não foi possível identificar o nome da receita.",
+            "error"
+        );
+
+        return;
     }
 
-    function copiarTextoReceita(id) {
-        const r = db.receitas.find(rec => rec.id === id);
-        if(!r) return;
 
-        let txt = `Nome: ${r.nome}\nRendimento: ${r.rendimento} ${r.rendimentoUnidade || 'und'}\nLucro: ${r.lucro}%\nEmbalagem: R$ ${r.embalagem || 0}\nOverhead: ${r.overhead || 0}%\n\nIngredientes:\n`;
-        r.ingredientes.forEach(ing => {
-            const insumo = db.insumos.find(i => i.id === ing.insumoId);
-            if(insumo) {
-                txt += `${insumo.nome}: ${ing.qtdUsada}${ing.unidadeUsada || insumo.unidade}\n`;
-            }
-        });
+    if(ingredientes.length === 0){
 
-        navigator.clipboard.writeText(txt).then(() => {
-            showToast("Ficha técnica copiada para a área de transferência!", "success");
-        });
+        showToast(
+            "Nenhum ingrediente foi identificado.",
+            "error"
+        );
+
+        return;
     }
 
-    function adicionarLinhaIngrediente() {
-        const container = document.getElementById('container-ingredientes');
-        const div = document.createElement('div');
-        div.className = 'ingredient-row';
-        
-        const options = db.insumos.map(i => `<option value="${i.id}">${i.nome} (Base: ${i.unidade})</option>`).join('');
 
-        div.innerHTML = `
-            <select class="rec-insumo-select" onchange="aoSelecionarInsumo(this)">
-                ${options.length ? options : '<option value="">Cadastre insumos primeiro</option>'}
+    document.getElementById(
+        "rec-nome"
+    ).value = nome;
+
+
+    document.getElementById(
+        "rec-rendimento"
+    ).value = rendimento;
+
+
+    document.getElementById(
+        "rec-rendimento-unidade"
+    ).value =
+        rendimentoUnidade;
+
+
+    document.getElementById(
+        "rec-lucro"
+    ).value = lucro;
+
+
+    document.getElementById(
+        "rec-embalagem"
+    ).value = 0;
+
+
+    document.getElementById(
+        "rec-overhead"
+    ).value = 10;
+
+
+    const container =
+        document.getElementById(
+            "container-ingredientes"
+        );
+
+
+    container.innerHTML = "";
+
+
+    ingredientes.forEach(item=>{
+
+        let insumo =
+            db.insumos.find(
+                i =>
+                    String(i.nome)
+                        .toLowerCase()
+                        ===
+                    item.nome
+                        .toLowerCase()
+            );
+
+
+        if(!insumo){
+
+            /*
+             * Correção:
+             * und continua sendo und.
+             * Antes podia cair incorretamente em g.
+             */
+
+            const unidadeBase =
+                item.unidade === "und"
+                    ? "und"
+                    : item.unidade === "kg"
+                        ? "kg"
+                        : item.unidade === "l"
+                            ? "l"
+                            : item.unidade;
+
+
+            const qtdPadraoEmb =
+                unidadeBase === "und"
+                    ? 1
+                    : unidadeBase === "kg"
+                        ? 1
+                        : unidadeBase === "l"
+                            ? 1
+                            : 1000;
+
+
+            insumo = {
+
+                id:gerarId(),
+
+                nome:item.nome,
+
+                unidade:unidadeBase,
+
+                qtdEmb:qtdPadraoEmb,
+
+                preco:0,
+
+                fc:1
+
+            };
+
+
+            db.insumos.push(insumo);
+
+            saveData();
+        }
+
+
+        adicionarLinhaIngrediente(
+            insumo.id,
+            item.qtd,
+            item.unidade
+        );
+
+    });
+
+
+    renderInsumos();
+
+    renderReceitas();
+
+    atualizarSelectsDimensionador();
+
+
+    showToast(
+        "Receita importada para conferência. Confira os dados antes de salvar.",
+        "success"
+    );
+
+
+    document.getElementById(
+        "import-area"
+    ).classList.add("hidden");
+}
+
+
+function parseNumeroBR(valor){
+
+    let texto =
+        String(valor)
+            .trim()
+            .replace(/\./g,"")
+            .replace(",", ".");
+
+    return Number(texto) || 0;
+}
+
+
+function normalizarUnidade(unidade){
+
+    unidade =
+        String(unidade)
+            .toLowerCase()
+            .trim();
+
+
+    if(
+        unidade === "un" ||
+        unidade === "unid"
+    ){
+
+        return "und";
+    }
+
+
+    if(unidade === "quilo"){
+
+        return "kg";
+    }
+
+
+    if(unidade === "litro"){
+
+        return "l";
+    }
+
+
+    return unidade;
+}
+
+
+/* ==========================================================
+   INGREDIENTES DA RECEITA
+========================================================== */
+
+function adicionarLinhaIngrediente(
+    selectedId = "",
+    quantidade = "",
+    unidade = ""
+){
+
+    const container =
+        document.getElementById(
+            "container-ingredientes"
+        );
+
+
+    const row =
+        document.createElement("div");
+
+
+    row.className =
+        "ingrediente-row";
+
+
+    const options =
+        db.insumos
+            .map(insumo=>`
+
+                <option
+                    value="${escapeHTML(insumo.id)}"
+                    ${String(insumo.id) === String(selectedId) ? "selected" : ""}
+                >
+                    ${escapeHTML(insumo.nome)}
+                </option>
+
+            `)
+            .join("");
+
+
+    row.innerHTML = `
+
+        <div>
+
+            <label>Insumo</label>
+
+            <select
+                class="form-control ingrediente-insumo"
+                onchange="aoSelecionarInsumo(this)"
+            >
+
+                <option value="">
+                    Selecione...
+                </option>
+
+                ${options}
+
             </select>
-            <input type="number" class="rec-insumo-qtd" placeholder="Qtd" step="0.01">
-            <select class="rec-insumo-unidade">
+
+        </div>
+
+
+        <div>
+
+            <label>Quantidade</label>
+
+            <input
+                type="number"
+                class="form-control ingrediente-qtd"
+                min="0.0001"
+                step="0.001"
+                value="${escapeHTML(quantidade)}"
+                oninput="atualizarCustoLinha(this)"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>Unidade</label>
+
+            <select
+                class="form-control ingrediente-unidade"
+                onchange="atualizarCustoLinha(this)"
+            >
+
                 <option value="g">g</option>
                 <option value="kg">kg</option>
                 <option value="ml">ml</option>
                 <option value="l">L</option>
                 <option value="und">und</option>
+
             </select>
-            <button onclick="this.parentElement.remove()" class="danger">✕</button>
-        `;
-        container.appendChild(div);
-        
-        const select = div.querySelector('.rec-insumo-select');
-        if(select && select.value) aoSelecionarInsumo(select);
-    }
 
-    function aoSelecionarInsumo(selectEl) {
-        const insumoId = parseInt(selectEl.value);
-        const insumo = db.insumos.find(i => i.id === insumoId);
-        if(insumo) {
-            const unitSelect = selectEl.parentElement.querySelector('.rec-insumo-unidade');
-            if(unitSelect) unitSelect.value = insumo.unidade;
+            <div class="ingrediente-custo">
+                Custo: R$ 0,00
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="remove-ingredient"
+            onclick="this.parentElement.remove()"
+        >
+            ✕
+        </button>
+
+    `;
+
+
+    container.appendChild(row);
+
+
+    if(unidade){
+
+        row.querySelector(
+            ".ingrediente-unidade"
+        ).value =
+            normalizarUnidade(unidade);
+
+    }else if(selectedId){
+
+        const insumo =
+            db.insumos.find(
+                i => String(i.id) === String(selectedId)
+            );
+
+
+        if(insumo){
+
+            row.querySelector(
+                ".ingrediente-unidade"
+            ).value =
+                insumo.unidade;
         }
     }
 
-    function salvarReceita() {
-        const nome = document.getElementById('rec-nome').value.trim();
-        const rendimento = parseFloat(document.getElementById('rec-rendimento').value);
-        const rendimentoUnidade = document.getElementById('rec-rendimento-unidade').value;
-        const lucro = parseFloat(document.getElementById('rec-lucro').value);
-        const embalagem = parseFloat(document.getElementById('rec-embalagem').value) || 0;
-        const overhead = parseFloat(document.getElementById('rec-overhead').value) || 0;
 
-        if(!nome || isNaN(rendimento) || isNaN(lucro) || rendimento <= 0) {
-            showToast("Preencha o nome, rendimento válido e margem de lucro!", "error");
+    atualizarCustoLinha(
+        row.querySelector(
+            ".ingrediente-qtd"
+        )
+    );
+}
+
+
+function aoSelecionarInsumo(selectEl){
+
+    const row =
+        selectEl.closest(
+            ".ingrediente-row"
+        );
+
+
+    const insumo =
+        db.insumos.find(
+            i =>
+                String(i.id) ===
+                String(selectEl.value)
+        );
+
+
+    if(insumo){
+
+        row.querySelector(
+            ".ingrediente-unidade"
+        ).value =
+            insumo.unidade;
+    }
+
+
+    atualizarCustoLinha(selectEl);
+}
+
+
+function atualizarCustoLinha(element){
+
+    const row =
+        element.closest(
+            ".ingrediente-row"
+        );
+
+
+    if(!row){
+
+        return;
+    }
+
+
+    const insumoId =
+        row.querySelector(
+            ".ingrediente-insumo"
+        ).value;
+
+
+    const qtd =
+        numero(
+            row.querySelector(
+                ".ingrediente-qtd"
+            ).value
+        );
+
+
+    const unidade =
+        row.querySelector(
+            ".ingrediente-unidade"
+        ).value;
+
+
+    const custoEl =
+        row.querySelector(
+            ".ingrediente-custo"
+        );
+
+
+    const insumo =
+        db.insumos.find(
+            i =>
+                String(i.id) ===
+                String(insumoId)
+        );
+
+
+    if(!insumo){
+
+        custoEl.textContent =
+            "Custo: R$ 0,00";
+
+        return;
+    }
+
+
+    const qtdConvertida =
+        converterUnidade(
+            qtd,
+            unidade,
+            insumo.unidade
+        );
+
+
+    if(qtdConvertida === null){
+
+        custoEl.textContent =
+            "Unidade incompatível";
+
+        return;
+    }
+
+
+    const custoPorUnidadeCompra =
+        numero(insumo.qtdEmb) > 0
+            ? numero(insumo.preco) /
+              numero(insumo.qtdEmb)
+            : 0;
+
+
+    /*
+     * FC aplicado uma única vez:
+     * quantidade líquida -> quantidade
+     * bruta necessária.
+     */
+
+    const qtdBruta =
+        qtdConvertida *
+        (numero(insumo.fc) || 1);
+
+
+    const custo =
+        custoPorUnidadeCompra *
+        qtdBruta;
+
+
+    custoEl.textContent =
+        "Custo: " + moeda(custo);
+}
+
+
+/* ==========================================================
+   SALVAR RECEITA
+========================================================== */
+
+function salvarReceita(){
+
+    const nome =
+        document.getElementById(
+            "rec-nome"
+        ).value.trim();
+
+
+    const rendimento =
+        numero(
+            document.getElementById(
+                "rec-rendimento"
+            ).value
+        );
+
+
+    const rendimentoUnidade =
+        document.getElementById(
+            "rec-rendimento-unidade"
+        ).value;
+
+
+    const lucro =
+        numero(
+            document.getElementById(
+                "rec-lucro"
+            ).value
+        );
+
+
+    const embalagem =
+        numero(
+            document.getElementById(
+                "rec-embalagem"
+            ).value
+        );
+
+
+    const overhead =
+        numero(
+            document.getElementById(
+                "rec-overhead"
+            ).value
+        );
+
+
+    if(!nome){
+
+        showToast(
+            "Informe o nome da receita.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(rendimento <= 0){
+
+        showToast(
+            "O rendimento deve ser maior que zero.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const rows =
+        Array.from(
+            document.querySelectorAll(
+                "#container-ingredientes .ingrediente-row"
+            )
+        );
+
+
+    const ingredientes = [];
+
+
+    for(const row of rows){
+
+        const insumoId =
+            row.querySelector(
+                ".ingrediente-insumo"
+            ).value;
+
+
+        const qtd =
+            numero(
+                row.querySelector(
+                    ".ingrediente-qtd"
+                ).value
+            );
+
+
+        const unidade =
+            row.querySelector(
+                ".ingrediente-unidade"
+            ).value;
+
+
+        if(!insumoId){
+
+            showToast(
+                "Selecione todos os insumos.",
+                "error"
+            );
+
             return;
         }
 
-        const linhas = document.querySelectorAll('.ingredient-row');
-        const ingredientes = [];
 
-        linhas.forEach(row => {
-            const insumoId = parseInt(row.querySelector('.rec-insumo-select').value);
-            const qtdUsada = parseFloat(row.querySelector('.rec-insumo-qtd').value);
-            const unidadeUsada = row.querySelector('.rec-insumo-unidade').value;
+        if(qtd <= 0){
 
-            if(!isNaN(insumoId) && !isNaN(qtdUsada) && qtdUsada > 0) {
-                ingredientes.push({ insumoId, qtdUsada, unidadeUsada });
+            showToast(
+                "As quantidades dos ingredientes devem ser maiores que zero.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const insumo =
+            db.insumos.find(
+                i =>
+                    String(i.id) ===
+                    String(insumoId)
+            );
+
+
+        if(!insumo){
+
+            showToast(
+                "Um dos insumos não foi encontrado.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const qtdConvertida =
+            converterUnidade(
+                qtd,
+                unidade,
+                insumo.unidade
+            );
+
+
+        if(qtdConvertida === null){
+
+            showToast(
+                `A unidade do ingrediente "${insumo.nome}" é incompatível com a unidade do insumo.`,
+                "error"
+            );
+
+            return;
+        }
+
+
+        ingredientes.push({
+
+            insumoId,
+
+            qtdUsada:qtd,
+
+            unidadeUsada:unidade
+
+        });
+    }
+
+
+    if(ingredientes.length === 0){
+
+        showToast(
+            "Adicione pelo menos um ingrediente.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const receita = {
+
+        id:gerarId(),
+
+        nome,
+
+        rendimento,
+
+        rendimentoUnidade,
+
+        lucro,
+
+        embalagem,
+
+        overhead,
+
+        ingredientes,
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    db.receitas.push(receita);
+
+
+    saveData();
+
+    renderReceitas();
+
+    atualizarSelectsDimensionador();
+
+    limparFormularioReceita();
+
+
+    showToast(
+        "Ficha técnica salva com sucesso.",
+        "success"
+    );
+}
+
+
+function limparFormularioReceita(){
+
+    document.getElementById(
+        "form-receita"
+    ).reset();
+
+
+    document.getElementById(
+        "rec-lucro"
+    ).value = 30;
+
+
+    document.getElementById(
+        "rec-embalagem"
+    ).value = 0;
+
+
+    document.getElementById(
+        "rec-overhead"
+    ).value = 10;
+
+
+    document.getElementById(
+        "container-ingredientes"
+    ).innerHTML = "";
+
+
+    adicionarLinhaIngrediente();
+}
+
+
+/* ==========================================================
+   RECEITAS
+========================================================== */
+
+function calcularCustoReceita(receita){
+
+    let custoIngredientes = 0;
+
+
+    receita.ingredientes
+        .forEach(ing=>{
+
+            const insumo =
+                db.insumos.find(
+                    i =>
+                        String(i.id) ===
+                        String(ing.insumoId)
+                );
+
+
+            if(!insumo){
+
+                return;
             }
+
+
+            const qtdConvertida =
+                converterUnidade(
+                    ing.qtdUsada,
+                    ing.unidadeUsada,
+                    insumo.unidade
+                );
+
+
+            if(qtdConvertida === null){
+
+                return;
+            }
+
+
+            const custoPorUnidadeCompra =
+                numero(insumo.qtdEmb) > 0
+                    ? numero(insumo.preco) /
+                      numero(insumo.qtdEmb)
+                    : 0;
+
+
+            /*
+             * FC aplicado somente aqui.
+             */
+
+            const qtdBruta =
+                qtdConvertida *
+                (numero(insumo.fc) || 1);
+
+
+            custoIngredientes +=
+                custoPorUnidadeCompra *
+                qtdBruta;
         });
 
-        if(ingredientes.length === 0) {
-            showToast("Adicione pelo menos um ingrediente válido!", "error");
-            return;
-        }
 
-        const id = new Date().getTime();
-        db.receitas.push({ id, nome, rendimento, rendimentoUnidade, lucro, embalagem, overhead, ingredientes });
-        saveData();
-        renderReceitas();
-        atualizarSelectsDimensionador();
+    const overheadValor =
+        custoIngredientes *
+        (numero(receita.overhead) / 100);
 
-        document.getElementById('rec-nome').value = '';
-        document.getElementById('rec-embalagem').value = '0.00';
-        document.getElementById('container-ingredientes').innerHTML = '';
-        adicionarLinhaIngrediente();
-        showToast("Ficha Técnica salva com sucesso!", "success");
+
+    return (
+        custoIngredientes +
+        numero(receita.embalagem) +
+        overheadValor
+    );
+}
+
+
+function renderReceitas(){
+
+    const container =
+        document.getElementById(
+            "lista-receitas-cards"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if(db.receitas.length === 0){
+
+        container.innerHTML = `
+            <div class="empty-state">
+                Nenhuma receita cadastrada.
+            </div>
+        `;
+
+        return;
     }
 
-    function deletarReceita(id) {
-        showCustomModal("Excluir Ficha Técnica", "Deseja realmente excluir esta ficha técnica?", () => {
-            db.receitas = db.receitas.filter(r => r.id !== id);
-            saveData();
-            renderReceitas();
-            atualizarSelectsDimensionador();
-            showToast("Ficha técnica excluída.", "success");
-        });
-    }
 
-    function renderReceitas() {
-        const container = document.getElementById('lista-receitas-cards');
-        if(db.receitas.length === 0) {
-            container.innerHTML = `<p style="color: var(--text-muted);">Nenhuma receita cadastrada ainda.</p>`;
-            return;
-        }
+    db.receitas.forEach(receita=>{
 
-        container.innerHTML = db.receitas.map(r => {
-            const rUnidade = r.rendimentoUnidade || 'und';
-            let custoInsumosTotal = 0;
+        const custoTotal =
+            calcularCustoReceita(
+                receita
+            );
 
-            const tabelaIng = r.ingredientes.map(ing => {
-                const insumo = db.insumos.find(i => i.id === ing.insumoId);
-                if(!insumo) return '';
-                
-                const unitUsada = ing.unidadeUsada || insumo.unidade;
-                const qtdConvertida = converterUnidade(ing.qtdUsada, unitUsada, insumo.unidade);
-                
-                const fc = insumo.fc || 1.0;
-                const custoFracReal = insumo.qtdEmb > 0 ? (insumo.preco / insumo.qtdEmb) * fc : 0;
-                const custoItem = custoFracReal * qtdConvertida;
-                custoInsumosTotal += custoItem;
 
-                return `<tr><td>${insumo.nome}</td><td>${ing.qtdUsada} ${unitUsada} (FC: ${fc})</td><td>R$ ${custoItem.toFixed(2)}</td></tr>`;
-            }).join('');
+        const rendimento =
+            numero(receita.rendimento);
 
-            const custoInsumosPorBase = custoInsumosTotal / r.rendimento;
-            const custoEmbPorBase = r.embalagem || 0;
-            const custoDiretoUnitario = custoInsumosPorBase + custoEmbPorBase;
-            const overheadUnitario = custoDiretoUnitario * ((r.overhead || 0) / 100);
-            const custoTotalUnitario = custoDiretoUnitario + overheadUnitario;
-            const precoSugerido = custoTotalUnitario * (1 + (r.lucro / 100));
 
-            let lucroBadge = '';
-            if (r.lucro < 50) lucroBadge = `<span class="badge badge-warning" style="margin-left:8px;">Lucro Baixo (${r.lucro}%)</span>`;
+        const custoUnidade =
+            rendimento > 0
+                ? custoTotal / rendimento
+                : 0;
 
-            return `
-                <div class="card" style="margin-bottom: 15px;">
-                    <div class="flex-grid" style="justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <h4 style="margin: 0;">${r.nome} ${lucroBadge}</h4>
-                        <div class="no-print" style="display: flex; gap: 6px;">
-                            <button onclick="copiarTextoReceita(${r.id})" class="outline" style="width: auto; padding: 4px 10px; font-size: 12px; margin-bottom: 0;">📋 Copiar</button>
-                            <button onclick="deletarReceita(${r.id})" class="danger" style="width: auto; padding: 4px 10px; font-size: 12px; margin-bottom: 0;">Excluir</button>
-                        </div>
-                    </div>
-                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
-                        Rendimento Base: <b>${r.rendimento} ${rUnidade}</b> | Lucro Meta: <b>${r.lucro}%</b> | Embalagem/Lote: <b>R$ ${(r.embalagem||0).toFixed(2)}</b> | Overhead: <b>${r.overhead||0}%</b>
-                    </p>
-                    <div class="table-responsive">
-                        <table>
-                            <thead><tr><th>Ingrediente</th><th>Qtd</th><th>Custo Real</th></tr></thead>
-                            <tbody>${tabelaIng}</tbody>
-                        </table>
-                    </div>
-                    <div class="flex-grid" style="margin-top: 12px; font-size: 13px; background: #F8FAFC; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <div class="col">Custo Insumos (Lote): <b>R$ ${custoInsumosTotal.toFixed(2)}</b></div>
-                        <div class="col">Custo Total / ${rUnidade}: <b>R$ ${custoTotalUnitario.toFixed(2)}</b></div>
-                        <div class="col" style="color: var(--success);">Preço Sugerido / ${rUnidade}: <b>R$ ${precoSugerido.toFixed(2)}</b></div>
-                    </div>
+
+        const margem =
+            numero(receita.lucro);
+
+
+        const precoSugerido =
+            custoUnidade *
+            (1 + margem / 100);
+
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "recipe-card";
+
+
+        const ingredientesHTML =
+            receita.ingredientes
+                .map(ing=>{
+
+                    const insumo =
+                        db.insumos.find(
+                            i =>
+                                String(i.id) ===
+                                String(ing.insumoId)
+                        );
+
+
+                    return `
+                        <li>
+                            ${escapeHTML(
+                                insumo?.nome ||
+                                "Insumo não encontrado"
+                            )}
+                            —
+                            ${formatarNumero(
+                                ing.qtdUsada
+                            )}
+                            ${escapeHTML(
+                                ing.unidadeUsada
+                            )}
+                        </li>
+                    `;
+                })
+                .join("");
+
+
+        card.innerHTML = `
+
+            <h3>
+                ${escapeHTML(receita.nome)}
+            </h3>
+
+            <div class="recipe-meta">
+
+                Rendimento:
+                <strong>
+                    ${formatarNumero(receita.rendimento)}
+                    ${escapeHTML(receita.rendimentoUnidade)}
+                </strong>
+
+                <br>
+
+                Lucro:
+                <strong>
+                    ${formatarNumero(receita.lucro)}%
+                </strong>
+
+                <br>
+
+                Overhead:
+                <strong>
+                    ${formatarNumero(receita.overhead)}%
+                </strong>
+
+            </div>
+
+
+            <div style="margin-top:12px">
+
+                <strong>Ingredientes</strong>
+
+                <ul>
+                    ${ingredientesHTML}
+                </ul>
+
+            </div>
+
+
+            <div class="recipe-cost">
+
+                <div>
+                    Custo total:
+                    <strong>
+                        ${moeda(custoTotal)}
+                    </strong>
                 </div>
-            `;
-        }).join('');
+
+                <div>
+                    Custo por unidade:
+                    <strong>
+                        ${moeda(custoUnidade)}
+                    </strong>
+                </div>
+
+                <div>
+                    Preço sugerido:
+                    <strong>
+                        ${moeda(precoSugerido)}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="recipe-actions no-print">
+
+                <button
+                    class="btn btn-outline btn-sm"
+                    onclick="copiarTextoReceita('${receita.id}')"
+                >
+                    Copiar
+                </button>
+
+                <button
+                    class="btn btn-danger btn-sm"
+                    onclick="deletarReceita('${receita.id}')"
+                >
+                    Excluir
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+    });
+}
+
+
+function copiarTextoReceita(id){
+
+    const receita =
+        db.receitas.find(
+            r => r.id === id
+        );
+
+
+    if(!receita){
+
+        return;
     }
 
-    // 3. DIMENSIONADOR / ESCALONADOR COM CONVERSÃO DE UNIDADES
-    function atualizarSelectsDimensionador() {
-        const select = document.getElementById('sim-receita');
-        if(db.receitas.length === 0) {
-            select.innerHTML = `<option value="">Cadastre receitas primeiro</option>`;
-            return;
+
+    let texto =
+        `RECEITA: ${receita.nome}\n` +
+        `RENDIMENTO: ${receita.rendimento} ${receita.rendimentoUnidade}\n` +
+        `LUCRO: ${receita.lucro}%\n` +
+        `OVERHEAD: ${receita.overhead}%\n\n` +
+        `INGREDIENTES:\n`;
+
+
+    receita.ingredientes.forEach(ing=>{
+
+        const insumo =
+            db.insumos.find(
+                i =>
+                    String(i.id) ===
+                    String(ing.insumoId)
+            );
+
+
+        texto +=
+            `${ing.qtdUsada} ${ing.unidadeUsada} ` +
+            `${insumo?.nome || "Insumo não encontrado"}\n`;
+    });
+
+
+    navigator.clipboard
+        .writeText(texto)
+        .then(()=>{
+
+            showToast(
+                "Ficha técnica copiada.",
+                "success"
+            );
+
+        })
+        .catch(()=>{
+
+            showToast(
+                "Não foi possível copiar automaticamente.",
+                "error"
+            );
+        });
+}
+
+
+function deletarReceita(id){
+
+    const receita =
+        db.receitas.find(
+            r => r.id === id
+        );
+
+
+    if(!receita){
+
+        return;
+    }
+
+
+    showCustomModal(
+        "Excluir receita?",
+        `A receita "${receita.nome}" será excluída permanentemente deste navegador.`,
+        function(){
+
+            db.receitas =
+                db.receitas.filter(
+                    r => r.id !== id
+                );
+
+
+            saveData();
+
+            renderReceitas();
+
+            atualizarSelectsDimensionador();
+
+            calcularEscalonamento();
+
+            showToast(
+                "Receita excluída.",
+                "success"
+            );
         }
-        select.innerHTML = db.receitas.map(r => `<option value="${r.id}">${r.nome} (Base: ${r.rendimento} ${r.rendimentoUnidade || 'und'})</option>`).join('');
+    );
+}
+
+
+/* ==========================================================
+   DIMENSIONADOR
+========================================================== */
+
+function atualizarSelectsDimensionador(){
+
+    const select =
+        document.getElementById(
+            "sim-receita"
+        );
+
+
+    if(!select){
+
+        return;
+    }
+
+
+    const atual =
+        select.value;
+
+
+    select.innerHTML = `
+
+        <option value="">
+            Selecione uma receita...
+        </option>
+
+        ${db.receitas
+            .map(receita=>`
+
+                <option
+                    value="${escapeHTML(receita.id)}"
+                >
+                    ${escapeHTML(receita.nome)}
+                </option>
+
+            `)
+            .join("")}
+
+    `;
+
+
+    if(
+        db.receitas.some(
+            r =>
+                String(r.id) ===
+                String(atual)
+        )
+    ){
+
+        select.value = atual;
+
+    }else if(db.receitas.length === 1){
+
+        select.value =
+            db.receitas[0].id;
+
         aoMudarReceitaDimensionador();
     }
+}
 
-    function aoMudarReceitaDimensionador() {
-        const recId = parseInt(document.getElementById('sim-receita').value);
-        const receita = db.receitas.find(r => r.id === recId);
-        if(receita) {
-            document.getElementById('sim-qtd-desejada').value = receita.rendimento;
-            document.getElementById('sim-qtd-unidade').value = receita.rendimentoUnidade || 'und';
-        }
-        calcularEscalonamento();
+
+function aoMudarReceitaDimensionador(){
+
+    const receitaId =
+        document.getElementById(
+            "sim-receita"
+        ).value;
+
+
+    const receita =
+        db.receitas.find(
+            r =>
+                String(r.id) ===
+                String(receitaId)
+        );
+
+
+    if(!receita){
+
+        document.getElementById(
+            "sim-titulo-receita"
+        ).textContent =
+            "Selecione uma receita";
+
+
+        document.getElementById(
+            "sim-subtitulo"
+        ).textContent =
+            "Informe a quantidade desejada para gerar o dimensionamento.";
+
+
+        document.getElementById(
+            "sim-qtd-desejada"
+        ).value = "";
+
+
+        limparRelatorioDimensionador();
+
+        return;
     }
 
-    function calcularEscalonamento() {
-        const recId = parseInt(document.getElementById('sim-receita').value);
-        const qtdDesejada = parseFloat(document.getElementById('sim-qtd-desejada').value);
-        const unidadeDesejada = document.getElementById('sim-qtd-unidade').value;
-        const relatorio = document.getElementById('relatorio-dimensionador');
 
-        const receita = db.receitas.find(r => r.id === recId);
-        if(!receita || isNaN(qtdDesejada) || qtdDesejada <= 0) {
-            relatorio.classList.add('hidden');
-            return;
-        }
+    document.getElementById(
+        "sim-titulo-receita"
+    ).textContent =
+        receita.nome;
 
-        relatorio.classList.remove('hidden');
 
-        const recUnidade = receita.rendimentoUnidade || 'und';
+    document.getElementById(
+        "sim-subtitulo"
+    ).textContent =
+        `Rendimento original: ${formatarNumero(receita.rendimento)} ${receita.rendimentoUnidade}`;
 
-        // Cálculo inteligente de proporção cruzando unidades compatíveis (peso com peso, volume com volume, und com und)
-        let fator = 1;
-        const baseRecVal = converterParaBaseComum(receita.rendimento, recUnidade);
-        const baseDesejadaVal = converterParaBaseComum(qtdDesejada, unidadeDesejada);
 
-        if(baseRecVal > 0) {
-            fator = baseDesejadaVal / baseRecVal;
-        }
+    document.getElementById(
+        "sim-qtd-desejada"
+    ).value =
+        receita.rendimento;
 
-        document.getElementById('sim-titulo-receita').innerText = receita.nome;
-        document.getElementById('sim-subtitulo').innerText = `Dimensionado para ${qtdDesejada} ${unidadeDesejada} (${fator.toFixed(2)}x a receita base de ${receita.rendimento} ${recUnidade})`;
 
-        let custoInsumosTotalProporcional = 0;
+    document.getElementById(
+        "sim-qtd-unidade"
+    ).value =
+        receita.rendimentoUnidade;
 
-        const tabelaRows = receita.ingredientes.map(ing => {
-            const insumo = db.insumos.find(i => i.id === ing.insumoId);
-            if(!insumo) return '';
 
-            const unitUsada = ing.unidadeUsada || insumo.unidade;
-            const qtdLiquidaProporcional = ing.qtdUsada * fator;
-            const fc = insumo.fc || 1.0;
-            const qtdBrutaNecessaria = qtdLiquidaProporcional * fc;
-            
-            const qtdConvertida = converterUnidade(qtdBrutaNecessaria, unitUsada, insumo.unidade);
-            const custoFracReal = insumo.qtdEmb > 0 ? (insumo.preco / insumo.qtdEmb) * fc : 0;
-            const custoItem = custoFracReal * qtdConvertida;
-            custoInsumosTotalProporcional += custoItem;
+    calcularEscalonamento();
+}
 
-            return `
-                <tr>
-                    <td><b>${insumo.nome}</b></td>
-                    <td style="color: var(--accent); font-weight: 700;">${qtdBrutaNecessaria.toFixed(2)} ${unitUsada}</td>
-                    <td>R$ ${custoItem.toFixed(2)}</td>
-                </tr>
+
+function limparRelatorioDimensionador(){
+
+    document.getElementById(
+        "sim-custo-total"
+    ).textContent =
+        "R$ 0,00";
+
+
+    document.getElementById(
+        "sim-custo-unidade"
+    ).textContent =
+        "R$ 0,00";
+
+
+    document.getElementById(
+        "sim-preco-sugerido"
+    ).textContent =
+        "R$ 0,00";
+
+
+    document.getElementById(
+        "sim-faturamento"
+    ).textContent =
+        "R$ 0,00";
+
+
+    document.getElementById(
+        "sim-tabela-ingredientes"
+    ).innerHTML = "";
+}
+
+
+function calcularEscalonamento(){
+
+    const receitaId =
+        document.getElementById(
+            "sim-receita"
+        )?.value;
+
+
+    const qtdDesejada =
+        numero(
+            document.getElementById(
+                "sim-qtd-desejada"
+            )?.value
+        );
+
+
+    const unidadeDesejada =
+        document.getElementById(
+            "sim-qtd-unidade"
+        )?.value;
+
+
+    const errorBox =
+        document.getElementById(
+            "dimensionador-error"
+        );
+
+
+    if(!receitaId || qtdDesejada <= 0){
+
+        errorBox.classList.add("hidden");
+
+        limparRelatorioDimensionador();
+
+        return;
+    }
+
+
+    const receita =
+        db.receitas.find(
+            r =>
+                String(r.id) ===
+                String(receitaId)
+        );
+
+
+    if(!receita){
+
+        return;
+    }
+
+
+    /*
+     * CORREÇÃO IMPORTANTE:
+     * Não permite comparar, por exemplo,
+     * 10 unidades de receita com 500 g.
+     */
+
+    const categoriaReceita =
+        categoriaUnidade(
+            receita.rendimentoUnidade
+        );
+
+
+    const categoriaDesejada =
+        categoriaUnidade(
+            unidadeDesejada
+        );
+
+
+    if(
+        !categoriaReceita ||
+        !categoriaDesejada ||
+        categoriaReceita !==
+        categoriaDesejada
+    ){
+
+        errorBox.textContent =
+            `A unidade desejada (${unidadeDesejada}) ` +
+            `é incompatível com o rendimento da receita ` +
+            `(${receita.rendimentoUnidade}). ` +
+            `Escolha uma unidade da mesma categoria.`;
+
+
+        errorBox.classList.remove(
+            "hidden"
+        );
+
+
+        limparRelatorioDimensionador();
+
+        return;
+    }
+
+
+    errorBox.classList.add("hidden");
+
+
+    const rendimentoBase =
+        converterParaBaseComum(
+            receita.rendimento,
+            receita.rendimentoUnidade
+        );
+
+
+    const desejadaBase =
+        converterParaBaseComum(
+            qtdDesejada,
+            unidadeDesejada
+        );
+
+
+    if(rendimentoBase <= 0){
+
+        return;
+    }
+
+
+    const fator =
+        desejadaBase /
+        rendimentoBase;
+
+
+    let custoIngredientes = 0;
+
+
+    const tbody =
+        document.getElementById(
+            "sim-tabela-ingredientes"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    receita.ingredientes
+        .forEach(ing=>{
+
+            const insumo =
+                db.insumos.find(
+                    i =>
+                        String(i.id) ===
+                        String(ing.insumoId)
+                );
+
+
+            if(!insumo){
+
+                const tr =
+                    document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td colspan="5">
+                        Insumo não encontrado.
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+
+                return;
+            }
+
+
+            /*
+             * Quantidade líquida da receita
+             * escalonada.
+             */
+
+            const qtdLiquidaProporcional =
+                numero(ing.qtdUsada) *
+                fator;
+
+
+            /*
+             * FC aplicado uma única vez:
+             * líquida × FC = quantidade bruta
+             * necessária para compra/preparo.
+             */
+
+            const qtdBrutaNecessaria =
+                qtdLiquidaProporcional *
+                (numero(insumo.fc) || 1);
+
+
+            const qtdConvertida =
+                converterUnidade(
+                    qtdBrutaNecessaria,
+                    ing.unidadeUsada,
+                    insumo.unidade
+                );
+
+
+            if(qtdConvertida === null){
+
+                const tr =
+                    document.createElement("tr");
+
+                tr.innerHTML = `
+
+                    <td>
+                        ${escapeHTML(insumo.nome)}
+                    </td>
+
+                    <td>
+                        ${formatarNumero(ing.qtdUsada)}
+                        ${escapeHTML(ing.unidadeUsada)}
+                    </td>
+
+                    <td colspan="3">
+                        Unidade incompatível.
+                    </td>
+                `;
+
+
+                tbody.appendChild(tr);
+
+                return;
+            }
+
+
+            /*
+             * CORREÇÃO DO FC:
+             *
+             * O valor já contém FC em
+             * qtdBrutaNecessaria.
+             *
+             * Portanto NÃO multiplicamos FC
+             * novamente no custo.
+             */
+
+            const custoPorUnidadeCompra =
+                numero(insumo.qtdEmb) > 0
+                    ? numero(insumo.preco) /
+                      numero(insumo.qtdEmb)
+                    : 0;
+
+
+            const custoItem =
+                custoPorUnidadeCompra *
+                qtdConvertida;
+
+
+            custoIngredientes +=
+                custoItem;
+
+
+            const tr =
+                document.createElement("tr");
+
+
+            tr.innerHTML = `
+
+                <td>
+                    <strong>
+                        ${escapeHTML(insumo.nome)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${formatarNumero(ing.qtdUsada)}
+                    ${escapeHTML(ing.unidadeUsada)}
+                </td>
+
+                <td>
+                    ${formatarNumero(qtdBrutaNecessaria)}
+                    ${escapeHTML(ing.unidadeUsada)}
+                </td>
+
+                <td>
+                    ${escapeHTML(insumo.unidade)}
+                </td>
+
+                <td>
+                    ${moeda(custoItem)}
+                </td>
+
             `;
-        }).join('');
 
-        document.getElementById('sim-tabela-ingredientes').innerHTML = tabelaRows;
 
-        // Custos proporcionais
-        const custoEmbTotal = (receita.embalagem || 0) * fator;
-        const custoDiretoBatelada = custoInsumosTotalProporcional + custoEmbTotal;
-        const overheadBatelada = custoDiretoBatelada * ((receita.overhead || 0) / 100);
-        const custoTotalBatelada = custoDiretoBatelada + overheadBatelada;
-        
-        const custoUnitarioReal = baseDesejadaVal > 0 ? (custoTotalBatelada / baseDesejadaVal) * (unidadeDesejada === 'kg' ? 1000 : (unidadeDesejada === 'l' ? 1000 : 1)) : 0;
-        
-        // Se a unidade for por kg ou L, o custo unitário por 1 unidade de medida (1kg ou 1L) é calculado proporcionalmente
-        let labelUnidadeVisual = unidadeDesejada;
-        if(unidadeDesejada === 'g') labelUnidadeVisual = 'g';
-        if(unidadeDesejada === 'kg') labelUnidadeVisual = 'kg';
-        if(unidadeDesejada === 'ml') labelUnidadeVisual = 'ml';
-        if(unidadeDesejada === 'l') labelUnidadeVisual = 'L';
-        if(unidadeDesejada === 'und') labelUnidadeVisual = 'und';
+            tbody.appendChild(tr);
 
-        const precoSugeridoPorPorcao = (custoTotalBatelada / qtdDesejada) * (1 + (receita.lucro / 100));
-        const faturamentoTotal = precoSugeridoPorPorcao * qtdDesejada;
+        });
 
-        document.getElementById('sim-custo-total').innerText = `R$ ${custoTotalBatelada.toFixed(2)}`;
-        document.getElementById('sim-custo-unidade').innerText = `R$ ${(custoTotalBatelada / qtdDesejada).toFixed(2)} / ${labelUnidadeVisual}`;
-        document.getElementById('sim-preco-sugerido').innerText = `R$ ${precoSugeridoPorPorcao.toFixed(2)} / ${labelUnidadeVisual}`;
-        document.getElementById('sim-faturamento').innerText = `R$ ${faturamentoTotal.toFixed(2)}`;
+
+    const overheadValor =
+        custoIngredientes *
+        (numero(receita.overhead) / 100);
+
+
+    const embalagemTotal =
+        numero(receita.embalagem) *
+        fator;
+
+
+    const custoTotal =
+        custoIngredientes +
+        overheadValor +
+        embalagemTotal;
+
+
+    const quantidadeFinal =
+        qtdDesejada;
+
+
+    const custoUnidade =
+        quantidadeFinal > 0
+            ? custoTotal / quantidadeFinal
+            : 0;
+
+
+    const precoSugerido =
+        custoUnidade *
+        (1 + numero(receita.lucro) / 100);
+
+
+    const faturamento =
+        precoSugerido *
+        quantidadeFinal;
+
+
+    document.getElementById(
+        "sim-titulo-receita"
+    ).textContent =
+        receita.nome;
+
+
+    document.getElementById(
+        "sim-subtitulo"
+    ).textContent =
+        `Dimensionamento para ${formatarNumero(qtdDesejada)} ${unidadeDesejada}`;
+
+
+    document.getElementById(
+        "sim-custo-total"
+    ).textContent =
+        moeda(custoTotal);
+
+
+    document.getElementById(
+        "sim-custo-unidade"
+    ).textContent =
+        moeda(custoUnidade);
+
+
+    document.getElementById(
+        "sim-preco-sugerido"
+    ).textContent =
+        moeda(precoSugerido);
+
+
+    document.getElementById(
+        "sim-faturamento"
+    ).textContent =
+        moeda(faturamento);
+}
+
+
+/* ==========================================================
+   INICIALIZAÇÃO
+========================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        configurarTelaLogin();
+
+        verificarSessao();
+
     }
+);
+
+
+/* ==========================================================
+   PROTEÇÃO BÁSICA DA INTERFACE
+========================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            event.key ===
+            AUTH_STORAGE_KEY
+        ){
+
+            /*
+             * Se as credenciais forem removidas
+             * em outra aba, encerra a sessão atual.
+             */
+
+            if(!localStorage.getItem(
+                AUTH_STORAGE_KEY
+            )){
+
+                logout();
+            }
+        }
+    }
+);
+
+
+/* Fecha modal clicando fora */
+
+document
+    .getElementById("custom-modal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target === this
+            ){
+
+                fecharCustomModal();
+            }
+        }
+    );
+
 </script>
 
 </body>
